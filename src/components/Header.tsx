@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import logo from "@/assets/logo-de-logica.png";
 
 const navigation = [
   { label: "Servicios", href: "/servicios" },
@@ -36,8 +37,8 @@ export const Header = () => {
       }`}
     >
       <nav className="container-custom py-4 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold tracking-tight">
-          De Lógica
+        <Link to="/" className="flex items-center">
+          <img src={logo} alt="De Lógica" className="h-8 md:h-10 w-auto" />
         </Link>
 
         {/* Desktop Navigation */}

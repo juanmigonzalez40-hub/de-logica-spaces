@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from "@/assets/logo-de-logica.png";
 
 const footerNav = [
   { label: "Aviso legal", href: "/legal/aviso-legal" },
@@ -13,7 +14,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Column 1: Brand */}
           <div>
-            <h3 className="text-xl font-bold mb-4">De Lógica</h3>
+            <img src={logo} alt="De Lógica" className="h-8 w-auto mb-4" />
             <p className="text-sm opacity-90">
               Diseño, interiorismo, fabricación e instalación para espacios comerciales
             </p>
