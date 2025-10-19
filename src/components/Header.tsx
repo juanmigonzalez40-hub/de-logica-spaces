@@ -38,7 +38,7 @@ export const Header = () => {
     >
       <nav className="container-custom py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <img src={logo} alt="De Lógica" className="h-8 md:h-10 w-auto" />
+          <img src={logo} alt="De Lógica" className="h-16 md:h-20 w-auto" />
         </Link>
 
         {/* Desktop Navigation */}
