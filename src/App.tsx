@@ -8,6 +8,9 @@ import { Footer } from "@/components/Footer";
 import Home from "./pages/Home";
 import Servicios from "./pages/Servicios";
 import ServicioInstalacion from "./pages/ServicioInstalacion";
+import ServicioDiseno from "./pages/ServicioDiseno";
+import ServicioMobiliario from "./pages/ServicioMobiliario";
+import ServicioSenaletica from "./pages/ServicioSenaletica";
 import SimplePage from "./pages/SimplePage";
 import Contacto from "./pages/Contacto";
 import Gracias from "./pages/Gracias";
@@ -26,39 +29,9 @@ const App = () => (
           <Route path="/" element={<Home />} />
           <Route path="/servicios" element={<Servicios />} />
           <Route path="/servicios/instalacion" element={<ServicioInstalacion />} />
-          <Route
-            path="/servicios/diseno"
-            element={
-              <SimplePage
-                title="Diseño e interiorismo"
-                subtitle="Imagen de marca llevada al espacio, del concepto al prototipo"
-                content="Briefing, moodboards, renders y planos; prototipado y guía para implantación sin sorpresas."
-                ctaTitle="¿Quieres un concepto a medida?"
-              />
-            }
-          />
-          <Route
-            path="/servicios/mobiliario"
-            element={
-              <SimplePage
-                title="Fabricación de mobiliario"
-                subtitle="Calidad industrial con acabado fino"
-                content="Prototipado, fabricación, acabados y control de calidad. Envío y montaje coordinados."
-                ctaTitle="Cuéntanos qué necesitas"
-              />
-            }
-          />
-          <Route
-            path="/servicios/senaletica"
-            element={
-              <SimplePage
-                title="Comunicación visual y señalética"
-                subtitle="Visibilidad, orientación y experiencia"
-                content="Fachada e interior; señalización técnica y decorativa; LED y backlight; corpóreas y vinilos."
-                ctaTitle="¿Necesitas renovar tu imagen?"
-              />
-            }
-          />
+          <Route path="/servicios/diseno" element={<ServicioDiseno />} />
+          <Route path="/servicios/mobiliario" element={<ServicioMobiliario />} />
+          <Route path="/servicios/senaletica" element={<ServicioSenaletica />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/gracias" element={<Gracias />} />
           {/* Placeholder routes - to be built */}
