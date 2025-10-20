@@ -55,7 +55,7 @@ const ServicioInstalacion = () => {
       <section className="section-padding">
         <div className="container-custom text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Instalación y mantenimiento
+            Instalación y montaje
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Montaje profesional, plazos controlados y acabados impecables

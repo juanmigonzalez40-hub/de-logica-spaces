@@ -29,7 +29,7 @@ const services = [
     image: tileSenaletica,
   },
   {
-    title: "Instalación y Mantenimiento",
+    title: "Instalación y Montaje",
     description:
       "Equipos propios de montaje, planificación por hitos y servicio postventa.",
     href: "/servicios/instalacion",

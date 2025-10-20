@@ -21,7 +21,7 @@ const services = [
     image: tileSenaletica,
   },
   {
-    label: "Instalación y Mantenimiento",
+    label: "Instalación y Montaje",
     href: "/servicios/instalacion",
     image: tileInstalacion,
   },
