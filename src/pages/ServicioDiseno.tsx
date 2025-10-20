@@ -6,7 +6,7 @@ const deliverables = [
   "Briefing y análisis de necesidades del negocio",
   "Moodboards y paletas de materiales y colores",
   "Renders 3D fotorrealistas del espacio",
-  "Planos técnicos detallados para ejecución",
+  "Planos detallados para ejecución",
   "Prototipado de elementos clave",
   "Guía de implantación y especificaciones",
 ];
