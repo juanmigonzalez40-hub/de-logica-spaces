@@ -2,6 +2,10 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Building2 } from "lucide-react";
 import { CTAStrip } from "@/components/sections/CTAStrip";
+import tileDiseno from "@/assets/tile-diseno.jpg";
+import tileFabricacion from "@/assets/tile-fabricacion.jpg";
+import tileSenaletica from "@/assets/tile-senaletica.jpg";
+import tileInstalacion from "@/assets/tile-instalacion.jpg";
 
 const services = [
   {
@@ -9,23 +13,27 @@ const services = [
     description:
       "Concepto, 3D, experiencia del cliente y selección de materiales. Imagen de marca aplicada al espacio.",
     href: "/servicios/diseno",
+    image: tileDiseno,
   },
   {
     title: "Fabricación de Mobiliario",
     description: "Mobiliario a medida para clínicas, retail, oficinas, restauración y gimnasios.",
     href: "/servicios/mobiliario",
+    image: tileFabricacion,
   },
   {
     title: "Comunicación Visual y Señalética",
     description:
       "Rótulos, letras corpóreas, pantallas, vinilos e impresión de gran formato.",
     href: "/servicios/senaletica",
+    image: tileSenaletica,
   },
   {
     title: "Instalación y Mantenimiento",
     description:
       "Equipos propios de montaje, planificación por hitos y servicio postventa.",
     href: "/servicios/instalacion",
+    image: tileInstalacion,
   },
 ];
 
@@ -50,15 +58,25 @@ const Servicios = () => {
               <Link
                 key={index}
                 to={service.href}
-                className="bg-background rounded-2xl p-8 shadow-elegant hover:shadow-xl transition-all group"
+                className="bg-background rounded-2xl overflow-hidden shadow-elegant hover:shadow-xl transition-all group"
               >
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-accent transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">{service.description}</p>
-                <span className="text-accent font-semibold group-hover:underline">
-                  Ver más →
-                </span>
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                </div>
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold mb-4 group-hover:text-accent transition-colors">
+                    {service.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-6 leading-relaxed">{service.description}</p>
+                  <span className="text-accent font-semibold group-hover:underline">
+                    Ver más →
+                  </span>
+                </div>
               </Link>
             ))}
           </div>
