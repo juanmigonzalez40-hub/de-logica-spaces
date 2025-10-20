@@ -7,7 +7,7 @@ const deliverables = [
   "Moodboards y paletas de materiales y colores",
   "Renders 3D fotorrealistas del espacio",
   "Planos detallados para ejecución",
-  "Prototipado de elementos clave",
+  "Prototipado de elementos clave (si aplica)",
   "Guía de implantación y especificaciones",
 ];
 
