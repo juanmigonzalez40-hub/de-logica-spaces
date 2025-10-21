@@ -13,6 +13,7 @@ import ServicioDiseno from "./pages/ServicioDiseno";
 import ServicioMobiliario from "./pages/ServicioMobiliario";
 import ServicioSenaletica from "./pages/ServicioSenaletica";
 import SimplePage from "./pages/SimplePage";
+import Sostenibilidad from "./pages/Sostenibilidad";
 import Contacto from "./pages/Contacto";
 import Gracias from "./pages/Gracias";
 import NotFound from "./pages/NotFound";
@@ -68,17 +69,7 @@ const App = () => (
               />
             }
           />
-          <Route
-            path="/sostenibilidad"
-            element={
-              <SimplePage
-                title="Sostenibilidad"
-                subtitle="Materiales de alto rendimiento con menor impacto"
-                content="Trabajamos con materiales con certificaciones como FSC®, PEFC, Cradle to Cradle, EU Ecolabel y GREENGUARD. Priorizamos soluciones duraderas, reparables y con menor residuo."
-                ctaTitle="¿Quieres alternativas sostenibles?"
-              />
-            }
-          />
+          <Route path="/sostenibilidad" element={<Sostenibilidad />} />
           <Route
             path="/nosotros"
             element={
