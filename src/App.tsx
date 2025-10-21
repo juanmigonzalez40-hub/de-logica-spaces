@@ -14,6 +14,8 @@ import ServicioMobiliario from "./pages/ServicioMobiliario";
 import ServicioSenaletica from "./pages/ServicioSenaletica";
 import SimplePage from "./pages/SimplePage";
 import Sostenibilidad from "./pages/Sostenibilidad";
+import Proyectos from "./pages/Proyectos";
+import Franquicias from "./pages/Franquicias";
 import Contacto from "./pages/Contacto";
 import Gracias from "./pages/Gracias";
 import NotFound from "./pages/NotFound";
@@ -38,16 +40,7 @@ const App = () => (
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/gracias" element={<Gracias />} />
           {/* Placeholder routes - to be built */}
-          <Route
-            path="/proyectos"
-            element={
-              <SimplePage
-                title="Proyectos"
-                subtitle="Portfolio de trabajos realizados"
-                content="Estamos preparando nuestra galería de proyectos. Mientras tanto, contacta con nosotros para ver ejemplos específicos de tu sector."
-              />
-            }
-          />
+          <Route path="/proyectos" element={<Proyectos />} />
           <Route
             path="/casos-de-exito"
             element={
@@ -58,17 +51,7 @@ const App = () => (
               />
             }
           />
-          <Route
-            path="/franquicias"
-            element={
-              <SimplePage
-                title="Franquicias"
-                subtitle="Coherencia, repetibilidad y tiempos óptimos"
-                content="Especialistas en implantación de imagen para cadenas en expansión. Manual y estándares, repetibilidad y control, plazos y aperturas sincronizadas."
-                ctaTitle="¿Tu marca crece?"
-              />
-            }
-          />
+          <Route path="/franquicias" element={<Franquicias />} />
           <Route path="/sostenibilidad" element={<Sostenibilidad />} />
           <Route
             path="/nosotros"
