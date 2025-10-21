@@ -38,7 +38,7 @@ const ServicioMobiliario = () => {
             Fabricación de mobiliario
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Calidad industrial con acabado fino
+            Mobiliario único que eleva tu marca
           </p>
         </div>
       </section>
