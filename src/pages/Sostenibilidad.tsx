@@ -9,27 +9,27 @@ const certifications = [
   {
     name: "FSC®",
     image: certFSC,
-    description: "Forest Stewardship Council - Gestión forestal responsable",
+    description: "Garantiza que la madera y productos derivados provienen de bosques gestionados de forma responsable, respetando criterios ambientales, sociales y económicos.",
   },
   {
     name: "PEFC",
     image: certPEFC,
-    description: "Programme for the Endorsement of Forest Certification",
+    description: "Certifica la gestión forestal sostenible y la trazabilidad de productos de madera, promoviendo el equilibrio entre aspectos ecológicos, sociales y económicos.",
   },
   {
     name: "Cradle to Cradle",
     image: certC2C,
-    description: "Economía circular y diseño regenerativo",
+    description: "Evalúa productos según salud de materiales, reutilización, energías renovables, gestión del agua y equidad social. Diseño pensado para la economía circular.",
   },
   {
     name: "EU Ecolabel",
     image: certEUEcolabel,
-    description: "Etiqueta ecológica de la Unión Europea",
+    description: "Etiqueta ecológica oficial de la UE que identifica productos y servicios con menor impacto ambiental durante todo su ciclo de vida.",
   },
   {
     name: "GREENGUARD",
     image: certGreenguard,
-    description: "Calidad del aire interior certificada",
+    description: "Certifica bajas emisiones químicas de productos para espacios interiores, garantizando aire más limpio y saludable.",
   },
 ];
 
