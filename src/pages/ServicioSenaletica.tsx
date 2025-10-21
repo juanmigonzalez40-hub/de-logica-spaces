@@ -14,7 +14,7 @@ const deliverables = [
 const differentials = [
   {
     title: "Fabricación e instalación",
-    description: "No subcontratamos. Producimos e instalamos con equipos propios para máximo control.",
+    description: "Producimos e instalamos con equipos propios para máximo control.",
   },
   {
     title: "Tecnología LED",
