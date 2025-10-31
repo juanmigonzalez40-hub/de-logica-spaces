@@ -14,17 +14,32 @@ export const EmprendeDialog = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Mostrar el diálogo automáticamente al cargar la página
-    setOpen(true);
+    // Verificar si el diálogo ya se mostró anteriormente
+    const hasSeenDialog = localStorage.getItem("emprendeDialogShown");
+    
+    if (!hasSeenDialog) {
+      setOpen(true);
+    }
   }, []);
 
+  const handleClose = () => {
+    // Marcar que el usuario ya vio el diálogo
+    localStorage.setItem("emprendeDialogShown", "true");
+    setOpen(false);
+  };
+
   const handleAction = () => {
+    localStorage.setItem("emprendeDialogShown", "true");
     setOpen(false);
     navigate("/contacto");
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={(isOpen) => {
+      if (!isOpen) {
+        handleClose();
+      }
+    }}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-2xl">¿Eres emprendedor?</DialogTitle>
@@ -36,7 +51,7 @@ export const EmprendeDialog = () => {
           <Button onClick={handleAction} size="lg" variant="primary">
             Solicitar propuesta
           </Button>
-          <Button onClick={() => setOpen(false)} variant="outline" size="lg">
+          <Button onClick={handleClose} variant="outline" size="lg">
             Continuar navegando
           </Button>
         </div>
