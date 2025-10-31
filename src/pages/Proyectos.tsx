@@ -1,6 +1,7 @@
 import { CTAStrip } from "@/components/sections/CTAStrip";
 import { EmprendeDialog } from "@/components/EmprendeDialog";
 import { ProjectsRegistrationDialog } from "@/components/ProjectsRegistrationDialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useState } from "react";
 import heroImage from "@/assets/hero.jpg";
 import disenoImg1 from "@/assets/servicio-diseno-1.jpg";
@@ -24,10 +25,15 @@ const sectors = [
 const Proyectos = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedSector, setSelectedSector] = useState("");
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleSectorClick = (sector: string) => {
     setSelectedSector(sector);
     setDialogOpen(true);
+  };
+
+  const handleImageClick = (image: string) => {
+    setSelectedImage(image);
   };
 
   return (
@@ -38,6 +44,18 @@ const Proyectos = () => {
         onOpenChange={setDialogOpen}
         sector={selectedSector}
       />
+      
+      <Dialog open={selectedImage !== null} onOpenChange={() => setSelectedImage(null)}>
+        <DialogContent className="max-w-[90vw] max-h-[90vh] p-0 overflow-hidden">
+          {selectedImage && (
+            <img 
+              src={selectedImage} 
+              alt="Proyecto ampliado"
+              className="w-full h-full object-contain"
+            />
+          )}
+        </DialogContent>
+      </Dialog>
       
       <main className="pt-24">
         <section className="section-padding">
@@ -54,7 +72,11 @@ const Proyectos = () => {
           <div className="container-custom">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[heroImage, disenoImg1, disenoImg2, mobiliarioImg1, mobiliarioImg2, instalacionImg1, instalacionImg2, heroImage, disenoImg1].map((img, index) => (
-                <div key={index} className="aspect-[4/3] overflow-hidden rounded-lg shadow-lg">
+                <div 
+                  key={index} 
+                  className="aspect-[4/3] overflow-hidden rounded-lg shadow-lg cursor-pointer"
+                  onClick={() => handleImageClick(img)}
+                >
                   <img 
                     src={img} 
                     alt={`Proyecto ${index + 1}`}
