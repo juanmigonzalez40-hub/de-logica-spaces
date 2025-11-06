@@ -1,15 +1,23 @@
 import { CTAStrip } from "@/components/sections/CTAStrip";
 import { EmprendeDialog } from "@/components/EmprendeDialog";
+import heroFranquicias from "@/assets/hero-franquicias.jpg";
 
 const Franquicias = () => {
   return (
     <>
       <EmprendeDialog />
-      <main className="pt-24">
-        <section className="section-padding">
-          <div className="container-custom text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Franquicias</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+      <main>
+        {/* Hero Section */}
+        <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${heroFranquicias})` }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
+          </div>
+          <div className="container-custom relative z-10 text-center text-white">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">Franquicias</h1>
+            <p className="text-xl md:text-2xl max-w-3xl mx-auto">
               Soluciones integrales para el equipamiento de tu franquicia
             </p>
           </div>
