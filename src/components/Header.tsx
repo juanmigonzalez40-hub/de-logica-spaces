@@ -28,6 +28,9 @@ export const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const textColorClass = isScrolled || !isHome ? "text-foreground" : "text-white";
+  const buttonColorClass = isScrolled || !isHome ? "" : "text-white border-white/30 hover:bg-white/10";
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -47,7 +50,7 @@ export const Header = () => {
             <Link
               key={item.href}
               to={item.href}
-              className="text-xs xl:text-sm font-medium uppercase tracking-wide hover:text-accent transition-colors"
+              className={`text-xs xl:text-sm font-medium uppercase tracking-wide hover:text-accent transition-colors ${textColorClass}`}
             >
               {item.label}
             </Link>
@@ -59,7 +62,7 @@ export const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden"
+          className={`md:hidden ${textColorClass}`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle menu"
         >
