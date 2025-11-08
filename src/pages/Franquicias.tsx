@@ -6,7 +6,7 @@ import franquiciaModa from "@/assets/franquicia-moda.jpg";
 import franquiciaRestaurante from "@/assets/franquicia-restaurante.jpg";
 import franquiciaGimnasio from "@/assets/franquicia-gimnasio.jpg";
 import franquiciaSalon from "@/assets/franquicia-salon.jpg";
-import franquiciaFarmacia from "@/assets/franquicia-farmacia.jpg";
+import franquiciaPanaderia from "@/assets/franquicia-panaderia.jpg";
 
 const proyectos = [
   {
@@ -35,9 +35,9 @@ const proyectos = [
     sector: "Belleza"
   },
   {
-    title: "Farmacia",
-    image: franquiciaFarmacia,
-    sector: "Salud"
+    title: "Panadería",
+    image: franquiciaPanaderia,
+    sector: "Alimentación"
   }
 ];
 
