@@ -18,28 +18,22 @@ export const EmprendeDialog = ({ alwaysShow = false }: EmprendeDialogProps) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Si alwaysShow es true, siempre mostrar el diálogo
-    if (alwaysShow) {
-      setOpen(true);
-      return;
-    }
-    
-    // Verificar si el diálogo ya se mostró anteriormente
-    const hasSeenDialog = localStorage.getItem("emprendeDialogShown");
+    // Verificar si el diálogo ya se mostró en esta sesión
+    const hasSeenDialog = sessionStorage.getItem("emprendeDialogShown");
     
     if (!hasSeenDialog) {
       setOpen(true);
     }
-  }, [alwaysShow]);
+  }, []);
 
   const handleClose = () => {
-    // Marcar que el usuario ya vio el diálogo
-    localStorage.setItem("emprendeDialogShown", "true");
+    // Marcar que el usuario ya vio el diálogo en esta sesión
+    sessionStorage.setItem("emprendeDialogShown", "true");
     setOpen(false);
   };
 
   const handleAction = () => {
-    localStorage.setItem("emprendeDialogShown", "true");
+    sessionStorage.setItem("emprendeDialogShown", "true");
     setOpen(false);
     navigate("/contacto");
   };
