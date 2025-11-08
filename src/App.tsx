@@ -16,6 +16,7 @@ import SimplePage from "./pages/SimplePage";
 import Sostenibilidad from "./pages/Sostenibilidad";
 import Proyectos from "./pages/Proyectos";
 import Franquicias from "./pages/Franquicias";
+import CasosDeExito from "./pages/CasosDeExito";
 import Contacto from "./pages/Contacto";
 import Gracias from "./pages/Gracias";
 import NotFound from "./pages/NotFound";
@@ -41,16 +42,7 @@ const App = () => (
           <Route path="/gracias" element={<Gracias />} />
           {/* Placeholder routes - to be built */}
           <Route path="/proyectos" element={<Proyectos />} />
-          <Route
-            path="/casos-de-exito"
-            element={
-              <SimplePage
-                title="Casos de éxito"
-                subtitle="Historias reales con resultados medibles"
-                content="Descubre cómo hemos ayudado a marcas y empresas a transformar sus espacios comerciales."
-              />
-            }
-          />
+          <Route path="/casos-de-exito" element={<CasosDeExito />} />
           <Route path="/franquicias" element={<Franquicias />} />
           <Route path="/sostenibilidad" element={<Sostenibilidad />} />
           <Route
