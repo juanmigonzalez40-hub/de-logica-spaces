@@ -38,8 +38,8 @@ const Proyectos = () => {
 
   return (
     <>
-      <EmprendeDialog />
-      <ProjectsRegistrationDialog 
+      <EmprendeDialog alwaysShow={true} />
+      <ProjectsRegistrationDialog
         open={dialogOpen} 
         onOpenChange={setDialogOpen}
         sector={selectedSector}

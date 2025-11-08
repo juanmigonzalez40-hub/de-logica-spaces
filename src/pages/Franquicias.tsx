@@ -44,7 +44,7 @@ const proyectos = [
 const Franquicias = () => {
   return (
     <>
-      <EmprendeDialog />
+      <EmprendeDialog alwaysShow={true} />
       <main>
         {/* Hero Section */}
         <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">

@@ -9,18 +9,28 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-export const EmprendeDialog = () => {
+interface EmprendeDialogProps {
+  alwaysShow?: boolean;
+}
+
+export const EmprendeDialog = ({ alwaysShow = false }: EmprendeDialogProps) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Si alwaysShow es true, siempre mostrar el diálogo
+    if (alwaysShow) {
+      setOpen(true);
+      return;
+    }
+    
     // Verificar si el diálogo ya se mostró anteriormente
     const hasSeenDialog = localStorage.getItem("emprendeDialogShown");
     
     if (!hasSeenDialog) {
       setOpen(true);
     }
-  }, []);
+  }, [alwaysShow]);
 
   const handleClose = () => {
     // Marcar que el usuario ya vio el diálogo
