@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ProjectsRegistrationDialogProps {
   open: boolean;
@@ -13,6 +14,7 @@ interface ProjectsRegistrationDialogProps {
 }
 
 export const ProjectsRegistrationDialog = ({ open, onOpenChange, sector }: ProjectsRegistrationDialogProps) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,26 +26,53 @@ export const ProjectsRegistrationDialog = ({ open, onOpenChange, sector }: Proje
     timeline: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    // Aquí se enviará el formulario cuando se implemente el backend
-    console.log("Formulario de registro de proyectos:", formData);
-    
-    toast.success("¡Registro completado! Te contactaremos pronto.");
-    onOpenChange(false);
-    
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-      businessType: sector,
-      projectDetails: "",
-      budget: "",
-      timeline: ""
-    });
+    try {
+      // Combinar presupuesto y timeline en el mensaje junto con los detalles del proyecto
+      const messageDetails = [
+        formData.projectDetails,
+        formData.budget ? `Presupuesto: ${formData.budget}` : null,
+        formData.timeline ? `Plazo: ${formData.timeline}` : null
+      ].filter(Boolean).join('\n');
+
+      const { error } = await supabase
+        .from('project_registrations')
+        .insert({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          sector: formData.businessType,
+          city: '', // Campo requerido pero no está en el formulario actual
+          premises: '', // Campo requerido pero no está en el formulario actual
+          message: messageDetails,
+        });
+
+      if (error) throw error;
+
+      toast.success("¡Registro completado! Te contactaremos pronto.");
+      onOpenChange(false);
+      
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        businessType: sector,
+        projectDetails: "",
+        budget: "",
+        timeline: ""
+      });
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+      toast.error("Hubo un problema al enviar tu solicitud. Por favor, intenta de nuevo.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -149,8 +178,8 @@ export const ProjectsRegistrationDialog = ({ open, onOpenChange, sector }: Proje
           </div>
 
           <div className="flex gap-3 pt-4">
-            <Button type="submit" className="flex-1">
-              Enviar solicitud
+            <Button type="submit" className="flex-1" disabled={isSubmitting}>
+              {isSubmitting ? "Enviando..." : "Enviar solicitud"}
             </Button>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancelar

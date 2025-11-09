@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contacto = () => {
   const [formData, setFormData] = useState({
@@ -34,16 +35,36 @@ const Contacto = () => {
       return;
     }
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert({
+          name: formData.nombre,
+          company: formData.empresa,
+          email: formData.email,
+          phone: formData.telefono,
+          business_type: formData.tipo,
+          message: formData.mensaje,
+        });
 
-    toast({
-      title: "¡Mensaje enviado!",
-      description: "Nos pondremos en contacto contigo muy pronto",
-    });
+      if (error) throw error;
 
-    navigate("/gracias");
-    setIsSubmitting(false);
+      toast({
+        title: "¡Mensaje enviado!",
+        description: "Nos pondremos en contacto contigo muy pronto",
+      });
+
+      navigate("/gracias");
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+      toast({
+        title: "Error",
+        description: "Hubo un problema al enviar tu mensaje. Por favor, intenta de nuevo.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
