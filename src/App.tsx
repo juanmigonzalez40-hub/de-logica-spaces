@@ -7,6 +7,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { AdminLayout } from "@/components/AdminLayout";
 import Home from "./pages/Home";
 import Servicios from "./pages/Servicios";
 import ServicioInstalacion from "./pages/ServicioInstalacion";
@@ -21,56 +24,84 @@ import CasosDeExito from "./pages/CasosDeExito";
 import Contacto from "./pages/Contacto";
 import Gracias from "./pages/Gracias";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/admin/Login";
+import Dashboard from "./pages/admin/Dashboard";
+import Contactos from "./pages/admin/Contactos";
+import ProyectosAdmin from "./pages/admin/Proyectos";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <ScrollToTop />
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/servicios" element={<Servicios />} />
-          <Route path="/servicios/instalacion" element={<ServicioInstalacion />} />
-          <Route path="/servicios/diseno" element={<ServicioDiseno />} />
-          <Route path="/servicios/mobiliario" element={<ServicioMobiliario />} />
-          <Route path="/servicios/senaletica" element={<ServicioSenaletica />} />
-          <Route path="/contacto" element={<Contacto />} />
-          <Route path="/gracias" element={<Gracias />} />
-          {/* Placeholder routes - to be built */}
-          <Route path="/proyectos" element={<Proyectos />} />
-          <Route path="/casos-de-exito" element={<CasosDeExito />} />
-          <Route path="/franquicias" element={<Franquicias />} />
-          <Route path="/sostenibilidad" element={<Sostenibilidad />} />
-          <Route
-            path="/nosotros"
-            element={
-              <SimplePage
-                title="Nosotros"
-                subtitle="Más de 20 años creando espacios que venden"
-                content="Equipo multidisciplinar con diseño, producción e instalación propias. Enfoque a resultados, detalle y plazos. Planificación, control de calidad y comunicación clara con dirección, retail, expansión, marketing y arquitectura."
-              />
-            }
-          />
-          <Route
-            path="/blog"
-            element={
-              <SimplePage
-                title="Blog"
-                subtitle="Ideas útiles, sin humo"
-                content="Contenido práctico para responsables de marketing, retail y expansión. Próximamente."
-              />
-            }
-          />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Footer />
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <ScrollToTop />
+          <Routes>
+            {/* Public routes with header and footer */}
+            <Route path="/" element={<><Header /><Home /><Footer /></>} />
+            <Route path="/servicios" element={<><Header /><Servicios /><Footer /></>} />
+            <Route path="/servicios/instalacion" element={<><Header /><ServicioInstalacion /><Footer /></>} />
+            <Route path="/servicios/diseno" element={<><Header /><ServicioDiseno /><Footer /></>} />
+            <Route path="/servicios/mobiliario" element={<><Header /><ServicioMobiliario /><Footer /></>} />
+            <Route path="/servicios/senaletica" element={<><Header /><ServicioSenaletica /><Footer /></>} />
+            <Route path="/contacto" element={<><Header /><Contacto /><Footer /></>} />
+            <Route path="/gracias" element={<><Header /><Gracias /><Footer /></>} />
+            <Route path="/proyectos" element={<><Header /><Proyectos /><Footer /></>} />
+            <Route path="/casos-de-exito" element={<><Header /><CasosDeExito /><Footer /></>} />
+            <Route path="/franquicias" element={<><Header /><Franquicias /><Footer /></>} />
+            <Route path="/sostenibilidad" element={<><Header /><Sostenibilidad /><Footer /></>} />
+            <Route
+              path="/nosotros"
+              element={
+                <>
+                  <Header />
+                  <SimplePage
+                    title="Nosotros"
+                    subtitle="Más de 20 años creando espacios que venden"
+                    content="Equipo multidisciplinar con diseño, producción e instalación propias. Enfoque a resultados, detalle y plazos. Planificación, control de calidad y comunicación clara con dirección, retail, expansión, marketing y arquitectura."
+                  />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/blog"
+              element={
+                <>
+                  <Header />
+                  <SimplePage
+                    title="Blog"
+                    subtitle="Ideas útiles, sin humo"
+                    content="Contenido práctico para responsables de marketing, retail y expansión. Próximamente."
+                  />
+                  <Footer />
+                </>
+              }
+            />
+            
+            {/* Admin routes - no header/footer */}
+            <Route path="/admin/login" element={<Login />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="contactos" element={<Contactos />} />
+              <Route path="proyectos" element={<ProyectosAdmin />} />
+            </Route>
+            
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<><Header /><NotFound /><Footer /></>} />
+          </Routes>
+        </TooltipProvider>
+      </AuthProvider>
     </BrowserRouter>
   </QueryClientProvider>
 );

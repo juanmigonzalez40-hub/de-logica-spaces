@@ -6,16 +6,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { contactSchema, ContactFormData } from "@/lib/validations";
 
 const Contacto = () => {
-  const [formData, setFormData] = useState({
-    nombre: "",
-    empresa: "",
+  const [formData, setFormData] = useState<ContactFormData>({
+    name: "",
+    company: "",
     email: "",
-    telefono: "",
-    tipo: "",
-    mensaje: "",
+    phone: "",
+    business_type: "",
+    message: "",
   });
+  const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -23,28 +25,21 @@ const Contacto = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Basic validation
-    if (!formData.nombre || !formData.email || !formData.tipo || !formData.mensaje) {
-      toast({
-        title: "Error",
-        description: "Por favor completa todos los campos requeridos",
-        variant: "destructive",
-      });
-      setIsSubmitting(false);
-      return;
-    }
+    setErrors({});
 
     try {
+      // Validate with Zod
+      const validated = contactSchema.parse(formData);
+
       const { error } = await supabase
         .from('contact_submissions')
         .insert({
-          name: formData.nombre,
-          company: formData.empresa,
-          email: formData.email,
-          phone: formData.telefono,
-          business_type: formData.tipo,
-          message: formData.mensaje,
+          name: validated.name,
+          company: validated.company || null,
+          email: validated.email,
+          phone: validated.phone,
+          business_type: validated.business_type || null,
+          message: validated.message,
         });
 
       if (error) throw error;
@@ -55,13 +50,29 @@ const Contacto = () => {
       });
 
       navigate("/gracias");
-    } catch (error) {
-      console.error("Error al enviar el formulario:", error);
-      toast({
-        title: "Error",
-        description: "Hubo un problema al enviar tu mensaje. Por favor, intenta de nuevo.",
-        variant: "destructive",
-      });
+    } catch (error: any) {
+      if (error.errors) {
+        // Zod validation errors
+        const fieldErrors: Partial<Record<keyof ContactFormData, string>> = {};
+        error.errors.forEach((err: any) => {
+          if (err.path[0]) {
+            fieldErrors[err.path[0] as keyof ContactFormData] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+        toast({
+          title: "Error de validación",
+          description: "Por favor corrige los errores en el formulario",
+          variant: "destructive",
+        });
+      } else {
+        console.error("Error al enviar el formulario:", error);
+        toast({
+          title: "Error",
+          description: "Hubo un problema al enviar tu mensaje. Por favor, intenta de nuevo.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -70,7 +81,12 @@ const Contacto = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    // Clear error for this field
+    if (errors[name as keyof ContactFormData]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
   };
 
   return (
@@ -93,23 +109,26 @@ const Contacto = () => {
               <h2 className="text-2xl font-bold mb-6">Envíanos un mensaje</h2>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <Label htmlFor="nombre">Nombre y apellidos *</Label>
+                  <Label htmlFor="name">Nombre y apellidos *</Label>
                   <Input
-                    id="nombre"
-                    name="nombre"
-                    value={formData.nombre}
+                    id="name"
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
-                    required
+                    className={errors.name ? "border-destructive" : ""}
                   />
+                  {errors.name && <p className="text-sm text-destructive mt-1">{errors.name}</p>}
                 </div>
                 <div>
-                  <Label htmlFor="empresa">Empresa</Label>
+                  <Label htmlFor="company">Empresa</Label>
                   <Input
-                    id="empresa"
-                    name="empresa"
-                    value={formData.empresa}
+                    id="company"
+                    name="company"
+                    value={formData.company}
                     onChange={handleChange}
+                    className={errors.company ? "border-destructive" : ""}
                   />
+                  {errors.company && <p className="text-sm text-destructive mt-1">{errors.company}</p>}
                 </div>
                 <div>
                   <Label htmlFor="email">Email *</Label>
@@ -119,40 +138,46 @@ const Contacto = () => {
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required
+                    className={errors.email ? "border-destructive" : ""}
                   />
+                  {errors.email && <p className="text-sm text-destructive mt-1">{errors.email}</p>}
                 </div>
                 <div>
-                  <Label htmlFor="telefono">Teléfono</Label>
+                  <Label htmlFor="phone">Teléfono *</Label>
                   <Input
-                    id="telefono"
-                    name="telefono"
+                    id="phone"
+                    name="phone"
                     type="tel"
-                    value={formData.telefono}
+                    value={formData.phone}
                     onChange={handleChange}
+                    placeholder="+34 600 000 000"
+                    className={errors.phone ? "border-destructive" : ""}
                   />
+                  {errors.phone && <p className="text-sm text-destructive mt-1">{errors.phone}</p>}
                 </div>
                 <div>
-                  <Label htmlFor="tipo">Tipo de negocio *</Label>
+                  <Label htmlFor="business_type">Tipo de negocio</Label>
                   <Input
-                    id="tipo"
-                    name="tipo"
+                    id="business_type"
+                    name="business_type"
                     placeholder="Clínica, retail, gimnasio, oficina..."
-                    value={formData.tipo}
+                    value={formData.business_type}
                     onChange={handleChange}
-                    required
+                    className={errors.business_type ? "border-destructive" : ""}
                   />
+                  {errors.business_type && <p className="text-sm text-destructive mt-1">{errors.business_type}</p>}
                 </div>
                 <div>
-                  <Label htmlFor="mensaje">Cuéntanos tu proyecto *</Label>
+                  <Label htmlFor="message">Cuéntanos tu proyecto *</Label>
                   <Textarea
-                    id="mensaje"
-                    name="mensaje"
+                    id="message"
+                    name="message"
                     rows={5}
-                    value={formData.mensaje}
+                    value={formData.message}
                     onChange={handleChange}
-                    required
+                    className={errors.message ? "border-destructive" : ""}
                   />
+                  {errors.message && <p className="text-sm text-destructive mt-1">{errors.message}</p>}
                 </div>
                 <Button type="submit" variant="primary" className="w-full" disabled={isSubmitting}>
                   {isSubmitting ? "Enviando..." : "Enviar"}

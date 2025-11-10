@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { projectSchema, ProjectFormData } from "@/lib/validations";
 
 interface ProjectsRegistrationDialogProps {
   open: boolean;
@@ -15,40 +17,38 @@ interface ProjectsRegistrationDialogProps {
 
 export const ProjectsRegistrationDialog = ({ open, onOpenChange, sector }: ProjectsRegistrationDialogProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ProjectFormData>({
     name: "",
     email: "",
     phone: "",
     company: "",
-    businessType: sector,
-    projectDetails: "",
-    budget: "",
-    timeline: ""
+    sector: sector,
+    city: "",
+    premises: "",
+    message: "",
   });
+  const [errors, setErrors] = useState<Partial<Record<keyof ProjectFormData, string>>>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrors({});
     
     try {
-      // Combinar presupuesto y timeline en el mensaje junto con los detalles del proyecto
-      const messageDetails = [
-        formData.projectDetails,
-        formData.budget ? `Presupuesto: ${formData.budget}` : null,
-        formData.timeline ? `Plazo: ${formData.timeline}` : null
-      ].filter(Boolean).join('\n');
+      // Validate with Zod
+      const validated = projectSchema.parse(formData);
 
       const { error } = await supabase
         .from('project_registrations')
         .insert({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          company: formData.company,
-          sector: formData.businessType,
-          city: '', // Campo requerido pero no está en el formulario actual
-          premises: '', // Campo requerido pero no está en el formulario actual
-          message: messageDetails,
+          name: validated.name,
+          email: validated.email,
+          phone: validated.phone,
+          company: validated.company || null,
+          sector: validated.sector,
+          city: validated.city,
+          premises: validated.premises,
+          message: validated.message || null,
         });
 
       if (error) throw error;
@@ -62,24 +62,45 @@ export const ProjectsRegistrationDialog = ({ open, onOpenChange, sector }: Proje
         email: "",
         phone: "",
         company: "",
-        businessType: sector,
-        projectDetails: "",
-        budget: "",
-        timeline: ""
+        sector: sector,
+        city: "",
+        premises: "",
+        message: "",
       });
-    } catch (error) {
-      console.error("Error al enviar el formulario:", error);
-      toast.error("Hubo un problema al enviar tu solicitud. Por favor, intenta de nuevo.");
+    } catch (error: any) {
+      if (error.errors) {
+        // Zod validation errors
+        const fieldErrors: Partial<Record<keyof ProjectFormData, string>> = {};
+        error.errors.forEach((err: any) => {
+          if (err.path[0]) {
+            fieldErrors[err.path[0] as keyof ProjectFormData] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+        toast.error("Por favor corrige los errores en el formulario");
+      } else {
+        console.error("Error al enviar el formulario:", error);
+        toast.error("Hubo un problema al enviar tu solicitud. Por favor, intenta de nuevo.");
+      }
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error for this field
+    if (errors[name as keyof ProjectFormData]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const handleSelectChange = (name: keyof ProjectFormData, value: string) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
   };
 
   return (
@@ -100,9 +121,10 @@ export const ProjectsRegistrationDialog = ({ open, onOpenChange, sector }: Proje
               name="name"
               value={formData.name}
               onChange={handleChange}
-              required
               placeholder="Tu nombre"
+              className={errors.name ? "border-destructive" : ""}
             />
+            {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
           </div>
 
           <div className="space-y-2">
@@ -113,9 +135,10 @@ export const ProjectsRegistrationDialog = ({ open, onOpenChange, sector }: Proje
               type="email"
               value={formData.email}
               onChange={handleChange}
-              required
               placeholder="tu@email.com"
+              className={errors.email ? "border-destructive" : ""}
             />
+            {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
           </div>
 
           <div className="space-y-2">
@@ -126,9 +149,10 @@ export const ProjectsRegistrationDialog = ({ open, onOpenChange, sector }: Proje
               type="tel"
               value={formData.phone}
               onChange={handleChange}
-              required
               placeholder="+34 600 000 000"
+              className={errors.phone ? "border-destructive" : ""}
             />
+            {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
           </div>
 
           <div className="space-y-2">
@@ -143,45 +167,54 @@ export const ProjectsRegistrationDialog = ({ open, onOpenChange, sector }: Proje
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="projectDetails">Detalles del proyecto *</Label>
+            <Label htmlFor="city">Ciudad *</Label>
+            <Input
+              id="city"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              placeholder="Madrid, Barcelona..."
+              className={errors.city ? "border-destructive" : ""}
+            />
+            {errors.city && <p className="text-sm text-destructive">{errors.city}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="premises">Tipo de local *</Label>
+            <Select
+              value={formData.premises}
+              onValueChange={(value) => handleSelectChange('premises', value)}
+            >
+              <SelectTrigger className={errors.premises ? "border-destructive" : ""}>
+                <SelectValue placeholder="Selecciona una opción" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="nuevo">Local nuevo</SelectItem>
+                <SelectItem value="reforma">Reforma de local existente</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.premises && <p className="text-sm text-destructive">{errors.premises}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="message">Detalles del proyecto</Label>
             <Textarea
-              id="projectDetails"
-              name="projectDetails"
-              value={formData.projectDetails}
+              id="message"
+              name="message"
+              value={formData.message}
               onChange={handleChange}
-              required
-              placeholder="Describe tu proyecto, necesidades, ubicación..."
+              placeholder="Describe tu proyecto, presupuesto estimado, plazo deseado..."
               rows={4}
+              className={errors.message ? "border-destructive" : ""}
             />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="budget">Presupuesto estimado</Label>
-            <Input
-              id="budget"
-              name="budget"
-              value={formData.budget}
-              onChange={handleChange}
-              placeholder="Ej: 10.000-20.000€"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="timeline">Plazo deseado</Label>
-            <Input
-              id="timeline"
-              name="timeline"
-              value={formData.timeline}
-              onChange={handleChange}
-              placeholder="Ej: 2-3 meses"
-            />
+            {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
           </div>
 
           <div className="flex gap-3 pt-4">
             <Button type="submit" className="flex-1" disabled={isSubmitting}>
               {isSubmitting ? "Enviando..." : "Enviar solicitud"}
             </Button>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
               Cancelar
             </Button>
           </div>
