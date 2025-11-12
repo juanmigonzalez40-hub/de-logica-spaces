@@ -53,6 +53,25 @@ export const ProjectsRegistrationDialog = ({ open, onOpenChange, sector }: Proje
 
       if (error) throw error;
 
+      // Send email notification (don't block user experience if it fails)
+      try {
+        await supabase.functions.invoke('send-project-email', {
+          body: {
+            name: validated.name,
+            email: validated.email,
+            phone: validated.phone,
+            company: validated.company || '',
+            sector: validated.sector,
+            city: validated.city,
+            premises: validated.premises,
+            message: validated.message || '',
+          }
+        });
+      } catch (emailError) {
+        console.error("Error al enviar notificación por email:", emailError);
+        // Continue anyway - the data is saved in the database
+      }
+
       toast.success("¡Registro completado! Te contactaremos pronto.");
       onOpenChange(false);
       

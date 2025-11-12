@@ -44,6 +44,23 @@ const Contacto = () => {
 
       if (error) throw error;
 
+      // Send email notification (don't block user experience if it fails)
+      try {
+        await supabase.functions.invoke('send-contact-email', {
+          body: {
+            name: validated.name,
+            email: validated.email,
+            phone: validated.phone,
+            company: validated.company || '',
+            business_type: validated.business_type || '',
+            message: validated.message,
+          }
+        });
+      } catch (emailError) {
+        console.error("Error al enviar notificación por email:", emailError);
+        // Continue anyway - the data is saved in the database
+      }
+
       toast({
         title: "¡Mensaje enviado!",
         description: "Nos pondremos en contacto contigo muy pronto",
