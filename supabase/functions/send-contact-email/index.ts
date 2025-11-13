@@ -102,7 +102,7 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     const emailResponse = await resend.emails.send({
-      from: "De Lógica <onboarding@resend.dev>",
+      from: "De Lógica <noreply@de-logica.com>",
       to: ["jm.gonzalez@de-logica.com"],
       subject: `🔔 Nuevo contacto desde De Lógica - ${name}`,
       html: emailHtml,
