@@ -118,7 +118,7 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     const emailResponse = await resend.emails.send({
-      from: "De Lógica Proyectos <onboarding@resend.dev>",
+      from: "De Lógica Proyectos <noreply@de-logica.com>",
       to: ["jm.gonzalez@de-logica.com"],
       subject: `📋 Nueva solicitud de proyecto - ${sector} - ${name}`,
       html: emailHtml,
