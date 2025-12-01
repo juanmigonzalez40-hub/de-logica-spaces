@@ -28,6 +28,10 @@ import Login from "./pages/admin/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import Contactos from "./pages/admin/Contactos";
 import ProyectosAdmin from "./pages/admin/Proyectos";
+import AvisoLegal from "./pages/legal/AvisoLegal";
+import Privacidad from "./pages/legal/Privacidad";
+import CookiesPage from "./pages/legal/Cookies";
+import { CookieBanner } from "@/components/CookieBanner";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +43,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <ScrollToTop />
+          <CookieBanner />
           <Routes>
             {/* Public routes with header and footer */}
             <Route path="/" element={<><Header /><Home /><Footer /></>} />
@@ -81,6 +86,11 @@ const App = () => (
                 </>
               }
             />
+            
+            {/* Legal routes */}
+            <Route path="/legal/aviso-legal" element={<><Header /><AvisoLegal /><Footer /></>} />
+            <Route path="/legal/privacidad" element={<><Header /><Privacidad /><Footer /></>} />
+            <Route path="/legal/cookies" element={<><Header /><CookiesPage /><Footer /></>} />
             
             {/* Admin routes - no header/footer */}
             <Route path="/admin/login" element={<Login />} />
