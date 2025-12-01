@@ -174,7 +174,7 @@ const Cookies = () => {
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-4">6. Actualización de la Política de Cookies</h2>
               <p>
-                DE LÓGICA RETAIL, S.L. puede modificar esta Política de Cookies en función de
+                De Lógica Soluciones de Marketing S.L. puede modificar esta Política de Cookies en función de
                 exigencias legislativas, reglamentarias, o con la finalidad de adaptar dicha política
                 a las instrucciones dictadas por la Agencia Española de Protección de Datos.
               </p>
