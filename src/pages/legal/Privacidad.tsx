@@ -16,8 +16,8 @@ const Privacidad = () => {
                 y garantía de los derechos digitales (LOPDGDD), le informamos:
               </p>
               <ul className="list-disc pl-6 space-y-2">
-                <li><strong>Responsable:</strong> DE LÓGICA RETAIL, S.L.</li>
-                <li><strong>NIF:</strong> B-87654321</li>
+                <li><strong>Responsable:</strong> De Lógica Soluciones de Marketing S.L.</li>
+                <li><strong>NIF:</strong> B83916833</li>
                 <li><strong>Domicilio:</strong> Camino de Hormigueras 124, Nave 4G, 28031 Madrid</li>
                 <li><strong>Email:</strong> info@de-logica.com</li>
                 <li><strong>Teléfono:</strong> +34 910 742 187</li>
@@ -116,7 +116,7 @@ const Privacidad = () => {
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-4">7. Medidas de seguridad</h2>
               <p>
-                DE LÓGICA RETAIL, S.L. ha adoptado las medidas técnicas y organizativas necesarias
+                De Lógica Soluciones de Marketing S.L. ha adoptado las medidas técnicas y organizativas necesarias
                 para garantizar la seguridad e integridad de los datos personales que trata, así
                 como para evitar su pérdida, alteración y/o acceso por parte de terceros no
                 autorizados.
@@ -127,7 +127,7 @@ const Privacidad = () => {
               <h2 className="text-2xl font-semibold text-foreground mb-4">8. Datos de menores</h2>
               <p>
                 Para el uso de los servicios ofrecidos en el sitio web, los usuarios deben ser
-                mayores de 14 años. DE LÓGICA RETAIL, S.L. no se hace responsable del incumplimiento
+                mayores de 14 años. De Lógica Soluciones de Marketing S.L. no se hace responsable del incumplimiento
                 de este requisito.
               </p>
             </section>
