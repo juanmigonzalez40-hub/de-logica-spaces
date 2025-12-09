@@ -1,6 +1,5 @@
 const AvisoLegal = () => {
-  return (
-    <main className="pt-24">
+  return <main className="pt-24">
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <h1 className="text-4xl md:text-5xl font-bold mb-8">Aviso Legal</h1>
@@ -19,7 +18,7 @@ const AvisoLegal = () => {
                 <li><strong>Domicilio social:</strong> Camino de Hormigueras 124, Nave 4G, 28031 Madrid</li>
                 <li><strong>Teléfono:</strong> +34 910 742 187 / +34 675 61 72 80</li>
                 <li><strong>Email:</strong> info@de-logica.com</li>
-                <li><strong>Registro Mercantil:</strong> Madrid, Tomo XXXXX, Folio XXX, Hoja M-XXXXXX</li>
+                <li><strong>Registro Mercantil:</strong>Registro Mercantil: Madrid, Tomo 19.848, Folio 1, Secciín 8, Hoja M-349648</li>
               </ul>
             </section>
 
@@ -117,8 +116,6 @@ const AvisoLegal = () => {
           </div>
         </div>
       </section>
-    </main>
-  );
+    </main>;
 };
-
 export default AvisoLegal;
