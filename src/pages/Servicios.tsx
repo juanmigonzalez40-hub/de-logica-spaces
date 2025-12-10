@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Building2 } from "lucide-react";
 import { CTAStrip } from "@/components/sections/CTAStrip";
 import tileDiseno from "@/assets/tile-diseno.jpg";
-import tileFabricacion from "@/assets/tile-fabricacion.jpg";
+import tileFabricacion from "@/assets/tile-fabricacion.png";
 import tileSenaletica from "@/assets/tile-senaletica.jpg";
 import tileInstalacion from "@/assets/tile-instalacion.jpg";
 
