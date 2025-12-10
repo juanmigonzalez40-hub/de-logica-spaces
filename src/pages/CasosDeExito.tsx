@@ -8,22 +8,22 @@ import casoCafeteria from "@/assets/caso-cafeteria.jpg";
 
 const casos = [
   {
-    title: "FitLife Gym - Expansión Nacional",
-    client: "FitLife Gym",
+    title: "Körper Training Center - Expansión Nacional",
+    client: "Körper Training Center",
     sector: "Fitness y Wellness",
     location: "Madrid",
     surface: "850 m²",
     timeline: "3 meses",
     services: ["Diseño integral", "Fabricación de mobiliario", "Instalación completa", "Señalética"],
     image: casoGimnasio,
-    description: "Proyecto de equipamiento completo para el centro insignia de la cadena FitLife Gym en Madrid. Diseño moderno e industrial con elementos de branding corporativo integrados en toda la instalación.",
+    description: "Proyecto de equipamiento completo para el centro insignia de la cadena Körper Training Center en Madrid. Diseño moderno e industrial con elementos de branding corporativo integrados en toda la instalación.",
     challenge: "Crear un espacio funcional que albergara múltiples zonas (cardio, musculación, clases dirigidas, spa) manteniendo una identidad de marca coherente y un flujo de usuarios óptimo.",
     solution: "Desarrollamos un concepto de diseño que integra colores corporativos (negro y verde neón) con materiales industriales como acero y hormigón. Zonas claramente diferenciadas con señalética LED y mobiliario custom que optimiza el espacio.",
     results: "+35% incremento de socios en los primeros 6 meses. Reducción del 20% en tiempos de espera de equipamiento gracias a la optimización del layout."
   },
   {
-    title: "Clínica Dental Sonrisa - Renovación Premium",
-    client: "Clínica Dental Sonrisa",
+    title: "Dentalia Plus - Renovación Premium",
+    client: "Dentalia Plus",
     sector: "Salud y Estética Dental",
     location: "Barcelona",
     surface: "320 m²",
@@ -36,8 +36,8 @@ const casos = [
     results: "Incremento del 28% en captación de pacientes privados. Valoración media de 4.8/5 estrellas en reseñas mencionando específicamente las instalaciones."
   },
   {
-    title: "Urban Style - Flagship Store",
-    client: "Urban Style",
+    title: "Modalia Concept - Flagship Store",
+    client: "Modalia Concept",
     sector: "Retail Moda",
     location: "Valencia",
     surface: "280 m²",
@@ -50,8 +50,8 @@ const casos = [
     results: "Facturación 40% superior a otras tiendas de la cadena. Reducción del 60% en tiempo de cambio de temporada gracias al mobiliario modular."
   },
   {
-    title: "Sabor Mediterráneo - Restaurante Gastronómico",
-    client: "Sabor Mediterráneo",
+    title: "La Brasserie del Puerto - Restaurante Gastronómico",
+    client: "La Brasserie del Puerto",
     sector: "Restauración",
     location: "Málaga",
     surface: "420 m²",
@@ -61,11 +61,11 @@ const casos = [
     description: "Restaurante gastronómico de alta cocina mediterránea. Diseño cálido y elegante que combina elementos tradicionales con toques contemporáneos, creando una experiencia gastronómica completa.",
     challenge: "Integrar una cocina vista de alto rendimiento manteniendo la estética del comedor, optimizando el flujo de trabajo del personal en un espacio limitado.",
     solution: "Cocina profesional con elementos de exhibición y mampara de vidrio. Distribución estratégica de mesas maximizando capacidad sin sacrificar intimidad. Materiales naturales (madera, piedra) con iluminación regulable.",
-    results: "Reservas completas los primeros 3 meses. Mención en Guía Repsol destacando \"ambiente sofisticado y acogedor\". Eficiencia operativa mejorada en un 25%."
+    results: "Reservas completas los primeros 3 meses. Mención en guías gastronómicas destacando \"ambiente sofisticado y acogedor\". Eficiencia operativa mejorada en un 25%."
   },
   {
-    title: "Visión Clara - Óptica Premium",
-    client: "Visión Clara",
+    title: "Óptika Nova - Óptica Premium",
+    client: "Óptika Nova",
     sector: "Salud Visual y Retail",
     location: "Sevilla",
     surface: "180 m²",
@@ -78,8 +78,8 @@ const casos = [
     results: "Incremento del 45% en ticket medio gracias a la presentación premium. Reducción del 30% en tiempo de selección de cliente gracias a la organización por estilos."
   },
   {
-    title: "Aroma Coffee Lab - Cafetería Especializada",
-    client: "Aroma Coffee Lab",
+    title: "Grano & Crema - Cafetería Especializada",
+    client: "Grano & Crema",
     sector: "Hostelería y Café Especializado",
     location: "Bilbao",
     surface: "150 m²",
@@ -89,7 +89,7 @@ const casos = [
     description: "Cafetería de tercera ola con tostado propio. Diseño industrial-acogedor que permite ver el proceso de tostado y preparación. Espacio diseñado tanto para consumo rápido como para estancia prolongada.",
     challenge: "Integrar equipamiento profesional de tostado y preparación de café sin que dominara visualmente el espacio, manteniendo ambiente acogedor.",
     solution: "Barra central que actúa como escenario del barista, zona de tostado con panel de vidrio como elemento decorativo. Mezcla de asientos: altos para consumo rápido y mesas bajas con sillones cómodos. Iluminación cálida tipo Edison.",
-    results: "Tiempo medio de estancia de 45 minutos (vs 20 minutos promedio sector). Instagram: +300% followers en 3 meses con clientes compartiendo el espacio. ROI recuperado en 14 meses."
+    results: "Tiempo medio de estancia de 45 minutos (vs 20 minutos promedio sector). Redes sociales: +300% seguidores en 3 meses con clientes compartiendo el espacio. ROI recuperado en 14 meses."
   }
 ];
 
