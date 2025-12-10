@@ -1,5 +1,5 @@
 import { CTAStrip } from "@/components/sections/CTAStrip";
-import mobiliarioImg1 from "@/assets/servicio-mobiliario-1.jpg";
+import mobiliarioImg1 from "@/assets/servicio-mobiliario-1.png";
 import mobiliarioImg2 from "@/assets/servicio-mobiliario-2.jpg";
 
 const deliverables = [
