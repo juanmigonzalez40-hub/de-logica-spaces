@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import tileDiseno from "@/assets/tile-diseno.jpg";
-import tileFabricacion from "@/assets/tile-fabricacion.jpg";
+import tileFabricacion from "@/assets/tile-fabricacion.png";
 import tileSenaletica from "@/assets/tile-senaletica.jpg";
 import tileInstalacion from "@/assets/tile-instalacion.jpg";
 
