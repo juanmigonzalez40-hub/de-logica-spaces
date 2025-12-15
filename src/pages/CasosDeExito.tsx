@@ -8,8 +8,8 @@ import casoCafeteria from "@/assets/caso-cafeteria.jpg";
 
 const casos = [
   {
-    title: "Körper Training Center - Expansión Nacional",
-    client: "Körper Training Center",
+    title: "Virgin Active - Expansión Nacional",
+    client: "Virgin Active",
     sector: "Fitness y Wellness",
     location: "Madrid",
     surface: "850 m²",
