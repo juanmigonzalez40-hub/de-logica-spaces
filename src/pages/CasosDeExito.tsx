@@ -16,7 +16,7 @@ const casos = [
     timeline: "3 meses",
     services: ["Diseño integral", "Fabricación de mobiliario", "Instalación completa", "Señalética"],
     image: casoGimnasio,
-    description: "Proyecto de equipamiento completo para el centro insignia de la cadena Körper Training Center en Madrid. Diseño moderno e industrial con elementos de branding corporativo integrados en toda la instalación.",
+    description: "Proyecto de equipamiento completo para el centro insignia de la cadena Virgin Active en Madrid. Diseño moderno e industrial con elementos de branding corporativo integrados en toda la instalación.",
     challenge: "Crear un espacio funcional que albergara múltiples zonas (cardio, musculación, clases dirigidas, spa) manteniendo una identidad de marca coherente y un flujo de usuarios óptimo.",
     solution: "Desarrollamos un concepto de diseño que integra colores corporativos (negro y verde neón) con materiales industriales como acero y hormigón. Zonas claramente diferenciadas con señalética LED y mobiliario custom que optimiza el espacio.",
     results: "+35% incremento de socios en los primeros 6 meses. Reducción del 20% en tiempos de espera de equipamiento gracias a la optimización del layout."
