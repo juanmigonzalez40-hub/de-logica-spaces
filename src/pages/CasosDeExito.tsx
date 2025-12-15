@@ -1,5 +1,6 @@
 import { CTAStrip } from "@/components/sections/CTAStrip";
 import casoGimnasio from "@/assets/caso-gimnasio.jpg";
+import casoGimnasio2 from "@/assets/caso-gimnasio-2.jpg";
 import casoClinicaDental from "@/assets/caso-clinica-dental.jpg";
 import casoTiendaModa from "@/assets/caso-tienda-moda.jpg";
 import casoRestaurante from "@/assets/caso-restaurante.jpg";
@@ -16,6 +17,7 @@ const casos = [
     timeline: "3 meses",
     services: ["Diseño integral", "Señalética corporativa", "Instalación completa", "Rotulación vinílica"],
     image: casoGimnasio,
+    images: [casoGimnasio, casoGimnasio2],
     description: "Proyecto de branding ambiental para la zona de musculación del centro Virgin Active en Madrid. Diseño de pared feature en rojo corporativo con tipografía tridimensional y palabras motivacionales que refuerzan la identidad de marca.",
     challenge: "Transformar una zona de entrenamiento estándar en un espacio inspirador que motivara a los usuarios, integrando el branding de Virgin Active sin interferir con la funcionalidad del equipamiento Technogym.",
     solution: "Creamos una pared protagonista en rojo vibrante con tipografía 3D en relieve. Palabras como 'pedalear', 'nadar', 'divertirse' y 'saltar' generan un impacto visual potente. Iluminación industrial con luminarias colgantes que complementan la estética.",
@@ -118,17 +120,30 @@ const CasosDeExito = () => {
                   index % 2 === 1 ? 'lg:grid-flow-dense' : ''
                 }`}
               >
-                {/* Image */}
+                {/* Image(s) */}
                 <div 
-                  className={`relative overflow-hidden rounded-lg shadow-elegant ${
+                  className={`relative overflow-hidden ${
                     index % 2 === 1 ? 'lg:col-start-2' : ''
                   }`}
                 >
-                  <img 
-                    src={caso.image} 
-                    alt={caso.title}
-                    className="w-full aspect-[16/10] object-cover"
-                  />
+                  {caso.images && caso.images.length > 1 ? (
+                    <div className="space-y-4">
+                      {caso.images.map((img, imgIdx) => (
+                        <img 
+                          key={imgIdx}
+                          src={img} 
+                          alt={`${caso.title} - Imagen ${imgIdx + 1}`}
+                          className="w-full aspect-[16/10] object-cover rounded-lg shadow-elegant"
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <img 
+                      src={caso.image} 
+                      alt={caso.title}
+                      className="w-full aspect-[16/10] object-cover rounded-lg shadow-elegant"
+                    />
+                  )}
                 </div>
 
                 {/* Content */}
