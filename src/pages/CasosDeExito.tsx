@@ -14,12 +14,12 @@ const casos = [
     location: "Madrid",
     surface: "850 m²",
     timeline: "3 meses",
-    services: ["Diseño integral", "Fabricación de mobiliario", "Instalación completa", "Señalética"],
+    services: ["Diseño integral", "Señalética corporativa", "Instalación completa", "Rotulación vinílica"],
     image: casoGimnasio,
-    description: "Proyecto de equipamiento completo para el centro insignia de la cadena Virgin Active en Madrid. Diseño moderno e industrial con elementos de branding corporativo integrados en toda la instalación.",
-    challenge: "Crear un espacio funcional que albergara múltiples zonas (cardio, musculación, clases dirigidas, spa) manteniendo una identidad de marca coherente y un flujo de usuarios óptimo.",
-    solution: "Desarrollamos un concepto de diseño que integra colores corporativos (negro y verde neón) con materiales industriales como acero y hormigón. Zonas claramente diferenciadas con señalética LED y mobiliario custom que optimiza el espacio.",
-    results: "+35% incremento de socios en los primeros 6 meses. Reducción del 20% en tiempos de espera de equipamiento gracias a la optimización del layout."
+    description: "Proyecto de branding ambiental para la zona de musculación del centro Virgin Active en Madrid. Diseño de pared feature en rojo corporativo con tipografía tridimensional y palabras motivacionales que refuerzan la identidad de marca.",
+    challenge: "Transformar una zona de entrenamiento estándar en un espacio inspirador que motivara a los usuarios, integrando el branding de Virgin Active sin interferir con la funcionalidad del equipamiento Technogym.",
+    solution: "Creamos una pared protagonista en rojo vibrante con tipografía 3D en relieve. Palabras como 'pedalear', 'nadar', 'divertirse' y 'saltar' generan un impacto visual potente. Iluminación industrial con luminarias colgantes que complementan la estética.",
+    results: "El espacio se convirtió en el más fotografiado del centro, generando contenido orgánico en redes sociales. +40% de engagement en Instagram. Reconocido como referente de diseño en el sector fitness."
   },
   {
     title: "Dentalia Plus - Renovación Premium",
