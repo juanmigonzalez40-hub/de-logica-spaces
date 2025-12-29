@@ -250,6 +250,20 @@ export const UnifiedContactForm = ({
         {errors.sectors && <p className="text-sm text-destructive">{errors.sectors}</p>}
       </div>
 
+      {/* Observaciones */}
+      <div className="space-y-2">
+        <Label htmlFor="observations">Observaciones</Label>
+        <Textarea
+          id="observations"
+          name="observations"
+          rows={3}
+          value={formData.observations}
+          onChange={handleChange}
+          className={errors.observations ? "border-destructive" : ""}
+        />
+        {errors.observations && <p className="text-sm text-destructive">{errors.observations}</p>}
+      </div>
+
       {/* Interesado en / Proyecto */}
       <div className="space-y-2">
         <Label htmlFor="project">Interesado en (Cuéntanos tu proyecto) *</Label>
@@ -283,20 +297,6 @@ export const UnifiedContactForm = ({
           ))}
         </div>
         {errors.budget && <p className="text-sm text-destructive">{errors.budget}</p>}
-      </div>
-
-      {/* Observaciones */}
-      <div className="space-y-2">
-        <Label htmlFor="observations">Observaciones</Label>
-        <Textarea
-          id="observations"
-          name="observations"
-          rows={3}
-          value={formData.observations}
-          onChange={handleChange}
-          className={errors.observations ? "border-destructive" : ""}
-        />
-        {errors.observations && <p className="text-sm text-destructive">{errors.observations}</p>}
       </div>
 
       <Button type="submit" variant="primary" className="w-full" disabled={isSubmitting}>
