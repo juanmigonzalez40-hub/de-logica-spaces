@@ -16,7 +16,10 @@ export type Database = {
     Tables: {
       contact_submissions: {
         Row: {
+          budget: string[] | null
           business_type: string | null
+          cif: string | null
+          city: string | null
           company: string | null
           created_at: string
           email: string
@@ -25,10 +28,14 @@ export type Database = {
           name: string
           notes: string | null
           phone: string
+          sectors: string[] | null
           status: string
         }
         Insert: {
+          budget?: string[] | null
           business_type?: string | null
+          cif?: string | null
+          city?: string | null
           company?: string | null
           created_at?: string
           email: string
@@ -37,10 +44,14 @@ export type Database = {
           name: string
           notes?: string | null
           phone: string
+          sectors?: string[] | null
           status?: string
         }
         Update: {
+          budget?: string[] | null
           business_type?: string | null
+          cif?: string | null
+          city?: string | null
           company?: string | null
           created_at?: string
           email?: string
@@ -49,12 +60,15 @@ export type Database = {
           name?: string
           notes?: string | null
           phone?: string
+          sectors?: string[] | null
           status?: string
         }
         Relationships: []
       }
       project_registrations: {
         Row: {
+          budget: string[] | null
+          cif: string | null
           city: string
           company: string | null
           created_at: string
@@ -69,6 +83,8 @@ export type Database = {
           status: string
         }
         Insert: {
+          budget?: string[] | null
+          cif?: string | null
           city: string
           company?: string | null
           created_at?: string
@@ -83,6 +99,8 @@ export type Database = {
           status?: string
         }
         Update: {
+          budget?: string[] | null
+          cif?: string | null
           city?: string
           company?: string | null
           created_at?: string
