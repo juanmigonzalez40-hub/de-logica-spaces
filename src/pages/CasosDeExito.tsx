@@ -3,7 +3,7 @@ import casoGimnasio from "@/assets/caso-gimnasio.jpg";
 import casoGimnasio2 from "@/assets/caso-gimnasio-2.jpg";
 import casoClinicaDental from "@/assets/caso-clinica-dental.jpg";
 import casoTiendaModa from "@/assets/caso-tienda-moda.jpg";
-import casoRestaurante from "@/assets/caso-restaurante.jpg";
+import casoDentalios from "@/assets/caso-dentalios.jpg";
 import casoOptica from "@/assets/caso-optica.jpg";
 import casoCafeteria from "@/assets/caso-cafeteria.jpg";
 
@@ -52,18 +52,18 @@ const casos = [
     results: "+45% de tráfico respecto a ubicación anterior. Reconocimiento de marca mejorado gracias a la visibilidad del rótulo. Tiempo medio de permanencia aumentado un 30%."
   },
   {
-    title: "La Brasserie del Puerto - Restaurante Gastronómico",
-    client: "La Brasserie del Puerto",
-    sector: "Restauración",
-    location: "Málaga",
-    surface: "420 m²",
-    timeline: "2.5 meses",
-    services: ["Diseño integral", "Mobiliario interior y terraza", "Cocina profesional", "Iluminación ambiente"],
-    image: casoRestaurante,
-    description: "Restaurante gastronómico de alta cocina mediterránea. Diseño cálido y elegante que combina elementos tradicionales con toques contemporáneos, creando una experiencia gastronómica completa.",
-    challenge: "Integrar una cocina vista de alto rendimiento manteniendo la estética del comedor, optimizando el flujo de trabajo del personal en un espacio limitado.",
-    solution: "Cocina profesional con elementos de exhibición y mampara de vidrio. Distribución estratégica de mesas maximizando capacidad sin sacrificar intimidad. Materiales naturales (madera, piedra) con iluminación regulable.",
-    results: "Reservas completas los primeros 3 meses. Mención en guías gastronómicas destacando \"ambiente sofisticado y acogedor\". Eficiencia operativa mejorada en un 25%."
+    title: "Dentalios - Clínica Odontológica Avanzada",
+    client: "Dentalios",
+    sector: "Salud y Estética Dental",
+    location: "Valladolid",
+    surface: "300 m²",
+    timeline: "3.5 meses",
+    services: ["Reforma y diseño interior integral", "Fabricación de mobiliario a medida", "Decoración y estilismo", "Rotulación completa"],
+    image: casoDentalios,
+    description: "Transformación integral de un local comercial en una clínica dental de vanguardia. El concepto se aleja de la estética clínica fría tradicional para abrazar un diseño inspirado en el sector hospitality, combinando calidez, tecnología y asepsia visual. Se ha priorizado una atmósfera que transmita calma y confianza desde el primer impacto visual.",
+    challenge: "Articular un espacio de gran superficie (más de 300 m²) para equilibrar la privacidad acústica y visual necesaria en los gabinetes médicos con la sensación de amplitud en las zonas comunes. El reto principal fue integrar la identidad corporativa y la rotulación técnica sin saturar el ambiente, además de fabricar mobiliario específico que ocultara el cableado médico complejo.",
+    solution: "Se implementó un diseño basado en la verticalidad y la luz indirecta. Fabricación a medida de un mostrador curvo con listones de madera y superficie sólida. Uso estratégico de foseados en techos con iluminación LED azul corporativa y tiras verticales en paredes. Suelos de madera para aportar confort, contrastando con vidrio traslúcido en divisiones que permite el paso de luz manteniendo la privacidad.",
+    results: "Creación de una identidad de marca física potente en Valladolid. Posicionamiento inmediato en el segmento premium. La distribución ha optimizado el flujo de pacientes y personal, reduciendo los cruces innecesarios. El ambiente relajado (sofás tipo lounge, luz cálida) ha demostrado reducir la ansiedad del paciente antes del tratamiento."
   },
   {
     title: "Óptika Nova - Óptica Premium",
