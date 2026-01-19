@@ -38,18 +38,18 @@ const casos = [
     results: "Incremento del 28% en captación de pacientes privados. Valoración media de 4.8/5 estrellas en reseñas mencionando específicamente las instalaciones."
   },
   {
-    title: "Terranova - Expansión Centro Comercial",
+    title: "Terranova - Rotulación Centro Comercial",
     client: "Terranova",
     sector: "Retail Moda",
     location: "Madrid",
     surface: "350 m²",
-    timeline: "8 semanas",
-    services: ["Diseño de tienda", "Rótulos luminosos", "Mobiliario expositivo", "Iluminación decorativa"],
+    timeline: "10 días",
+    services: ["Rótulos luminosos exteriores", "Rotulación interior", "Corpóreos 3D", "Instalación completa"],
     image: casoTiendaModa,
-    description: "Proyecto integral para la cadena italiana de moda Terranova en centro comercial. Diseño abierto y luminoso con señalética corporativa retroiluminada y elementos decorativos como el icónico lettering 'CIAO' que refuerzan la identidad de marca.",
-    challenge: "Crear una tienda con identidad propia que destacara en el entorno competitivo del centro comercial, transmitiendo el claim 'Color your life' de la marca.",
-    solution: "Rótulo principal 'TERRANOVA' con iluminación LED multicolor. Diseño interior abierto sin barreras visuales, lámparas colgantes decorativas tipo globo y lettering 3D 'CIAO' como elemento decorativo diferenciador. Layout optimizado para flujo de clientes.",
-    results: "+45% de tráfico respecto a ubicación anterior. Reconocimiento de marca mejorado gracias a la visibilidad del rótulo. Tiempo medio de permanencia aumentado un 30%."
+    description: "Proyecto de rotulación integral para la cadena italiana de moda Terranova en centro comercial. Fabricación e instalación de señalética corporativa retroiluminada y elementos decorativos como el icónico lettering 'CIAO' que refuerzan la identidad de marca.",
+    challenge: "Ejecutar la fabricación e instalación de toda la rotulación en un plazo muy ajustado, coordinando con la apertura de tienda y cumpliendo los requisitos técnicos del centro comercial.",
+    solution: "Rótulo principal 'TERRANOVA' con iluminación LED multicolor en fachada. Lettering 3D 'CIAO' como elemento decorativo interior diferenciador. Coordinación precisa entre taller de fabricación y equipo de instalación para cumplir el plazo de 10 días.",
+    results: "Entrega en tiempo récord sin incidencias. Reconocimiento de marca mejorado gracias a la visibilidad del rótulo. El lettering 'CIAO' se convirtió en punto de foto para clientes, generando contenido orgánico en redes."
   },
   {
     title: "Dentalios - Clínica Odontológica Avanzada",
