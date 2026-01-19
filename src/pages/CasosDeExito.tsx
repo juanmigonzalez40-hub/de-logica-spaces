@@ -48,7 +48,7 @@ const casos = [
     image: casoTiendaModa,
     description: "Proyecto de rotulación integral para la cadena italiana de moda Terranova en centro comercial. Fabricación e instalación de señalética corporativa retroiluminada que refuerza la identidad de marca.",
     challenge: "Ejecutar la fabricación e instalación de toda la rotulación en un plazo muy ajustado, coordinando con la apertura de tienda y cumpliendo los requisitos técnicos del centro comercial.",
-    solution: "Rótulo principal 'TERRANOVA' con iluminación LED multicolor en fachada. Rotulación interior corporativa con acabados premium. Coordinación precisa entre taller de fabricación y equipo de instalación para cumplir el plazo de 10 días.",
+    solution: "Rótulo principal 'TERRANOVA' en fachada con iluminación corporativa. Rotulación interior con iluminación LED multicolor y acabados premium. Coordinación precisa entre taller de fabricación y equipo de instalación para cumplir el plazo de 10 días.",
     results: "Entrega en tiempo récord sin incidencias. Reconocimiento de marca mejorado gracias a la visibilidad del rótulo exterior. Cliente satisfecho que repite en nuevas aperturas."
   },
   {
