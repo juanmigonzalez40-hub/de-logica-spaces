@@ -3,14 +3,15 @@ import { EmprendeDialog } from "@/components/EmprendeDialog";
 import { ProjectsRegistrationDialog } from "@/components/ProjectsRegistrationDialog";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useState } from "react";
-import heroImage from "@/assets/hero.jpg";
-import disenoImg1 from "@/assets/servicio-diseno-1.jpg";
-import disenoImg2 from "@/assets/servicio-diseno-2.jpg";
-import mobiliarioImg1 from "@/assets/servicio-mobiliario-1.jpg";
-import mobiliarioImg2 from "@/assets/servicio-mobiliario-2.jpg";
-import instalacionImg1 from "@/assets/servicio-instalacion-1.jpg";
-import instalacionImg2 from "@/assets/servicio-instalacion-2.jpg";
-
+import proyectoClinica from "@/assets/proyecto-clinica.jpg";
+import proyectoHairlab from "@/assets/proyecto-hairlab.jpg";
+import proyectoSpa from "@/assets/proyecto-spa.webp";
+import proyectoRestaurante from "@/assets/proyecto-restaurante.jpg";
+import proyectoBoxing from "@/assets/proyecto-boxing.jpeg";
+import proyectoSainclinics from "@/assets/proyecto-sainclinics.jpg";
+import proyectoJardin from "@/assets/proyecto-jardin.jpg";
+import proyectoBlum from "@/assets/proyecto-blum.webp";
+import proyectoLladro from "@/assets/proyecto-lladro.jpg";
 const sectors = [
   "Gimnasios y wellness",
   "Clínicas dentales",
@@ -71,7 +72,7 @@ const Proyectos = () => {
         <section className="section-padding bg-muted">
           <div className="container-custom">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[heroImage, disenoImg1, disenoImg2, mobiliarioImg1, mobiliarioImg2, instalacionImg1, instalacionImg2, heroImage, disenoImg1].map((img, index) => (
+              {[proyectoClinica, proyectoHairlab, proyectoSpa, proyectoRestaurante, proyectoBoxing, proyectoSainclinics, proyectoJardin, proyectoBlum, proyectoLladro].map((img, index) => (
                 <div 
                   key={index} 
                   className="aspect-[4/3] overflow-hidden rounded-lg shadow-lg cursor-pointer"
