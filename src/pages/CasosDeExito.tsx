@@ -46,10 +46,10 @@ const casos = [
     timeline: "10 días",
     services: ["Rótulos luminosos exteriores", "Rotulación interior", "Corpóreos 3D", "Instalación completa"],
     image: casoTiendaModa,
-    description: "Proyecto de rotulación integral para la cadena italiana de moda Terranova en centro comercial. Fabricación e instalación de señalética corporativa retroiluminada y elementos decorativos como el icónico lettering 'CIAO' que refuerzan la identidad de marca.",
+    description: "Proyecto de rotulación integral para la cadena italiana de moda Terranova en centro comercial. Fabricación e instalación de señalética corporativa retroiluminada que refuerza la identidad de marca.",
     challenge: "Ejecutar la fabricación e instalación de toda la rotulación en un plazo muy ajustado, coordinando con la apertura de tienda y cumpliendo los requisitos técnicos del centro comercial.",
-    solution: "Rótulo principal 'TERRANOVA' con iluminación LED multicolor en fachada. Lettering 3D 'CIAO' como elemento decorativo interior diferenciador. Coordinación precisa entre taller de fabricación y equipo de instalación para cumplir el plazo de 10 días.",
-    results: "Entrega en tiempo récord sin incidencias. Reconocimiento de marca mejorado gracias a la visibilidad del rótulo. El lettering 'CIAO' se convirtió en punto de foto para clientes, generando contenido orgánico en redes."
+    solution: "Rótulo principal 'TERRANOVA' con iluminación LED multicolor en fachada. Rotulación interior corporativa con acabados premium. Coordinación precisa entre taller de fabricación y equipo de instalación para cumplir el plazo de 10 días.",
+    results: "Entrega en tiempo récord sin incidencias. Reconocimiento de marca mejorado gracias a la visibilidad del rótulo exterior. Cliente satisfecho que repite en nuevas aperturas."
   },
   {
     title: "Dentalios - Clínica Odontológica Avanzada",
