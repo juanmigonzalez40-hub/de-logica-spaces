@@ -24,8 +24,8 @@ const casos = [
     results: "El espacio se convirtió en el más fotografiado del centro, generando contenido orgánico en redes sociales. +40% de engagement en Instagram. Reconocido como referente de diseño en el sector fitness."
   },
   {
-    title: "Dentalia Plus - Renovación Premium",
-    client: "Dentalia Plus",
+    title: "Clínica Salud Dental - Renovación Premium",
+    client: "Clínica Salud Dental",
     sector: "Salud y Estética Dental",
     location: "Barcelona",
     surface: "320 m²",
