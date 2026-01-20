@@ -1,12 +1,12 @@
 import { CTAStrip } from "@/components/sections/CTAStrip";
 import { EmprendeDialog } from "@/components/EmprendeDialog";
 import heroFranquicias from "@/assets/hero-franquicias.jpg";
-import franquiciaCafeteria from "@/assets/franquicia-cafeteria.jpg";
-import franquiciaModa from "@/assets/franquicia-moda.jpg";
+import franquiciaCafeteria from "@/assets/franquicia-kfc.jpg";
+import franquiciaModa from "@/assets/franquicia-newbalance.webp";
 import franquiciaRestaurante from "@/assets/franquicia-restaurante.jpg";
 import franquiciaGimnasio from "@/assets/franquicia-gimnasio.jpg";
-import franquiciaSalon from "@/assets/franquicia-salon.jpg";
-import franquiciaPanaderia from "@/assets/franquicia-panaderia.jpg";
+import franquiciaSalon from "@/assets/franquicia-nails.jpg";
+import franquiciaPanaderia from "@/assets/franquicia-okaidi.jpg";
 
 const proyectos = [
   {
