@@ -17,6 +17,7 @@ import ServicioDiseno from "./pages/ServicioDiseno";
 import ServicioMobiliario from "./pages/ServicioMobiliario";
 import ServicioSenaletica from "./pages/ServicioSenaletica";
 import SimplePage from "./pages/SimplePage";
+import Nosotros from "./pages/Nosotros";
 import Sostenibilidad from "./pages/Sostenibilidad";
 import Proyectos from "./pages/Proyectos";
 import Franquicias from "./pages/Franquicias";
@@ -58,20 +59,7 @@ const App = () => (
             <Route path="/casos-de-exito" element={<><Header /><CasosDeExito /><Footer /></>} />
             <Route path="/franquicias" element={<><Header /><Franquicias /><Footer /></>} />
             <Route path="/sostenibilidad" element={<><Header /><Sostenibilidad /><Footer /></>} />
-            <Route
-              path="/nosotros"
-              element={
-                <>
-                  <Header />
-                  <SimplePage
-                    title="Nosotros"
-                    subtitle="Más de 20 años creando espacios que venden"
-                    content="Equipo multidisciplinar con diseño, producción e instalación propias. Enfoque a resultados, detalle y plazos. Planificación, control de calidad y comunicación clara con dirección, retail, expansión, marketing y arquitectura."
-                  />
-                  <Footer />
-                </>
-              }
-            />
+            <Route path="/nosotros" element={<><Header /><Nosotros /><Footer /></>} />
             <Route
               path="/blog"
               element={
