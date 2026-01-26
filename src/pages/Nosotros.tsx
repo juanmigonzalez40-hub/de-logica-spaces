@@ -1,6 +1,6 @@
 import { StatsStrip } from "@/components/sections/StatsStrip";
 import { CTAStrip } from "@/components/sections/CTAStrip";
-import heroImage from "@/assets/hero.jpg";
+import heroNosotros from "@/assets/hero-nosotros.jpg";
 import casoBeatae from "@/assets/caso-beatae-1.png";
 import servicioDiseno from "@/assets/servicio-diseno-1.jpg";
 import servicioMobiliario from "@/assets/servicio-mobiliario-1.jpg";
@@ -11,8 +11,8 @@ const Nosotros = () => {
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <img
-          src={heroImage}
-          alt="Espacios comerciales De Lógica"
+          src={heroNosotros}
+          alt="Equipo De Lógica trabajando en proyectos de interiorismo comercial"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
