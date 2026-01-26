@@ -5,7 +5,8 @@ import casoClinicaDental from "@/assets/caso-clinica-dental.jpg";
 import casoTiendaModa from "@/assets/caso-tienda-moda.jpg";
 import casoDentalios from "@/assets/caso-dentalios.jpg";
 import casoOptica from "@/assets/caso-optica.jpg";
-import casoCafeteria from "@/assets/caso-cafeteria.jpg";
+import casoBeatae1 from "@/assets/caso-beatae-1.png";
+import casoBeatae2 from "@/assets/caso-beatae-2.png";
 
 const casos = [
   {
@@ -80,18 +81,19 @@ const casos = [
     results: "Incremento del 45% en ticket medio gracias a la presentación premium. Reducción del 30% en tiempo de selección de cliente gracias a la organización por estilos."
   },
   {
-    title: "Grano & Crema - Cafetería Especializada",
-    client: "Grano & Crema",
-    sector: "Hostelería y Café Especializado",
-    location: "Bilbao",
-    surface: "150 m²",
+    title: "Beatae - Bakery & Café Sin Gluten",
+    client: "Beatae",
+    sector: "Hostelería y Panadería Artesanal",
+    location: "Madrid",
+    surface: "80 m² (2 plantas)",
     timeline: "4 semanas",
-    services: ["Diseño de cafetería", "Barra y back-bar", "Mobiliario de salón", "Zona de tostado vista"],
-    image: casoCafeteria,
-    description: "Cafetería de tercera ola con tostado propio. Diseño industrial-acogedor que permite ver el proceso de tostado y preparación. Espacio diseñado tanto para consumo rápido como para estancia prolongada.",
-    challenge: "Integrar equipamiento profesional de tostado y preparación de café sin que dominara visualmente el espacio, manteniendo ambiente acogedor.",
-    solution: "Barra central que actúa como escenario del barista, zona de tostado con panel de vidrio como elemento decorativo. Mezcla de asientos: altos para consumo rápido y mesas bajas con sillones cómodos. Iluminación cálida tipo Edison.",
-    results: "Tiempo medio de estancia de 45 minutos (vs 20 minutos promedio sector). Redes sociales: +300% seguidores en 3 meses con clientes compartiendo el espacio. ROI recuperado en 14 meses."
+    services: ["Diseño integral", "Fabricación de mobiliario a medida", "Instalación completa", "Iluminación decorativa LED"],
+    image: casoBeatae1,
+    images: [casoBeatae1, casoBeatae2],
+    description: "Un lugar donde el sabor se eleva y convierte cada bocado en un auténtico 'wow'. Bakery café especializado en pan 100% casero y sin gluten, elaborado con ingredientes naturales y horneado a diario en su obrador propio. Protagonista de bocadillos artesanos y brunch saludable en pleno centro de Madrid.",
+    challenge: "Diseñar un espacio de 80 m² distribuido en dos plantas, con obrador y cocina en planta baja, maximizando el área de servicio al público en la planta superior mientras se transmitía la esencia artesanal y saludable de la marca.",
+    solution: "Diseño contemporáneo con identidad propia: sofás tapizados en violeta corporativo con respaldos acanalados, mesas de mármol con detalles dorados, y columnas de hierro forjado restauradas como elemento patrimonial. Mural retroiluminado con forma orgánica en azul-violeta que enmarca el logo. Neón decorativo 'Natural Honest Delicious' reforzando los valores de marca.",
+    results: "Espacio que transmite naturalidad, honestidad y calidad desde el primer impacto visual. La distribución optimizada permite un flujo de trabajo eficiente entre obrador y zona de servicio. El diseño se ha convertido en seña de identidad reconocible en redes sociales."
   }
 ];
 
