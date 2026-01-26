@@ -1,10 +1,8 @@
 import { StatsStrip } from "@/components/sections/StatsStrip";
 import { CTAStrip } from "@/components/sections/CTAStrip";
+import { PenTool, Factory, Truck } from "lucide-react";
 import heroNosotros from "@/assets/hero-nosotros.jpg";
 import casoBeatae from "@/assets/caso-beatae-1.png";
-import servicioDiseno from "@/assets/servicio-diseno-1.jpg";
-import servicioMobiliario from "@/assets/servicio-mobiliario-1.jpg";
-import servicioInstalacion from "@/assets/servicio-instalacion-1.jpg";
 const Nosotros = () => {
   return (
     <main className="pt-24">
@@ -72,13 +70,9 @@ const Nosotros = () => {
             Control total del proceso para garantizar calidad, plazos y presupuesto.
           </p>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="group">
-              <div className="overflow-hidden rounded-lg mb-4">
-                <img
-                  src={servicioDiseno}
-                  alt="Diseño de interiores comerciales"
-                  className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
+            <div className="group text-center">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-300">
+                <PenTool className="w-10 h-10 text-accent" />
               </div>
               <h3 className="text-xl font-bold mb-2">Diseño</h3>
               <p className="text-muted-foreground">
@@ -86,13 +80,9 @@ const Nosotros = () => {
                 objetivos comerciales y normativa.
               </p>
             </div>
-            <div className="group">
-              <div className="overflow-hidden rounded-lg mb-4">
-                <img
-                  src={servicioMobiliario}
-                  alt="Fabricación de mobiliario"
-                  className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
+            <div className="group text-center">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-300">
+                <Factory className="w-10 h-10 text-accent" />
               </div>
               <h3 className="text-xl font-bold mb-2">Producción</h3>
               <p className="text-muted-foreground">
@@ -100,13 +90,9 @@ const Nosotros = () => {
                 Control de calidad en cada pieza.
               </p>
             </div>
-            <div className="group">
-              <div className="overflow-hidden rounded-lg mb-4">
-                <img
-                  src={servicioInstalacion}
-                  alt="Instalación llave en mano"
-                  className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
+            <div className="group text-center">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-300">
+                <Truck className="w-10 h-10 text-accent" />
               </div>
               <h3 className="text-xl font-bold mb-2">Instalación</h3>
               <p className="text-muted-foreground">
