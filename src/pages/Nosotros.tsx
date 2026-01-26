@@ -1,14 +1,10 @@
 import { StatsStrip } from "@/components/sections/StatsStrip";
 import { CTAStrip } from "@/components/sections/CTAStrip";
 import heroImage from "@/assets/hero.jpg";
-import proyectoLladro from "@/assets/proyecto-lladro.jpg";
-import proyectoBoxing from "@/assets/proyecto-boxing.jpeg";
-import proyectoSpa from "@/assets/proyecto-spa.webp";
-import proyectoHairlab from "@/assets/proyecto-hairlab.jpg";
-import tileDiseno from "@/assets/tile-diseno.jpg";
-import tileFabricacion from "@/assets/tile-fabricacion.png";
-import tileInstalacion from "@/assets/tile-instalacion.jpg";
-
+import casoBeatae from "@/assets/caso-beatae-1.png";
+import servicioDiseno from "@/assets/servicio-diseno-1.jpg";
+import servicioMobiliario from "@/assets/servicio-mobiliario-1.jpg";
+import servicioInstalacion from "@/assets/servicio-instalacion-1.jpg";
 const Nosotros = () => {
   return (
     <main className="pt-24">
@@ -54,8 +50,8 @@ const Nosotros = () => {
             </div>
             <div className="order-1 lg:order-2">
               <img
-                src={proyectoLladro}
-                alt="Proyecto Lladró - Espacio comercial"
+                src={casoBeatae}
+                alt="Proyecto Beatae - Bakery & Café"
                 className="w-full h-[400px] object-cover rounded-lg shadow-elegant"
               />
             </div>
@@ -65,41 +61,6 @@ const Nosotros = () => {
 
       {/* Stats Strip */}
       <StatsStrip />
-
-      {/* Gallery of Projects */}
-      <section className="section-padding bg-muted">
-        <div className="container-custom">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-            Nuestro trabajo habla por nosotros
-          </h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Cada proyecto es una oportunidad de demostrar que los espacios bien diseñados 
-            generan resultados medibles.
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <img
-              src={proyectoLladro}
-              alt="Proyecto Lladró"
-              className="w-full h-48 md:h-64 object-cover rounded-lg hover:scale-105 transition-transform duration-300"
-            />
-            <img
-              src={proyectoBoxing}
-              alt="Proyecto Boxing"
-              className="w-full h-48 md:h-64 object-cover rounded-lg hover:scale-105 transition-transform duration-300"
-            />
-            <img
-              src={proyectoSpa}
-              alt="Proyecto Spa"
-              className="w-full h-48 md:h-64 object-cover rounded-lg hover:scale-105 transition-transform duration-300"
-            />
-            <img
-              src={proyectoHairlab}
-              alt="Proyecto Hairlab"
-              className="w-full h-48 md:h-64 object-cover rounded-lg hover:scale-105 transition-transform duration-300"
-            />
-          </div>
-        </div>
-      </section>
 
       {/* How We Work - 3 columns */}
       <section className="section-padding">
@@ -114,7 +75,7 @@ const Nosotros = () => {
             <div className="group">
               <div className="overflow-hidden rounded-lg mb-4">
                 <img
-                  src={tileDiseno}
+                  src={servicioDiseno}
                   alt="Diseño de interiores comerciales"
                   className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -128,7 +89,7 @@ const Nosotros = () => {
             <div className="group">
               <div className="overflow-hidden rounded-lg mb-4">
                 <img
-                  src={tileFabricacion}
+                  src={servicioMobiliario}
                   alt="Fabricación de mobiliario"
                   className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -142,7 +103,7 @@ const Nosotros = () => {
             <div className="group">
               <div className="overflow-hidden rounded-lg mb-4">
                 <img
-                  src={tileInstalacion}
+                  src={servicioInstalacion}
                   alt="Instalación llave en mano"
                   className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
