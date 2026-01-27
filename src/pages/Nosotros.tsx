@@ -2,7 +2,6 @@ import { StatsStrip } from "@/components/sections/StatsStrip";
 import { CTAStrip } from "@/components/sections/CTAStrip";
 import { PenTool, Factory, Truck } from "lucide-react";
 import heroNosotros from "@/assets/hero-nosotros.jpg";
-import casoBeatae from "@/assets/caso-beatae-1.png";
 const Nosotros = () => {
   return (
     <main className="pt-24">
@@ -22,37 +21,26 @@ const Nosotros = () => {
         </div>
       </section>
 
-      {/* Value Proposition - 2 columns */}
+      {/* Value Proposition */}
       <section className="section-padding">
-        <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                No somos una agencia. <br />
-                <span className="text-accent">Fabricamos espacios.</span>
-              </h2>
-              <div className="space-y-4 text-muted-foreground text-lg">
-                <p>
-                  Diseñamos, producimos e instalamos con equipos propios. Sin intermediarios, 
-                  sin sorpresas. Un único interlocutor de principio a fin.
-                </p>
-                <p>
-                  Trabajamos con dirección de retail, expansión y marketing de marcas que 
-                  entienden que el espacio físico es su mejor escaparate.
-                </p>
-                <p className="font-medium text-foreground">
-                  Nos miden por resultados: aperturas a tiempo, costes controlados, 
-                  espacios que funcionan.
-                </p>
-              </div>
-            </div>
-            <div className="order-1 lg:order-2">
-              <img
-                src={casoBeatae}
-                alt="Proyecto Beatae - Bakery & Café"
-                className="w-full h-[400px] object-cover rounded-lg shadow-elegant"
-              />
-            </div>
+        <div className="container-custom max-w-4xl">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
+            No somos una agencia. <br />
+            <span className="text-accent">Fabricamos espacios.</span>
+          </h2>
+          <div className="space-y-4 text-muted-foreground text-lg text-center">
+            <p>
+              Diseñamos, producimos e instalamos con equipos propios. Sin intermediarios, 
+              sin sorpresas. Un único interlocutor de principio a fin.
+            </p>
+            <p>
+              Trabajamos con dirección de retail, expansión y marketing de marcas que 
+              entienden que el espacio físico es su mejor escaparate.
+            </p>
+            <p className="font-medium text-foreground">
+              Nos miden por resultados: aperturas a tiempo, costes controlados, 
+              espacios que funcionan.
+            </p>
           </div>
         </div>
       </section>
