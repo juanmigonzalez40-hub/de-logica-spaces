@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { CTAStrip } from "@/components/sections/CTAStrip";
 import { ArrowLeft, Calendar } from "lucide-react";
+import blogFranquicias from "@/assets/blog-franquicias.jpg";
 
 const ArticuloFranquicias = () => {
   return (
@@ -33,6 +34,17 @@ const ArticuloFranquicias = () => {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
             Franquicias: El reto de mantener la misma imagen en 50 locales diferentes
           </h1>
+        </div>
+      </section>
+
+      {/* Featured Image */}
+      <section className="pb-8">
+        <div className="container-custom max-w-4xl">
+          <img
+            src={blogFranquicias}
+            alt="Locales de franquicia con imagen de marca consistente"
+            className="w-full h-auto rounded-lg shadow-elegant"
+          />
         </div>
       </section>
 
