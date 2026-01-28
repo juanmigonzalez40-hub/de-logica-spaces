@@ -16,7 +16,6 @@ import ServicioInstalacion from "./pages/ServicioInstalacion";
 import ServicioDiseno from "./pages/ServicioDiseno";
 import ServicioMobiliario from "./pages/ServicioMobiliario";
 import ServicioSenaletica from "./pages/ServicioSenaletica";
-import SimplePage from "./pages/SimplePage";
 import Nosotros from "./pages/Nosotros";
 import Sostenibilidad from "./pages/Sostenibilidad";
 import Proyectos from "./pages/Proyectos";
@@ -25,6 +24,10 @@ import CasosDeExito from "./pages/CasosDeExito";
 import Contacto from "./pages/Contacto";
 import Gracias from "./pages/Gracias";
 import NotFound from "./pages/NotFound";
+import Blog from "./pages/Blog";
+import ArticuloRotulos from "./pages/blog/ArticuloRotulos";
+import ArticuloMobiliario from "./pages/blog/ArticuloMobiliario";
+import ArticuloFranquicias from "./pages/blog/ArticuloFranquicias";
 import Login from "./pages/admin/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import Contactos from "./pages/admin/Contactos";
@@ -60,20 +63,10 @@ const App = () => (
             <Route path="/franquicias" element={<><Header /><Franquicias /><Footer /></>} />
             <Route path="/sostenibilidad" element={<><Header /><Sostenibilidad /><Footer /></>} />
             <Route path="/nosotros" element={<><Header /><Nosotros /><Footer /></>} />
-            <Route
-              path="/blog"
-              element={
-                <>
-                  <Header />
-                  <SimplePage
-                    title="Blog"
-                    subtitle="Ideas útiles, sin humo"
-                    content="Contenido práctico para responsables de marketing, retail y expansión. Próximamente."
-                  />
-                  <Footer />
-                </>
-              }
-            />
+            <Route path="/blog" element={<><Header /><Blog /><Footer /></>} />
+            <Route path="/blog/rotulos-fachadas" element={<><Header /><ArticuloRotulos /><Footer /></>} />
+            <Route path="/blog/mobiliario-comercial" element={<><Header /><ArticuloMobiliario /><Footer /></>} />
+            <Route path="/blog/franquicias-branding" element={<><Header /><ArticuloFranquicias /><Footer /></>} />
             
             {/* Legal routes */}
             <Route path="/legal/aviso-legal" element={<><Header /><AvisoLegal /><Footer /></>} />
