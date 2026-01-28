@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { CTAStrip } from "@/components/sections/CTAStrip";
 import { ArrowLeft, Calendar } from "lucide-react";
+import blogRotulos from "@/assets/blog-rotulos.jpg";
 
 const ArticuloRotulos = () => {
   return (
@@ -33,6 +34,17 @@ const ArticuloRotulos = () => {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
             Tu fachada habla: Por qué un buen rótulo atrae más clientes que el mejor producto
           </h1>
+        </div>
+      </section>
+
+      {/* Featured Image */}
+      <section className="pb-8">
+        <div className="container-custom max-w-4xl">
+          <img
+            src={blogRotulos}
+            alt="Fachada comercial moderna con rótulo LED iluminado"
+            className="w-full h-auto rounded-lg shadow-elegant"
+          />
         </div>
       </section>
 

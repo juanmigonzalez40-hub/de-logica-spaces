@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { CTAStrip } from "@/components/sections/CTAStrip";
 import { ArrowLeft, Calendar } from "lucide-react";
+import blogMobiliario from "@/assets/blog-mobiliario.jpg";
 
 const ArticuloMobiliario = () => {
   return (
@@ -33,6 +34,17 @@ const ArticuloMobiliario = () => {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
             Mobiliario Comercial: Diseñando espacios que venden solos
           </h1>
+        </div>
+      </section>
+
+      {/* Featured Image */}
+      <section className="pb-8">
+        <div className="container-custom max-w-4xl">
+          <img
+            src={blogMobiliario}
+            alt="Interior de tienda con mobiliario comercial de diseño"
+            className="w-full h-auto rounded-lg shadow-elegant"
+          />
         </div>
       </section>
 
