@@ -82,7 +82,7 @@ const Proyectos = () => {
                     src={img} 
                     alt={`Proyecto ${index + 1}`}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                    style={index === 7 ? { objectPosition: 'center 20%' } : undefined}
+                    style={index === 4 ? { objectPosition: 'center 20%' } : index === 7 ? { objectPosition: 'center 20%' } : undefined}
                   />
                 </div>
               ))}
