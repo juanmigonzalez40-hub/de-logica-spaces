@@ -16,13 +16,13 @@ const casos = [
     location: "Madrid",
     surface: "850 m²",
     timeline: "5 semanas",
-    services: ["Diseño integral", "Señalética corporativa", "Instalación completa", "Rotulación vinílica"],
+    services: ["Diseño integral de espacios", "Señalética corporativa", "Mobiliario a medida", "Instalación completa"],
     image: casoGimnasio,
     images: [casoGimnasio, casoGimnasio2],
-    description: "Proyecto de branding ambiental para la zona de musculación del centro Virgin Active en Madrid. Diseño de pared feature en rojo corporativo con tipografía tridimensional y palabras motivacionales que refuerzan la identidad de marca.",
-    challenge: "Transformar una zona de entrenamiento estándar en un espacio inspirador que motivara a los usuarios, integrando el branding de Virgin Active sin interferir con la funcionalidad del equipamiento Technogym.",
-    solution: "Creamos una pared protagonista en rojo vibrante con tipografía 3D en relieve. Palabras como 'pedalear', 'nadar', 'divertirse' y 'saltar' generan un impacto visual potente. Iluminación industrial con luminarias colgantes que complementan la estética.",
-    results: "El espacio se convirtió en el más fotografiado del centro, generando contenido orgánico en redes sociales. +40% de engagement en Instagram. Reconocido como referente de diseño en el sector fitness."
+    description: "Proyecto integral de diseño y acondicionamiento del centro Virgin Active en Madrid. Intervención completa en diferentes ambientes: sala de musculación, sala de yoga, zona de piscina y vestuarios. Cada espacio fue diseñado con una identidad propia dentro del universo de marca Virgin Active.",
+    challenge: "Diseñar y ejecutar múltiples ambientes diferenciados —musculación, yoga, piscina y vestuarios— bajo una misma identidad de marca, manteniendo la coherencia visual sin que los espacios perdieran su carácter propio. Todo ello en un plazo ajustado de 5 semanas.",
+    solution: "Desarrollamos un concepto integral donde cada ambiente tiene su propia atmósfera: pared feature en rojo corporativo con tipografía 3D motivacional en la zona de musculación, espacios serenos con iluminación cálida para yoga, acabados resistentes a la humedad en piscina y vestuarios con materiales premium. Iluminación industrial con luminarias colgantes que unifican la estética general.",
+    results: "El centro se convirtió en referente de diseño en el sector fitness. La zona de musculación es el espacio más fotografiado, generando contenido orgánico en redes sociales. +40% de engagement en Instagram. El proyecto sirvió como modelo para nuevas aperturas de la cadena."
   },
   {
     title: "Clínica Salud Dental - Renovación Premium",
