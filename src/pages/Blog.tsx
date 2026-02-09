@@ -9,7 +9,7 @@ const articles = [
     title: "Tu fachada habla: Por qué un buen rótulo atrae más clientes que el mejor producto",
     excerpt: "Tienes el local, tienes el producto y tienes la ilusión. Pero si la gente pasa por delante de tu negocio y no mira dos veces, tienes un problema.",
     category: "Rótulos y Fachadas",
-    date: "2025-01-15",
+    date: "2026-02-13",
   },
   {
     slug: "mobiliario-comercial",
