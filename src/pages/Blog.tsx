@@ -16,7 +16,7 @@ const articles = [
     title: "Mobiliario Comercial: Diseñando espacios que venden solos",
     excerpt: "¿Alguna vez has entrado en una tienda y te has sentido 'a gusto' sin saber por qué? El secreto no suele estar en el producto, sino en el diseño del espacio.",
     category: "Mobiliario Comercial",
-    date: "2025-01-10",
+    date: "2026-02-12",
   },
   {
     slug: "franquicias-branding",
