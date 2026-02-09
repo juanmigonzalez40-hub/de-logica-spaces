@@ -23,7 +23,7 @@ const articles = [
     title: "Franquicias: El reto de mantener la misma imagen en 50 locales diferentes",
     excerpt: "La consistencia de marca es lo que genera confianza en el consumidor. Si un cliente entra en tu franquicia, debe sentir lo mismo esté donde esté.",
     category: "Franquicias y Branding",
-    date: "2025-01-05",
+    date: "2026-02-11",
   },
 ];
 
