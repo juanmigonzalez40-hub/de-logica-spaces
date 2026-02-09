@@ -9,21 +9,21 @@ const articles = [
     title: "Tu fachada habla: Por qué un buen rótulo atrae más clientes que el mejor producto",
     excerpt: "Tienes el local, tienes el producto y tienes la ilusión. Pero si la gente pasa por delante de tu negocio y no mira dos veces, tienes un problema.",
     category: "Rótulos y Fachadas",
-    date: "2025-01-15",
+    date: "2026-02-13",
   },
   {
     slug: "mobiliario-comercial",
     title: "Mobiliario Comercial: Diseñando espacios que venden solos",
     excerpt: "¿Alguna vez has entrado en una tienda y te has sentido 'a gusto' sin saber por qué? El secreto no suele estar en el producto, sino en el diseño del espacio.",
     category: "Mobiliario Comercial",
-    date: "2025-01-10",
+    date: "2026-02-12",
   },
   {
     slug: "franquicias-branding",
     title: "Franquicias: El reto de mantener la misma imagen en 50 locales diferentes",
     excerpt: "La consistencia de marca es lo que genera confianza en el consumidor. Si un cliente entra en tu franquicia, debe sentir lo mismo esté donde esté.",
     category: "Franquicias y Branding",
-    date: "2025-01-05",
+    date: "2026-02-11",
   },
 ];
 
