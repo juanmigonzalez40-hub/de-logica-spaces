@@ -29,21 +29,53 @@ interface ProjectEmailRequest {
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
+  if (req.method !== "POST") {
+    return new Response(JSON.stringify({ success: false, error: "Method not allowed" }), {
+      status: 405, headers: { "Content-Type": "application/json", ...corsHeaders },
+    });
+  }
+
   try {
     const raw: ProjectEmailRequest = await req.json();
-    const name = escapeHtml(raw.name);
-    const email = escapeHtml(raw.email);
-    const phone = escapeHtml(raw.phone);
-    const company = raw.company ? escapeHtml(raw.company) : undefined;
-    const sector = escapeHtml(raw.sector);
-    const city = escapeHtml(raw.city);
+
+    // Input validation
+    if (!raw.name || typeof raw.name !== 'string' || raw.name.trim().length === 0 || raw.name.length > 200) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid name" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+    if (!raw.email || typeof raw.email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw.email) || raw.email.length > 255) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid email" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+    if (!raw.phone || typeof raw.phone !== 'string' || raw.phone.trim().length === 0 || raw.phone.length > 30) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid phone" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+    if (!raw.sector || typeof raw.sector !== 'string' || raw.sector.trim().length === 0 || raw.sector.length > 200) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid sector" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+    if (!raw.city || typeof raw.city !== 'string' || raw.city.trim().length === 0 || raw.city.length > 200) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid city" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+    if (!raw.premises || typeof raw.premises !== 'string' || !['nuevo', 'reforma'].includes(raw.premises)) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid premises" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+    if (raw.company && (typeof raw.company !== 'string' || raw.company.length > 200)) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid company" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+    if (raw.message && (typeof raw.message !== 'string' || raw.message.length > 5000)) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid message" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+
+    const name = escapeHtml(raw.name.trim());
+    const email = escapeHtml(raw.email.trim());
+    const phone = escapeHtml(raw.phone.trim());
+    const company = raw.company ? escapeHtml(raw.company.trim()) : undefined;
+    const sector = escapeHtml(raw.sector.trim());
+    const city = escapeHtml(raw.city.trim());
     const premises = raw.premises;
-    const message = raw.message ? escapeHtml(raw.message) : undefined;
+    const message = raw.message ? escapeHtml(raw.message.trim()) : undefined;
 
     console.log("Enviando email de proyecto para:", raw.name, "- Sector:", raw.sector);
 
@@ -154,7 +186,7 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error("Error al enviar email de proyecto:", error);
     return new Response(
-      JSON.stringify({ success: false, error: error.message }),
+      JSON.stringify({ success: false, error: "An internal error occurred" }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
