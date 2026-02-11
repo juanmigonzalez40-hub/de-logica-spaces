@@ -8,6 +8,15 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 interface ContactEmailRequest {
   name: string;
   email: string;
@@ -24,9 +33,15 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { name, email, phone, company, business_type, message }: ContactEmailRequest = await req.json();
+    const raw: ContactEmailRequest = await req.json();
+    const name = escapeHtml(raw.name);
+    const email = escapeHtml(raw.email);
+    const phone = escapeHtml(raw.phone);
+    const company = raw.company ? escapeHtml(raw.company) : undefined;
+    const business_type = raw.business_type ? escapeHtml(raw.business_type) : undefined;
+    const message = escapeHtml(raw.message);
 
-    console.log("Enviando email de contacto para:", name);
+    console.log("Enviando email de contacto para:", raw.name);
 
     const emailHtml = `
       <!DOCTYPE html>
@@ -106,7 +121,7 @@ const handler = async (req: Request): Promise<Response> => {
       to: ["jm.gonzalez@de-logica.com"],
       subject: `🔔 Nuevo contacto desde De Lógica - ${name}`,
       html: emailHtml,
-      reply_to: email,
+      reply_to: raw.email,
     });
 
     console.log("Email enviado exitosamente:", emailResponse);
