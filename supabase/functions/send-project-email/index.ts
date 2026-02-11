@@ -8,6 +8,15 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 interface ProjectEmailRequest {
   name: string;
   email: string;
@@ -26,9 +35,17 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { name, email, phone, company, sector, city, premises, message }: ProjectEmailRequest = await req.json();
+    const raw: ProjectEmailRequest = await req.json();
+    const name = escapeHtml(raw.name);
+    const email = escapeHtml(raw.email);
+    const phone = escapeHtml(raw.phone);
+    const company = raw.company ? escapeHtml(raw.company) : undefined;
+    const sector = escapeHtml(raw.sector);
+    const city = escapeHtml(raw.city);
+    const premises = raw.premises;
+    const message = raw.message ? escapeHtml(raw.message) : undefined;
 
-    console.log("Enviando email de proyecto para:", name, "- Sector:", sector);
+    console.log("Enviando email de proyecto para:", raw.name, "- Sector:", raw.sector);
 
     const premisesText = premises === "nuevo" ? "Local nuevo" : "Reforma de local existente";
 
@@ -122,7 +139,7 @@ const handler = async (req: Request): Promise<Response> => {
       to: ["jm.gonzalez@de-logica.com"],
       subject: `📋 Nueva solicitud de proyecto - ${sector} - ${name}`,
       html: emailHtml,
-      reply_to: email,
+      reply_to: raw.email,
     });
 
     console.log("Email de proyecto enviado exitosamente:", emailResponse);
