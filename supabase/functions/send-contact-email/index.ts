@@ -27,19 +27,45 @@ interface ContactEmailRequest {
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
+  if (req.method !== "POST") {
+    return new Response(JSON.stringify({ success: false, error: "Method not allowed" }), {
+      status: 405, headers: { "Content-Type": "application/json", ...corsHeaders },
+    });
+  }
+
   try {
     const raw: ContactEmailRequest = await req.json();
-    const name = escapeHtml(raw.name);
-    const email = escapeHtml(raw.email);
-    const phone = escapeHtml(raw.phone);
-    const company = raw.company ? escapeHtml(raw.company) : undefined;
-    const business_type = raw.business_type ? escapeHtml(raw.business_type) : undefined;
-    const message = escapeHtml(raw.message);
+
+    // Input validation
+    if (!raw.name || typeof raw.name !== 'string' || raw.name.trim().length === 0 || raw.name.length > 200) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid name" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+    if (!raw.email || typeof raw.email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw.email) || raw.email.length > 255) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid email" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+    if (!raw.phone || typeof raw.phone !== 'string' || raw.phone.trim().length === 0 || raw.phone.length > 30) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid phone" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+    if (!raw.message || typeof raw.message !== 'string' || raw.message.trim().length === 0 || raw.message.length > 5000) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid message" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+    if (raw.company && (typeof raw.company !== 'string' || raw.company.length > 200)) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid company" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+    if (raw.business_type && (typeof raw.business_type !== 'string' || raw.business_type.length > 200)) {
+      return new Response(JSON.stringify({ success: false, error: "Invalid business type" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
+    }
+
+    const name = escapeHtml(raw.name.trim());
+    const email = escapeHtml(raw.email.trim());
+    const phone = escapeHtml(raw.phone.trim());
+    const company = raw.company ? escapeHtml(raw.company.trim()) : undefined;
+    const business_type = raw.business_type ? escapeHtml(raw.business_type.trim()) : undefined;
+    const message = escapeHtml(raw.message.trim());
 
     console.log("Enviando email de contacto para:", raw.name);
 
@@ -136,7 +162,7 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error("Error al enviar email de contacto:", error);
     return new Response(
-      JSON.stringify({ success: false, error: error.message }),
+      JSON.stringify({ success: false, error: "An internal error occurred" }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
