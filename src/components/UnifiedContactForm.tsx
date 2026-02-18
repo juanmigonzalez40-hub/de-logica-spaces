@@ -33,6 +33,7 @@ export const UnifiedContactForm = ({
     observations: "",
   });
   const [errors, setErrors] = useState<Partial<Record<keyof UnifiedFormData, string>>>({});
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -302,6 +303,38 @@ export const UnifiedContactForm = ({
       <Button type="submit" variant="primary" className="w-full" disabled={isSubmitting}>
         {isSubmitting ? "Enviando..." : "Enviar"}
       </Button>
+
+      {/* Privacy checkbox */}
+      <div className="flex items-start space-x-2">
+        <Checkbox
+          id="privacy-accepted"
+          checked={privacyAccepted}
+          onCheckedChange={(checked) => setPrivacyAccepted(checked as boolean)}
+        />
+        <Label htmlFor="privacy-accepted" className="font-normal cursor-pointer text-sm leading-snug">
+          He leído la{" "}
+          <a href="/legal/privacidad" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:no-underline">
+            Política de Privacidad
+          </a>
+        </Label>
+      </div>
+
+      {/* Legal info block */}
+      <div className="text-xs text-muted-foreground space-y-1 border-t pt-4">
+        <p className="font-semibold">Información básica de protección de datos</p>
+        <p><strong>Responsable:</strong> De Lógica Soluciones de Marketing S.L. (B83916833).</p>
+        <p><strong>Finalidad:</strong> atender tu solicitud y contactarte por email o teléfono para gestionarla (presupuesto/reunión).</p>
+        <p><strong>Derechos:</strong> puedes ejercer tus derechos y obtener más información en la{" "}
+          <a href="/legal/privacidad" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:no-underline">
+            Política de Privacidad
+          </a>.
+        </p>
+        <p><strong>Más info:</strong>{" "}
+          <a href="/legal/privacidad" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:no-underline">
+            Política de Privacidad
+          </a>.
+        </p>
+      </div>
     </form>
   );
 };
