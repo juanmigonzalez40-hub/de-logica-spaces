@@ -55,7 +55,7 @@ const ServicioInstalacion = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
               <h2 className="text-3xl font-bold mb-4">Qué hacemos</h2>
-              <p className="text-muted-foreground leading-relaxed">Implantamos tu proyecto en tienda, clínica, oficina o gimnasio con equipos propios de montaje. Cubrimos la cadena completa: recepción de material, transporte, coordinación de accesos, e instalación</p>
+              <p className="text-muted-foreground leading-relaxed">Implantamos tu proyecto en tienda, clínica, oficina o gimnasio con equipos propios de montaje. Cubrimos la cadena completa: recepción de material, transporte, coordinación de accesos e instalación.</p>
             </div>
             <div>
               <h2 className="text-3xl font-bold mb-4">Para quién</h2>
