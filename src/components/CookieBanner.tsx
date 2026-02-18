@@ -9,7 +9,7 @@ export const CookieBanner = () => {
   const [preferences, setPreferences] = useState({
     necessary: true,
     analytics: false,
-    marketing: false,
+    thirdParty: false,
   });
 
   useEffect(() => {
@@ -23,32 +23,23 @@ export const CookieBanner = () => {
     const finalPreferences = customPreferences || {
       necessary: true,
       analytics: accepted,
-      marketing: accepted,
+      thirdParty: accepted,
     };
     
     localStorage.setItem("cookieConsent", JSON.stringify(finalPreferences));
     setShowBanner(false);
     
-    // Aquí se implementarían las cookies según las preferencias
     if (finalPreferences.analytics) {
       // Activar Google Analytics, etc.
     }
-    if (finalPreferences.marketing) {
-      // Activar Meta Pixel, etc.
+    if (finalPreferences.thirdParty) {
+      // Activar Google Maps, contenido externo, etc.
     }
   };
 
-  const handleAcceptAll = () => {
-    saveConsent(true);
-  };
-
-  const handleRejectAll = () => {
-    saveConsent(false);
-  };
-
-  const handleSavePreferences = () => {
-    saveConsent(false, preferences);
-  };
+  const handleAcceptAll = () => saveConsent(true);
+  const handleRejectAll = () => saveConsent(false);
+  const handleSavePreferences = () => saveConsent(false, preferences);
 
   if (!showBanner) return null;
 
@@ -60,9 +51,10 @@ export const CookieBanner = () => {
             <div className="flex-1">
               <h3 className="font-semibold mb-2">Uso de cookies</h3>
               <p className="text-sm text-muted-foreground">
-                Utilizamos cookies propias y de terceros para mejorar nuestros servicios y
-                mostrarle publicidad relacionada con sus preferencias mediante el análisis de
-                sus hábitos de navegación. Puede obtener más información en nuestra{" "}
+                Utilizamos cookies necesarias para que el sitio funcione. Con tu permiso,
+                usaremos cookies de analítica para medir el uso del sitio y cookies de
+                terceros para cargar contenido externo (p.&nbsp;ej., Google Maps).
+                Puedes Aceptar, Rechazar o Configurar. Más información en la{" "}
                 <Link to="/legal/cookies" className="underline hover:text-primary">
                   Política de Cookies
                 </Link>
@@ -85,11 +77,7 @@ export const CookieBanner = () => {
           <div>
             <div className="flex items-start justify-between mb-4">
               <h3 className="font-semibold">Configuración de cookies</h3>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setShowSettings(false)}
-              >
+              <Button variant="ghost" size="icon" onClick={() => setShowSettings(false)}>
                 <X className="h-4 w-4" />
               </Button>
             </div>
@@ -99,8 +87,7 @@ export const CookieBanner = () => {
                 <div className="flex-1">
                   <h4 className="font-medium mb-1">Cookies necesarias</h4>
                   <p className="text-sm text-muted-foreground">
-                    Estas cookies son esenciales para el funcionamiento del sitio web y no
-                    pueden desactivarse.
+                    Esenciales para el funcionamiento del sitio web. No pueden desactivarse.
                   </p>
                 </div>
                 <div className="text-sm font-medium text-muted-foreground">Siempre activas</div>
@@ -110,8 +97,7 @@ export const CookieBanner = () => {
                 <div className="flex-1">
                   <h4 className="font-medium mb-1">Cookies analíticas</h4>
                   <p className="text-sm text-muted-foreground">
-                    Nos permiten analizar el uso del sitio web y mejorar la experiencia del
-                    visitante.
+                    Permiten medir el uso del sitio web y mejorar la experiencia del visitante.
                   </p>
                 </div>
                 <input
@@ -126,17 +112,16 @@ export const CookieBanner = () => {
 
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
-                  <h4 className="font-medium mb-1">Cookies de marketing</h4>
+                  <h4 className="font-medium mb-1">Cookies de terceros / contenido externo</h4>
                   <p className="text-sm text-muted-foreground">
-                    Se utilizan para rastrear a los visitantes en las páginas web y mostrar
-                    anuncios relevantes.
+                    Necesarias para cargar contenido de terceros como Google Maps.
                   </p>
                 </div>
                 <input
                   type="checkbox"
-                  checked={preferences.marketing}
+                  checked={preferences.thirdParty}
                   onChange={(e) =>
-                    setPreferences({ ...preferences, marketing: e.target.checked })
+                    setPreferences({ ...preferences, thirdParty: e.target.checked })
                   }
                   className="mt-1"
                 />
@@ -154,4 +139,38 @@ export const CookieBanner = () => {
       </div>
     </div>
   );
+};
+
+/**
+ * Hook to check if third-party cookies have been accepted.
+ * Use this to conditionally render external content like Google Maps.
+ */
+export const useThirdPartyCookiesAccepted = () => {
+  const [accepted, setAccepted] = useState(false);
+
+  useEffect(() => {
+    const consent = localStorage.getItem("cookieConsent");
+    if (consent) {
+      try {
+        const parsed = JSON.parse(consent);
+        setAccepted(!!parsed.thirdParty);
+      } catch {
+        setAccepted(false);
+      }
+    }
+  }, []);
+
+  const accept = () => {
+    const consent = localStorage.getItem("cookieConsent");
+    let current = { necessary: true, analytics: false, thirdParty: true };
+    if (consent) {
+      try {
+        current = { ...current, ...JSON.parse(consent), thirdParty: true };
+      } catch { /* use default */ }
+    }
+    localStorage.setItem("cookieConsent", JSON.stringify(current));
+    setAccepted(true);
+  };
+
+  return { accepted, accept };
 };
