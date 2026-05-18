@@ -35,10 +35,10 @@ const ServicioMobiliario = () => {
       <section className="section-padding">
         <div className="container-custom text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Fabricación de mobiliario
+            Diseño y fabricación de mobiliario comercial
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Mobiliario único que eleva tu marca
+            Mobiliario único a medida que eleva tu marca y optimiza las ventas
           </p>
         </div>
       </section>
@@ -68,13 +68,13 @@ const ServicioMobiliario = () => {
             <div>
               <h2 className="text-3xl font-bold mb-4">Qué hacemos</h2>
               <p className="text-muted-foreground leading-relaxed">
-                Fabricamos mobiliario a medida para espacios comerciales: mostradores de recepción, expositores, estanterías, mesas, bancos de trabajo y cualquier pieza que necesites. Trabajamos madera, metal, acrílico y materiales compuestos con maquinaria CNC de última generación.
+                Nos especializamos en el diseño y la fabricación de mobiliario comercial a medida para tiendas, franquicias y espacios retail. Desarrollamos mostradores de recepción, expositores, estanterías, mesas, bancos de trabajo y cualquier pieza que necesites. Trabajamos madera, metal, acrílico y materiales compuestos con maquinaria CNC de última generación.
               </p>
             </div>
             <div>
               <h2 className="text-3xl font-bold mb-4">Para quién</h2>
               <p className="text-muted-foreground leading-relaxed">
-                Retail, clínicas dentales y estéticas, gimnasios, oficinas, restaurantes, panaderías, ópticas y cualquier negocio que necesite mobiliario funcional y con personalidad. También para franquicias que requieren repetibilidad exacta en múltiples ubicaciones.
+                Retail, clínicas dentales y estéticas, gimnasios, oficinas, restaurantes, ópticas y cualquier negocio que necesite soluciones de diseño y fabricación de mobiliario comercial con gran durabilidad y diseño enfocado a ventas. Especialmente indicado para franquicias que requieren repetibilidad exacta en múltiples ubicaciones.
               </p>
             </div>
           </div>

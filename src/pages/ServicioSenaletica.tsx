@@ -35,10 +35,10 @@ const ServicioSenaletica = () => {
       <section className="section-padding">
         <div className="container-custom text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Comunicación visual y señalética
+            Producción gráfica y fabricación de rótulos
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Visibilidad, orientación y experiencia
+            Visibilidad comercial, diseño de señalética e impresión de gran formato
           </p>
         </div>
       </section>
@@ -68,13 +68,13 @@ const ServicioSenaletica = () => {
             <div>
               <h2 className="text-3xl font-bold mb-4">Qué hacemos</h2>
               <p className="text-muted-foreground leading-relaxed">
-                Diseñamos, fabricamos e instalamos todo tipo de elementos de comunicación visual: rótulos de fachada, letras corpóreas con iluminación LED, señalización interior, vinilos decorativos y de escaparate, e impresión de gran formato. Todo lo necesario para que tu marca destaque y tus clientes se orienten fácilmente.
+                Somos especialistas en la producción gráfica integral y la fabricación de rótulos para empresas y locales comerciales. Diseñamos, fabricamos e instalamos todo tipo de elementos de comunicación visual: rótulos de fachada, letras corpóreas con iluminación LED, señalización interior, vinilos decorativos y de escaparate, e impresión de gran formato.
               </p>
             </div>
             <div>
               <h2 className="text-3xl font-bold mb-4">Para quién</h2>
               <p className="text-muted-foreground leading-relaxed">
-                Negocios que abren, renuevan imagen o necesitan mejorar la visibilidad: retail, clínicas, gimnasios, restaurantes, oficinas, hoteles. También franquicias que requieren identidad visual consistente en todas sus ubicaciones.
+                Negocios que abren, renuevan imagen o necesitan mejorar su visibilidad a través de la producción gráfica publicitaria: retail, clínicas, gimnasios, restaurantes. También para redes de franquicias que requieren de una fabricación de rótulos consistente e identidad visual unificada en todas sus ubicaciones.
               </p>
             </div>
           </div>

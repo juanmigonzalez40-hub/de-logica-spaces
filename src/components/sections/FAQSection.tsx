@@ -7,20 +7,24 @@ import {
 
 const faqs = [
   {
-    question: "¿Qué servicios de interiorismo comercial ofrece De Lógica Spaces?",
-    answer: "Ofrecemos soluciones 360° para espacios comerciales, abarcando desde el diseño de interiores y la fabricación de mobiliario a medida, hasta la instalación completa y la señalética. Somos especialistas en adaptar la imagen de marca a locales físicos y franquicias."
+    question: "¿En qué consiste vuestro servicio de diseño y fabricación de mobiliario comercial?",
+    answer: "Diseñamos y fabricamos mobiliario comercial a medida para tiendas y franquicias. Nos adaptamos a las especificaciones técnicas de tu marca, utilizando materiales duraderos y diseños que optimizan la experiencia de compra en el punto de venta."
+  },
+  {
+    question: "¿Hacéis diseño y fabricación de rótulos para fachadas e interiores?",
+    answer: "Sí, somos especialistas en la fabricación de rótulos luminosos, letras corpóreas 3D (con tecnología LED) y señalética integral. Nos encargamos desde el diseño visual hasta la instalación final en fachada o en el interior del local."
+  },
+  {
+    question: "¿Ofrecéis servicios de producción gráfica e impresión en gran formato?",
+    answer: "Ofrecemos soluciones completas de producción gráfica para retail. Esto incluye vinilos para escaparates, impresión de gran formato para cartelería, murales decorativos y cualquier elemento de comunicación visual que tu espacio comercial necesite."
   },
   {
     question: "¿Trabajáis con franquicias en toda España?",
-    answer: "Sí, operamos a nivel nacional e internacional. Contamos con equipos de instalación propios y experiencia en la apertura simultánea de múltiples locales para franquicias, garantizando la consistencia de la marca en cualquier ubicación."
+    answer: "Sí, operamos a nivel nacional e internacional. Contamos con equipos de instalación propios y experiencia en la apertura simultánea de múltiples locales para franquicias, garantizando la consistencia de la marca y de sus elementos gráficos y mobiliario en cualquier ubicación."
   },
   {
-    question: "¿Fabricáis el mobiliario a medida para tiendas?",
-    answer: "Sí, disponemos de instalaciones propias donde diseñamos y fabricamos mobiliario comercial adaptado a las necesidades específicas de cada marca, utilizando materiales duraderos y diseños que optimizan la experiencia de compra."
-  },
-  {
-    question: "¿Cuánto tiempo se tarda en montar un local comercial?",
-    answer: "El tiempo varía según la magnitud del proyecto, pero nuestra metodología 'Llave en Mano' nos permite ser altamente eficientes. Gestionamos todas las fases (diseño, licencias, fabricación y montaje) para asegurar la apertura en el plazo y presupuesto acordados."
+    question: "¿Cuánto tiempo se tarda en fabricar e instalar el equipamiento de un local comercial?",
+    answer: "El tiempo varía según la magnitud del proyecto, pero al ser fabricantes directos de mobiliario comercial y rótulos, nuestra metodología 'Llave en Mano' nos permite ser altamente eficientes y controlar los plazos de entrega sin depender de intermediarios."
   }
 ];
 
