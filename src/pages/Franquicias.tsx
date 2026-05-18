@@ -6,7 +6,7 @@ import franquiciaModa from "@/assets/franquicia-newbalance.webp";
 import franquiciaRestaurante from "@/assets/franquicia-restaurante.jpg";
 import franquiciaGimnasio from "@/assets/franquicia-gimnasio.jpg";
 import franquiciaSalon from "@/assets/franquicia-nails.jpg";
-import franquiciaPanaderia from "@/assets/franquicia-okaidi.jpg";
+import franquiciaPanaderia from "@/assets/franquicia-okaidi.jpg"; // Keeping the import name as is for simplicity, but it's okaidi
 
 const proyectos = [
   {
@@ -35,9 +35,9 @@ const proyectos = [
     sector: "Belleza"
   },
   {
-    title: "Panadería",
+    title: "Retail Moda",
     image: franquiciaPanaderia,
-    sector: "Alimentación"
+    sector: "Retail"
   }
 ];
 
