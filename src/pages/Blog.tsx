@@ -16,14 +16,14 @@ const articles = [
     title: "Mobiliario Comercial: Diseñando espacios que venden solos",
     excerpt: "¿Alguna vez has entrado en una tienda y te has sentido 'a gusto' sin saber por qué? El secreto no suele estar en el producto, sino en el diseño del espacio.",
     category: "Mobiliario Comercial",
-    date: "2026-02-12",
+    date: "2026-03-12",
   },
   {
     slug: "franquicias-branding",
     title: "Franquicias: El reto de mantener la misma imagen en 50 locales diferentes",
     excerpt: "La consistencia de marca es lo que genera confianza en el consumidor. Si un cliente entra en tu franquicia, debe sentir lo mismo esté donde esté.",
     category: "Franquicias y Branding",
-    date: "2026-02-11",
+    date: "2026-04-11",
   },
 ];
 

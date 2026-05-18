@@ -28,7 +28,7 @@ const ArticuloMobiliario = () => {
             </span>
             <span className="flex items-center gap-1">
               <Calendar className="w-3 h-3" />
-              12 febrero 2026
+              12 marzo 2026
             </span>
           </div>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
