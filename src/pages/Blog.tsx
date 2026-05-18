@@ -5,6 +5,13 @@ import { ArrowRight, Calendar } from "lucide-react";
 
 const articles = [
   {
+    slug: "prepara-local-verano",
+    title: "Prepara tu local para el verano: Cambios rápidos que impactan en tus ventas",
+    excerpt: "El verano cambia los hábitos de consumo. Si tu local sigue respirando invierno, estás perdiendo oportunidades de venta. Descubre cómo adaptar tu espacio comercial rápidamente.",
+    category: "Retail y Estrategia",
+    date: "2026-05-15",
+  },
+  {
     slug: "rotulos-fachadas",
     title: "Tu fachada habla: Por qué un buen rótulo atrae más clientes que el mejor producto",
     excerpt: "Tienes el local, tienes el producto y tienes la ilusión. Pero si la gente pasa por delante de tu negocio y no mira dos veces, tienes un problema.",
