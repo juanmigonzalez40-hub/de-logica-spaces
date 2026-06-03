@@ -26,6 +26,7 @@ const Contacto = lazy(() => import("./pages/Contacto"));
 const Gracias = lazy(() => import("./pages/Gracias"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Blog = lazy(() => import("./pages/Blog"));
+const ImplantacionComercial = lazy(() => import("./pages/ImplantacionComercial"));
 const ArticuloRotulos = lazy(() => import("./pages/blog/ArticuloRotulos"));
 const ArticuloMobiliario = lazy(() => import("./pages/blog/ArticuloMobiliario"));
 const ArticuloFranquicias = lazy(() => import("./pages/blog/ArticuloFranquicias"));
@@ -54,6 +55,7 @@ const App = () => (
             <Routes>
               {/* Public routes with header and footer */}
               <Route path="/" element={<><Header /><Home /><Footer /></>} />
+              <Route path="/implantacion-comercial" element={<><Header /><ImplantacionComercial /><Footer /></>} />
               <Route path="/servicios" element={<><Header /><Servicios /><Footer /></>} />
               <Route path="/servicios/instalacion" element={<><Header /><ServicioInstalacion /><Footer /></>} />
               <Route path="/servicios/diseno" element={<><Header /><ServicioDiseno /><Footer /></>} />

@@ -19,6 +19,7 @@ export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const isLanding = location.pathname === "/implantacion-comercial";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,33 +46,52 @@ export const Header = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-4 xl:gap-8">
-          {navigation.map((item) => (
-            <Link
-              key={item.href}
-              to={item.href}
-              className={`text-xs xl:text-sm font-medium uppercase tracking-wide hover:text-accent transition-colors ${textColorClass}`}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Button asChild variant="primary" size="sm">
-            <Link to="/contacto">Contacto</Link>
-          </Button>
-        </div>
+        {!isLanding ? (
+          <div className="hidden md:flex items-center gap-4 xl:gap-8">
+            {navigation.map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                className={`text-xs xl:text-sm font-medium uppercase tracking-wide hover:text-accent transition-colors ${textColorClass}`}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Button asChild variant="primary" size="sm">
+              <Link to="/contacto">Contacto</Link>
+            </Button>
+          </div>
+        ) : (
+          <div className="hidden md:flex items-center gap-4">
+            <span className={`text-sm font-medium ${textColorClass} hidden lg:inline mr-4`}>
+              Telf: <a href="tel:+34910742187" className="hover:text-accent font-semibold">+34 910 742 187</a>
+            </span>
+            <Button asChild variant="primary" size="sm">
+              <a href="#formulario">Solicitar Valoración</a>
+            </Button>
+          </div>
+        )}
 
         {/* Mobile Menu Button */}
-        <button
-          className={`md:hidden ${textColorClass}`}
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {!isLanding ? (
+          <button
+            className={`md:hidden ${textColorClass}`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        ) : (
+          <div className="md:hidden">
+            <Button asChild variant="primary" size="xs" className="text-xs py-1 px-3">
+              <a href="#formulario">Valorar</a>
+            </Button>
+          </div>
+        )}
       </nav>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
+      {!isLanding && isMobileMenuOpen && (
         <div className="md:hidden bg-background border-t">
           <div className="container-custom py-4 flex flex-col gap-4">
             {navigation.map((item) => (
