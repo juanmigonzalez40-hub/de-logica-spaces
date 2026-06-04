@@ -27,6 +27,8 @@ export type Database = {
           message: string
           name: string
           notes: string | null
+          notion_sync_error: string | null
+          notion_sync_status: string
           phone: string
           sectors: string[] | null
           status: string
@@ -43,6 +45,8 @@ export type Database = {
           message: string
           name: string
           notes?: string | null
+          notion_sync_error?: string | null
+          notion_sync_status?: string
           phone: string
           sectors?: string[] | null
           status?: string
@@ -59,6 +63,8 @@ export type Database = {
           message?: string
           name?: string
           notes?: string | null
+          notion_sync_error?: string | null
+          notion_sync_status?: string
           phone?: string
           sectors?: string[] | null
           status?: string
