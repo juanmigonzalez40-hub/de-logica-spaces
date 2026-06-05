@@ -77,6 +77,17 @@ export const UnifiedContactForm = ({
         event_id: eventId
       });
 
+      // Obtener las cookies Meta
+      const fbp = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('_fbp='))
+        ?.split('=')[1];
+
+      const fbc = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('_fbc='))
+        ?.split('=')[1];
+
       // Send email notification
       try {
         await supabase.functions.invoke('send-contact-email', {
@@ -89,6 +100,11 @@ export const UnifiedContactForm = ({
             message: `${validated.project}\n\nPresupuesto: ${validated.budget.join(', ')}\n\nObservaciones: ${validated.observations || 'N/A'}`,
             city: validated.city,
             cif: validated.cif,
+            event_id: eventId,
+            fbp: fbp,
+            fbc: fbc,
+            userAgent: navigator.userAgent,
+            sourceUrl: window.location.href,
           }
         });
       } catch (emailError) {

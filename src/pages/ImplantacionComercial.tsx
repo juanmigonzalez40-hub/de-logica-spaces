@@ -178,6 +178,17 @@ export default function ImplantacionComercial() {
         submittedAt: new Date().toISOString()
       });
 
+      // Obtener las cookies Meta
+      const fbp = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('_fbp='))
+        ?.split('=')[1];
+
+      const fbc = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('_fbc='))
+        ?.split('=')[1];
+
       // Send email notification via Supabase Function (optional fallback)
       try {
         await supabase.functions.invoke('send-contact-email', {
@@ -190,6 +201,11 @@ export default function ImplantacionComercial() {
             message: `${formData.descripcion}\n\nDetalles adicionales:\n${formattedNotes}`,
             city: formData.ciudad || "No especificada",
             cif: formData.cif || "N/A",
+            event_id: eventId,
+            fbp: fbp,
+            fbc: fbc,
+            userAgent: navigator.userAgent,
+            sourceUrl: window.location.href,
           }
         });
       } catch (emailError) {
