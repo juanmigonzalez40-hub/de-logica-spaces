@@ -46,6 +46,11 @@ export const UnifiedContactForm = ({
     try {
       const validated = unifiedFormSchema.parse(formData);
 
+      // META CAPI - event_id para deduplicación futura
+      const eventId = typeof crypto !== 'undefined' && crypto.randomUUID 
+        ? crypto.randomUUID() 
+        : 'evt_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
+
       const { error } = await supabase
         .from('contact_submissions')
         .insert({
@@ -60,6 +65,7 @@ export const UnifiedContactForm = ({
           message: validated.project,
           budget: validated.budget,
           notes: validated.observations || null,
+          event_id: eventId,
         });
 
       if (error) throw error;

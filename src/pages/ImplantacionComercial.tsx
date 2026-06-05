@@ -138,9 +138,14 @@ export default function ImplantacionComercial() {
     setIsSubmitting(true);
 
     try {
-      // Format notes containing metadata fields to easily review in Supabase panel
+      // Formatear metadatos específicos para verlos fácilmente en el panel
       const formattedNotes = `Cargo: ${formData.cargo}\nNúmero de centros: ${formData.numCentros}\nAperturas previstas: ${formData.aperturasPrevistas}\nInversión estimada: ${formData.inversionEstimada}\nPlazo previsto: ${formData.plazoPrevisto}`;
       
+      // META CAPI - event_id para deduplicación futura
+      const eventId = typeof crypto !== 'undefined' && crypto.randomUUID 
+        ? crypto.randomUUID() 
+        : 'evt_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
+
       const { error } = await supabase
         .from('contact_submissions')
         .insert({
@@ -155,6 +160,7 @@ export default function ImplantacionComercial() {
           message: formData.descripcion,
           budget: [formData.inversionEstimada],
           notes: formattedNotes,
+          event_id: eventId,
         });
 
       if (error) throw error;
