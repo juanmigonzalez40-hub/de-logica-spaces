@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@2.0.0";
 
-// Forced redeploy to reload environment variables (META_PIXEL_ID, META_ACCESS_TOKEN) - 2026-06-05 12:35:01
+// Forced redeploy to reload environment variables (META_PIXEL_ID, META_ACCESS_TOKEN) - 2026-06-05 13:00:00
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
