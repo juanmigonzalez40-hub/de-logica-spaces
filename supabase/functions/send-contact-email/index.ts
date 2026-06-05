@@ -33,6 +33,13 @@ function escapeHtml(unsafe: string): string {
     .replace(/'/g, '&#039;');
 }
 
+async function sha256(message: string): Promise<string> {
+  const msgBuffer = new TextEncoder().encode(message.trim().toLowerCase());
+  const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
 interface ContactEmailRequest {
   name: string;
   email: string;
@@ -40,6 +47,11 @@ interface ContactEmailRequest {
   company?: string;
   business_type?: string;
   message: string;
+  event_id?: string;
+  fbp?: string;
+  fbc?: string;
+  userAgent?: string;
+  sourceUrl?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -175,6 +187,72 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     console.log("Email enviado exitosamente:", emailResponse);
+
+    // =========================================================================
+    // META CONVERSIONS API (CAPI) INTEGRATION
+    // =========================================================================
+    const META_PIXEL_ID = Deno.env.get("META_PIXEL_ID");
+    const META_ACCESS_TOKEN = Deno.env.get("META_ACCESS_TOKEN");
+
+    if (raw.event_id) {
+      if (META_PIXEL_ID && META_ACCESS_TOKEN) {
+        try {
+          const hashedEmail = await sha256(raw.email);
+          
+          // Limpiar y formatear teléfono (ej: +34 600 000 000 -> 34600000000)
+          const cleanedPhone = raw.phone.replace(/\D/g, '');
+          // Si tiene 9 dígitos y empieza por 6/7/8/9, asumimos código de país de España (34)
+          const formattedPhone = (cleanedPhone.length === 9 && /^[6789]/.test(cleanedPhone))
+            ? '34' + cleanedPhone
+            : cleanedPhone;
+          const hashedPhone = await sha256(formattedPhone);
+
+          const capiPayload = {
+            data: [
+              {
+                event_name: "Lead",
+                event_time: Math.floor(Date.now() / 1000),
+                event_id: raw.event_id,
+                event_source_url: raw.sourceUrl || "https://de-logica.com/",
+                action_source: "website",
+                user_data: {
+                  em: [hashedEmail],
+                  ph: [hashedPhone],
+                  client_ip_address: clientIp,
+                  client_user_agent: raw.userAgent || req.headers.get("user-agent") || "",
+                  fbp: raw.fbp || undefined,
+                  fbc: raw.fbc || undefined,
+                },
+              },
+            ],
+          };
+
+          console.log(`[CAPI] Enviando evento Lead a Meta CAPI con event_id: ${raw.event_id}`);
+          
+          const capiResponse = await fetch(
+            `https://graph.facebook.com/v19.0/${META_PIXEL_ID}/events?access_token=${META_ACCESS_TOKEN}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(capiPayload),
+            }
+          );
+
+          const capiResult = await capiResponse.json();
+          if (!capiResponse.ok) {
+            console.error("[CAPI] Error en respuesta de Meta CAPI:", capiResult);
+          } else {
+            console.log("[CAPI] Evento enviado exitosamente a Meta CAPI:", capiResult);
+          }
+        } catch (capiError) {
+          console.error("[CAPI] Excepción al enviar evento a Meta CAPI:", capiError);
+        }
+      } else {
+        console.warn("[CAPI] Warning: Faltan las variables de entorno META_PIXEL_ID o META_ACCESS_TOKEN en Supabase. El envío a Meta CAPI ha sido omitido.");
+      }
+    }
 
     return new Response(JSON.stringify({ success: true, data: emailResponse }), {
       status: 200,
