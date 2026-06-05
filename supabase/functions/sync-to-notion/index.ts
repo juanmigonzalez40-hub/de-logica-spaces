@@ -214,7 +214,7 @@ serve(async (req: Request) => {
         { key: "Teléfono principal", value: phone },
         { key: "Ciudad", value: city },
         { key: "País", value: "España" },
-        { key: "Estado de cliente", value: "Lead" },
+        { key: "Estado de cliente", value: "Lead recibido" },
       ];
 
       for (const field of fieldsMapping) {
