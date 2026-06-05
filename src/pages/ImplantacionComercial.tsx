@@ -165,6 +165,13 @@ export default function ImplantacionComercial() {
 
       if (error) throw error;
 
+      // Inicializar y empujar evento a la capa de datos de Google Tag Manager (GTM)
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: 'lead_form_submitted',
+        event_id: eventId
+      });
+
       // Mock Notion future integration message in console for future developers
       console.log("Future automation hook: Sending to Notion database...", {
         ...formData,
