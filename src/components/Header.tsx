@@ -83,7 +83,7 @@ export const Header = () => {
           </button>
         ) : (
           <div className="md:hidden">
-            <Button asChild variant="primary" size="xs" className="text-xs py-1 px-3">
+            <Button asChild variant="primary" size="sm" className="text-xs py-1 px-3 h-8">
               <a href="#formulario">Valorar</a>
             </Button>
           </div>

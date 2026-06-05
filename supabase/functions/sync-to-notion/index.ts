@@ -6,99 +6,58 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Helper to extract clean domain from email address
 function extractDomain(email: string): string | null {
   if (!email) return null;
   const parts = email.split("@");
   if (parts.length < 2) return null;
   const domain = parts[1].toLowerCase().trim();
-  
+
   const publicDomains = [
-    "gmail.com", "hotmail.com", "yahoo.com", "yahoo.es", "live.com", 
-    "outlook.com", "outlook.es", "icloud.com", "aol.com", "msn.com", 
+    "gmail.com", "hotmail.com", "yahoo.com", "yahoo.es", "live.com",
+    "outlook.com", "outlook.es", "icloud.com", "aol.com", "msn.com",
     "zoho.com", "protonmail.com", "yandex.com", "mail.com", "ymail.com"
   ];
-  
+
   if (publicDomains.includes(domain)) {
     return null;
   }
   return domain;
 }
 
-// Helper to format values for Notion properties based on their database schema type
 function formatProperty(type: string | null, value: any) {
   if (!type || value === undefined || value === null) return undefined;
-  
+
   switch (type) {
     case "title":
-      return {
-        title: [
-          {
-            text: {
-              content: String(value),
-            },
-          },
-        ],
-      };
+      return { title: [{ text: { content: String(value) } }] };
     case "rich_text":
-      return {
-        rich_text: [
-          {
-            text: {
-              content: String(value),
-            },
-          },
-        ],
-      };
+      return { rich_text: [{ text: { content: String(value) } }] };
     case "email":
-      return {
-        email: String(value).trim().toLowerCase(),
-      };
+      return { email: String(value).trim().toLowerCase() };
     case "phone_number":
-      return {
-        phone_number: String(value).trim(),
-      };
+      return { phone_number: String(value).trim() };
     case "url":
-      return {
-        url: String(value).trim(),
-      };
+      return { url: String(value).trim() };
     case "select":
-      return {
-        select: {
-          name: String(value),
-        },
-      };
+      return { select: { name: String(value) } };
     case "multi_select":
       const items = Array.isArray(value) ? value : [value];
-      return {
-        multi_select: items.map(item => ({ name: String(item) })),
-      };
+      return { multi_select: items.map(item => ({ name: String(item) })) };
     case "number":
       const num = Number(value);
       return isNaN(num) ? undefined : { number: num };
     case "date":
-      return {
-        date: {
-          start: String(value),
-        },
-      };
+      return { date: { start: String(value) } };
     case "relation":
       const ids = Array.isArray(value) ? value : [value];
-      return {
-        relation: ids.map(id => ({ id })),
-      };
+      return { relation: ids.map(id => ({ id })) };
     case "status":
-      return {
-        status: {
-          name: String(value),
-        },
-      };
+      return { status: { name: String(value) } };
     default:
       return undefined;
   }
 }
 
-// Helper for Notion REST API GET request
 async function getNotionDatabase(dbId: string, token: string) {
   const res = await fetch(`https://api.notion.com/v1/databases/${dbId}`, {
     method: "GET",
@@ -114,7 +73,6 @@ async function getNotionDatabase(dbId: string, token: string) {
   return await res.json();
 }
 
-// Helper for Notion REST API query request
 async function queryNotionDatabase(dbId: string, filter: any, token: string) {
   const res = await fetch(`https://api.notion.com/v1/databases/${dbId}/query`, {
     method: "POST",
@@ -132,7 +90,6 @@ async function queryNotionDatabase(dbId: string, filter: any, token: string) {
   return await res.json();
 }
 
-// Helper for Notion REST API create page request
 async function createNotionPage(dbId: string, properties: any, token: string) {
   const res = await fetch("https://api.notion.com/v1/pages", {
     method: "POST",
@@ -158,7 +115,6 @@ serve(async (req: Request) => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // 1. Initialize Clients
   const notionToken = Deno.env.get("NOTION_INTEGRATION_TOKEN");
   const companiesDbId = Deno.env.get("NOTION_DATABASE_COMPANIES_ID");
   const opportunitiesDbId = Deno.env.get("NOTION_DATABASE_OPPORTUNITIES_ID");
@@ -182,9 +138,7 @@ serve(async (req: Request) => {
     const payload = await req.json();
     console.log("Received Database Webhook payload:", JSON.stringify(payload));
 
-    // Ensure we only process INSERT events to avoid webhook loops
     if (payload.type !== "INSERT" && payload.event !== "INSERT") {
-      console.log(`Skipping non-INSERT event type: ${payload.type || payload.event}`);
       return new Response(JSON.stringify({ success: true, message: "Skipped non-INSERT event" }), {
         status: 200,
         headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -199,76 +153,55 @@ serve(async (req: Request) => {
     submissionId = record.id;
     const { name, company, email, phone, cif, city, sectors, message, budget, notes, created_at } = record;
 
-    console.log(`Processing lead sync for submission ID: ${submissionId} (Email: ${email})`);
+    console.log(`Processing lead sync for submission ID: ${submissionId}`);
 
-    // 2. Fetch database schemas once using raw fetch
-    console.log("Retrieving Notion database schemas...");
     const [companiesDb, opportunitiesDb, activitiesDb] = await Promise.all([
       getNotionDatabase(companiesDbId, notionToken),
       getNotionDatabase(opportunitiesDbId, notionToken),
       getNotionDatabase(activitiesDbId, notionToken),
     ]);
 
-    // 3. Search and Deduplicate Empresa
     let companyPageId: string | null = null;
 
-    // A. Priority 1: Search by CIF
     if (cif && cif !== "N/A" && cif !== "") {
       const normalizedCif = cif.toUpperCase().replace(/\s+/g, "");
-      console.log(`Search Step 1: Querying company by CIF: ${normalizedCif}`);
       const filter = {
         property: "CIF",
-        rich_text: {
-          equals: normalizedCif,
-        },
+        rich_text: { equals: normalizedCif },
       };
       const response = await queryNotionDatabase(companiesDbId, filter, notionToken);
       if (response.results && response.results.length > 0) {
         companyPageId = response.results[0].id;
-        console.log("Company matched by CIF:", companyPageId);
       }
     }
 
-    // B. Priority 2: Search by Web Domain
     if (!companyPageId && email) {
       const domain = extractDomain(email);
       if (domain) {
-        console.log(`Search Step 2: Querying company by Web Domain containing: ${domain}`);
         const filter = {
           property: "Web",
-          url: {
-            contains: domain,
-          },
+          url: { contains: domain },
         };
         const response = await queryNotionDatabase(companiesDbId, filter, notionToken);
         if (response.results && response.results.length > 0) {
           companyPageId = response.results[0].id;
-          console.log("Company matched by Web Domain:", companyPageId);
         }
       }
     }
 
-    // C. Priority 3: Search by Email Corporativo
     if (!companyPageId && email) {
-      console.log(`Search Step 3: Querying company by Email corporativo: ${email}`);
       const filter = {
         property: "Email corporativo",
-        email: {
-          equals: email.trim().toLowerCase(),
-        },
+        email: { equals: email.trim().toLowerCase() },
       };
       const response = await queryNotionDatabase(companiesDbId, filter, notionToken);
       if (response.results && response.results.length > 0) {
         companyPageId = response.results[0].id;
-        console.log("Company matched by Email corporativo:", companyPageId);
       }
     }
 
-    // 4. Create Empresa if not exists
     if (!companyPageId) {
-      console.log("Company not found in CRM. Creating new Empresa page...");
       const companyProps: any = {};
-      
       const compTitleKey = Object.keys(companiesDb.properties).find(
         key => companiesDb.properties[key].type === "title"
       ) || "Nombre empresa";
@@ -291,26 +224,22 @@ serve(async (req: Request) => {
         }
       }
 
-      // Handle extracted Web domain URL
       const domain = extractDomain(email);
       const webType = companiesDb.properties["Web"]?.type;
       if (webType && domain) {
         companyProps["Web"] = formatProperty(webType, `https://${domain}`);
       }
 
-      // Handle Sectors (multi_select)
       const sectorType = companiesDb.properties["Sector"]?.type;
       if (sectorType && sectors && sectors.length > 0) {
         companyProps["Sector"] = formatProperty(sectorType, sectors);
       }
 
-      // Handle Facturación estimada from budget array
       const budgetType = companiesDb.properties["Facturación estimada"]?.type;
       if (budgetType && budget && budget.length > 0) {
         companyProps["Facturación estimada"] = formatProperty(budgetType, budget[0]);
       }
 
-      // Handle Número de sedes from notes centers extraction
       const sedesType = companiesDb.properties["Número de sedes"]?.type;
       if (sedesType && notes) {
         const centersMatch = notes.match(/Número de centros:\s*(.+)/i);
@@ -321,13 +250,9 @@ serve(async (req: Request) => {
 
       const newCompany = await createNotionPage(companiesDbId, companyProps, notionToken);
       companyPageId = newCompany.id;
-      console.log(`New Empresa page created with ID: ${companyPageId}`);
     }
 
-    // 5. Create Oportunidad Comercial
-    console.log("Creating Oportunidad Comercial page...");
     const oppProps: any = {};
-
     const oppTitleKey = Object.keys(opportunitiesDb.properties).find(
       key => opportunitiesDb.properties[key].type === "title"
     ) || "Nombre";
@@ -355,19 +280,14 @@ serve(async (req: Request) => {
 
     const newOpp = await createNotionPage(opportunitiesDbId, oppProps, notionToken);
     const opportunityPageId = newOpp.id;
-    console.log(`New Oportunidad page created with ID: ${opportunityPageId}`);
 
-    // 6. Create Actividad Comercial
-    console.log("Creating Actividad Comercial page...");
     const actProps: any = {};
-
     const actTitleKey = Object.keys(activitiesDb.properties).find(
       key => activitiesDb.properties[key].type === "title"
     ) || "Actividad";
 
     actProps[actTitleKey] = formatProperty("title", `Formulario Web - ${name}`);
 
-    // Format rich text notes details
     const notesContent = `
 === DATOS DEL FORMULARIO ===
 Contacto: ${name}
@@ -401,20 +321,15 @@ ${notes || 'Ninguno'}
     }
 
     await createNotionPage(activitiesDbId, actProps, notionToken);
-    console.log("New Actividad page created successfully in Notion.");
 
-    // 7. Update status to synced in Supabase
     if (submissionId) {
-      console.log(`Updating submission ${submissionId} status to synced in Supabase...`);
-      const { error: dbError } = await supabase
+      await supabase
         .from("contact_submissions")
         .update({
           notion_sync_status: "synced",
           notion_sync_error: null,
         })
         .eq("id", submissionId);
-      
-      if (dbError) throw dbError;
     }
 
     return new Response(JSON.stringify({ success: true, message: "Lead synced to Notion successfully" }), {
@@ -423,12 +338,9 @@ ${notes || 'Ninguno'}
     });
 
   } catch (error: any) {
-    console.error("Sync error occurred in sync-to-notion Edge Function:", error);
-
-    // 8. Update status to failed and store the error message in Supabase
+    console.error("Sync error:", error);
     if (submissionId) {
       try {
-        console.log(`Updating submission ${submissionId} status to failed in Supabase...`);
         await supabase
           .from("contact_submissions")
           .update({
@@ -437,7 +349,7 @@ ${notes || 'Ninguno'}
           })
           .eq("id", submissionId);
       } catch (updateDbError) {
-        console.error("Failed to update sync error in contact_submissions table:", updateDbError);
+        console.error("Failed to update status:", updateDbError);
       }
     }
 
