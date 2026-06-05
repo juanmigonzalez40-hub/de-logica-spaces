@@ -250,6 +250,7 @@ serve(async (req: Request) => {
       }
 
       console.log("CREANDO EMPRESA");
+      console.log("PAYLOAD_EMPRESA", JSON.stringify(companyProps, null, 2));
       const newCompany = await createNotionPage(companiesDbId, companyProps, notionToken);
       console.log("EMPRESA CREADA");
       companyPageId = newCompany.id;
@@ -282,6 +283,7 @@ serve(async (req: Request) => {
     }
 
     console.log("CREANDO OPORTUNIDAD");
+    console.log("PAYLOAD_OPORTUNIDAD", JSON.stringify(oppProps, null, 2));
     const newOpp = await createNotionPage(opportunitiesDbId, oppProps, notionToken);
     console.log("OPORTUNIDAD CREADA");
     const opportunityPageId = newOpp.id;
