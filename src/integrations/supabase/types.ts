@@ -23,6 +23,7 @@ export type Database = {
           company: string | null
           created_at: string
           email: string
+          event_id: string | null
           id: string
           message: string
           name: string
@@ -41,6 +42,7 @@ export type Database = {
           company?: string | null
           created_at?: string
           email: string
+          event_id?: string | null
           id?: string
           message: string
           name: string
@@ -59,6 +61,7 @@ export type Database = {
           company?: string | null
           created_at?: string
           email?: string
+          event_id?: string | null
           id?: string
           message?: string
           name?: string
