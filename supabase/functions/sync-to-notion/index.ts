@@ -249,7 +249,9 @@ serve(async (req: Request) => {
         }
       }
 
+      console.log("CREANDO EMPRESA");
       const newCompany = await createNotionPage(companiesDbId, companyProps, notionToken);
+      console.log("EMPRESA CREADA");
       companyPageId = newCompany.id;
     }
 
@@ -279,7 +281,9 @@ serve(async (req: Request) => {
       }
     }
 
+    console.log("CREANDO OPORTUNIDAD");
     const newOpp = await createNotionPage(opportunitiesDbId, oppProps, notionToken);
+    console.log("OPORTUNIDAD CREADA");
     const opportunityPageId = newOpp.id;
 
     const actProps: any = {};
@@ -321,7 +325,9 @@ ${notes || 'Ninguno'}
       }
     }
 
+    console.log("CREANDO ACTIVIDAD");
     await createNotionPage(activitiesDbId, actProps, notionToken);
+    console.log("ACTIVIDAD CREADA");
 
     if (submissionId) {
       await supabase
