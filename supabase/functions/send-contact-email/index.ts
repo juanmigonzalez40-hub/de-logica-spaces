@@ -76,6 +76,12 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const raw: ContactEmailRequest = await req.json();
 
+    // DEBUG - logs temporales para verificar el funcionamiento real en producción
+    console.log("[DEBUG] event_id:", raw.event_id);
+    console.log("[DEBUG] fbp:", raw.fbp);
+    console.log("[DEBUG] fbc:", raw.fbc);
+    console.log("[DEBUG] sourceUrl:", raw.sourceUrl);
+
     // Input validation
     if (!raw.name || typeof raw.name !== 'string' || raw.name.trim().length === 0 || raw.name.length > 200) {
       return new Response(JSON.stringify({ success: false, error: "Invalid name" }), { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } });
