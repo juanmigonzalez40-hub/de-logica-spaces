@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Client } from "https://esm.sh/@notionhq/client@2.2.15";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.8";
 
 const corsHeaders = {
@@ -12,13 +11,13 @@ function extractDomain(email: string): string | null {
   const parts = email.split("@");
   if (parts.length < 2) return null;
   const domain = parts[1].toLowerCase().trim();
-  
+
   const publicDomains = [
-    "gmail.com", "hotmail.com", "yahoo.com", "yahoo.es", "live.com", 
-    "outlook.com", "outlook.es", "icloud.com", "aol.com", "msn.com", 
+    "gmail.com", "hotmail.com", "yahoo.com", "yahoo.es", "live.com",
+    "outlook.com", "outlook.es", "icloud.com", "aol.com", "msn.com",
     "zoho.com", "protonmail.com", "yandex.com", "mail.com", "ymail.com"
   ];
-  
+
   if (publicDomains.includes(domain)) {
     return null;
   }
@@ -27,74 +26,88 @@ function extractDomain(email: string): string | null {
 
 function formatProperty(type: string | null, value: any) {
   if (!type || value === undefined || value === null) return undefined;
-  
+
   switch (type) {
     case "title":
-      return {
-        title: [
-          {
-            text: {
-              content: String(value),
-            },
-          },
-        ],
-      };
+      return { title: [{ text: { content: String(value) } }] };
     case "rich_text":
-      return {
-        rich_text: [
-          {
-            text: {
-              content: String(value),
-            },
-          },
-        ],
-      };
+      return { rich_text: [{ text: { content: String(value) } }] };
     case "email":
-      return {
-        email: String(value).trim().toLowerCase(),
-      };
+      return { email: String(value).trim().toLowerCase() };
     case "phone_number":
-      return {
-        phone_number: String(value).trim(),
-      };
+      return { phone_number: String(value).trim() };
     case "url":
-      return {
-        url: String(value).trim(),
-      };
+      return { url: String(value).trim() };
     case "select":
-      return {
-        select: {
-          name: String(value),
-        },
-      };
+      return { select: { name: String(value) } };
     case "multi_select":
       const items = Array.isArray(value) ? value : [value];
-      return {
-        multi_select: items.map(item => ({ name: String(item) })),
-      };
+      return { multi_select: items.map(item => ({ name: String(item) })) };
     case "number":
       const num = Number(value);
       return isNaN(num) ? undefined : { number: num };
     case "date":
-      return {
-        date: {
-          start: String(value),
-        },
-      };
+      return { date: { start: String(value) } };
     case "relation":
       const ids = Array.isArray(value) ? value : [value];
-      return {
-        relation: ids.map(id => ({ id })),
-      };
+      return { relation: ids.map(id => ({ id })) };
     case "status":
-      return {
-        status: {
-          name: String(value),
-        },
-      };
+      return { status: { name: String(value) } };
     default:
       return undefined;
   }
+}
+
+async function getNotionDatabase(dbId: string, token: string) {
+  const res = await fetch(`https://api.notion.com/v1/databases/${dbId}`, {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Notion-Version": "2022-06-28",
+    },
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Error retrieving Notion DB (${dbId}): ${res.status} ${err}`);
+  }
+  return await res.json();
+}
+
+async function queryNotionDatabase(dbId: string, filter: any, token: string) {
+  const res = await fetch(`https://api.notion.com/v1/databases/${dbId}/query`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Notion-Version": "2022-06-28",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ filter }),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Error querying Notion DB (${dbId}): ${res.status} ${err}`);
+  }
+  return await res.json();
+}
+
+async function createNotionPage(dbId: string, properties: any, token: string) {
+  const res = await fetch("https://api.notion.com/v1/pages", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Notion-Version": "2022-06-28",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      parent: { database_id: dbId },
+      properties,
+    }),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Error creating Notion page in DB (${dbId}): ${res.status} ${err}`);
+  }
+  return await res.json();
 }
 
 serve(async (req: Request) => {
@@ -119,7 +132,6 @@ serve(async (req: Request) => {
     );
   }
 
-  const notion = new Client({ auth: notionToken });
   let submissionId: string | null = null;
 
   try {
@@ -144,66 +156,50 @@ serve(async (req: Request) => {
     console.log(`Processing lead sync for submission ID: ${submissionId}`);
 
     const [companiesDb, opportunitiesDb, activitiesDb] = await Promise.all([
-      notion.databases.retrieve({ database_id: companiesDbId }),
-      notion.databases.retrieve({ database_id: opportunitiesDbId }),
-      notion.databases.retrieve({ database_id: activitiesDbId }),
+      getNotionDatabase(companiesDbId, notionToken),
+      getNotionDatabase(opportunitiesDbId, notionToken),
+      getNotionDatabase(activitiesDbId, notionToken),
     ]);
 
     let companyPageId: string | null = null;
 
-    // 1. Buscar por CIF
     if (cif && cif !== "N/A" && cif !== "") {
       const normalizedCif = cif.toUpperCase().replace(/\s+/g, "");
-      const response = await notion.databases.query({
-        database_id: companiesDbId,
-        filter: {
-          property: "CIF",
-          rich_text: {
-            equals: normalizedCif,
-          },
-        },
-      });
-      if (response.results.length > 0) {
+      const filter = {
+        property: "CIF",
+        rich_text: { equals: normalizedCif },
+      };
+      const response = await queryNotionDatabase(companiesDbId, filter, notionToken);
+      if (response.results && response.results.length > 0) {
         companyPageId = response.results[0].id;
       }
     }
 
-    // 2. Buscar por Web / Dominio
     if (!companyPageId && email) {
       const domain = extractDomain(email);
       if (domain) {
-        const response = await notion.databases.query({
-          database_id: companiesDbId,
-          filter: {
-            property: "Web",
-            url: {
-              contains: domain,
-            },
-          },
-        });
-        if (response.results.length > 0) {
+        const filter = {
+          property: "Web",
+          url: { contains: domain },
+        };
+        const response = await queryNotionDatabase(companiesDbId, filter, notionToken);
+        if (response.results && response.results.length > 0) {
           companyPageId = response.results[0].id;
         }
       }
     }
 
-    // 3. Buscar por Email corporativo
     if (!companyPageId && email) {
-      const response = await notion.databases.query({
-        database_id: companiesDbId,
-        filter: {
-          property: "Email corporativo",
-          email: {
-            equals: email.trim().toLowerCase(),
-          },
-        },
-      });
-      if (response.results.length > 0) {
+      const filter = {
+        property: "Email corporativo",
+        email: { equals: email.trim().toLowerCase() },
+      };
+      const response = await queryNotionDatabase(companiesDbId, filter, notionToken);
+      if (response.results && response.results.length > 0) {
         companyPageId = response.results[0].id;
       }
     }
 
-    // Crear Empresa si no existe
     if (!companyPageId) {
       const companyProps: any = {};
       const compTitleKey = Object.keys(companiesDb.properties).find(
@@ -252,14 +248,10 @@ serve(async (req: Request) => {
         }
       }
 
-      const newCompany = await notion.pages.create({
-        parent: { database_id: companiesDbId },
-        properties: companyProps,
-      });
+      const newCompany = await createNotionPage(companiesDbId, companyProps, notionToken);
       companyPageId = newCompany.id;
     }
 
-    // Crear Oportunidad Comercial
     const oppProps: any = {};
     const oppTitleKey = Object.keys(opportunitiesDb.properties).find(
       key => opportunitiesDb.properties[key].type === "title"
@@ -286,13 +278,9 @@ serve(async (req: Request) => {
       }
     }
 
-    const newOpp = await notion.pages.create({
-      parent: { database_id: opportunitiesDbId },
-      properties: oppProps,
-    });
+    const newOpp = await createNotionPage(opportunitiesDbId, oppProps, notionToken);
     const opportunityPageId = newOpp.id;
 
-    // Crear Actividad Comercial
     const actProps: any = {};
     const actTitleKey = Object.keys(activitiesDb.properties).find(
       key => activitiesDb.properties[key].type === "title"
@@ -332,10 +320,7 @@ ${notes || 'Ninguno'}
       }
     }
 
-    await notion.pages.create({
-      parent: { database_id: activitiesDbId },
-      properties: actProps,
-    });
+    await createNotionPage(activitiesDbId, actProps, notionToken);
 
     if (submissionId) {
       await supabase
