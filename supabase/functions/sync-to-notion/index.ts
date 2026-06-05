@@ -111,6 +111,7 @@ async function createNotionPage(dbId: string, properties: any, token: string) {
 }
 
 serve(async (req: Request) => {
+  console.log("SYNC_TO_NOTION_VERSION_20260605_01");
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
