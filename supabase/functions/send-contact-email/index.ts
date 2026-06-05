@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@2.0.0";
 
+// Forced redeploy to reload environment variables (META_PIXEL_ID, META_ACCESS_TOKEN) - 2026-06-05 12:35:01
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
@@ -81,6 +82,14 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("[DEBUG] fbp:", raw.fbp);
     console.log("[DEBUG] fbc:", raw.fbc);
     console.log("[DEBUG] sourceUrl:", raw.sourceUrl);
+
+    {
+      const META_PIXEL_ID = Deno.env.get("META_PIXEL_ID");
+      const META_ACCESS_TOKEN = Deno.env.get("META_ACCESS_TOKEN");
+
+      console.log("[DEBUG META_PIXEL_ID]", META_PIXEL_ID);
+      console.log("[DEBUG TOKEN EXISTS]", !!META_ACCESS_TOKEN);
+    }
 
     // Input validation
     if (!raw.name || typeof raw.name !== 'string' || raw.name.trim().length === 0 || raw.name.length > 200) {
@@ -234,6 +243,8 @@ const handler = async (req: Request): Promise<Response> => {
           };
 
           console.log(`[CAPI] Enviando evento Lead a Meta CAPI con event_id: ${raw.event_id}`);
+          console.log("[DEBUG META_PIXEL_ID]", Deno.env.get("META_PIXEL_ID"));
+          console.log("[DEBUG TOKEN EXISTS]", !!Deno.env.get("META_ACCESS_TOKEN"));
           
           const capiResponse = await fetch(
             `https://graph.facebook.com/v19.0/${META_PIXEL_ID}/events?access_token=${META_ACCESS_TOKEN}`,
