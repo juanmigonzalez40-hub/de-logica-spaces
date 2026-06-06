@@ -110,6 +110,23 @@ async function createNotionPage(dbId: string, properties: any, token: string) {
   return await res.json();
 }
 
+async function updateNotionPage(pageId: string, properties: any, token: string) {
+  const res = await fetch(`https://api.notion.com/v1/pages/${pageId}`, {
+    method: "PATCH",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Notion-Version": "2022-06-28",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ properties }),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Error updating Notion page (${pageId}): ${res.status} ${err}`);
+  }
+  return await res.json();
+}
+
 serve(async (req: Request) => {
   console.log("SYNC_TO_NOTION_VERSION_D9CC5A8");
   if (req.method === "OPTIONS") {
@@ -160,6 +177,7 @@ serve(async (req: Request) => {
     } = record;
 
     console.log(`Processing lead sync for submission ID: ${submissionId}`);
+    console.log("DEBUG_COMPANY_RECORD", JSON.stringify(record, null, 2));
 
     const [companiesDb, opportunitiesDb, activitiesDb] = await Promise.all([
       getNotionDatabase(companiesDbId, notionToken),
@@ -175,9 +193,11 @@ serve(async (req: Request) => {
         property: "CIF",
         rich_text: { equals: normalizedCif },
       };
+      console.log("DEBUG_COMPANY_MATCH_CIF", JSON.stringify(filter, null, 2));
       const response = await queryNotionDatabase(companiesDbId, filter, notionToken);
       if (response.results && response.results.length > 0) {
         companyPageId = response.results[0].id;
+        console.log("Empresa encontrada por CIF.");
       }
     }
 
@@ -188,9 +208,11 @@ serve(async (req: Request) => {
           property: "Web",
           url: { contains: domain },
         };
+        console.log("DEBUG_COMPANY_MATCH_DOMAIN", JSON.stringify(filter, null, 2));
         const response = await queryNotionDatabase(companiesDbId, filter, notionToken);
         if (response.results && response.results.length > 0) {
           companyPageId = response.results[0].id;
+          console.log("Empresa encontrada por dominio.");
         }
       }
     }
@@ -200,69 +222,97 @@ serve(async (req: Request) => {
         property: "Email corporativo",
         email: { equals: email.trim().toLowerCase() },
       };
+      console.log("DEBUG_COMPANY_MATCH_EMAIL", JSON.stringify(filter, null, 2));
       const response = await queryNotionDatabase(companiesDbId, filter, notionToken);
       if (response.results && response.results.length > 0) {
         companyPageId = response.results[0].id;
+        console.log("Empresa encontrada por email.");
       }
     }
 
+    const companyProps: any = {};
+    const compTitleKey = Object.keys(companiesDb.properties).find(
+      key => companiesDb.properties[key].type === "title"
+    ) || "Nombre empresa";
+
+    companyProps[compTitleKey] = formatProperty("title", company || name || "Empresa Sin Nombre");
+
+    const fieldsMapping = [
+      { key: "CIF", value: cif ? cif.toUpperCase().replace(/\s+/g, "") : null },
+      { key: "Email corporativo", value: email },
+      { key: "Teléfono principal", value: phone },
+      { key: "Ciudad", value: city },
+      { key: "País", value: "España" },
+      { key: "Estado de cliente", value: "Lead recibido" },
+    ];
+
+    for (const field of fieldsMapping) {
+      const type = companiesDb.properties[field.key]?.type;
+      if (type && field.value) {
+        companyProps[field.key] = formatProperty(type, field.value);
+      }
+    }
+
+    const domain = extractDomain(email);
+    const webType = companiesDb.properties["Web"]?.type;
+    if (webType && domain) {
+      companyProps["Web"] = formatProperty(webType, `https://${domain}`);
+    }
+
+    const sectorType = companiesDb.properties["Sector"]?.type;
+    const combinedSectors = [];
+    if (sectors && Array.isArray(sectors)) combinedSectors.push(...sectors);
+    
+    if (project_types && Array.isArray(project_types)) {
+      const PROJECT_TYPES_MAP: Record<string, string> = {
+        "implantacion_integral": "Implantación integral",
+        "mobiliario_comercial": "Mobiliario a medida",
+        "rotulation_corporativa": "Rotulación corporativa",
+        "rotulacion_corporativa": "Rotulación corporativa",
+        "produccion_grafica": "Producción gráfica",
+        "renovacion_restyling": "Renovación / Restyling"
+      };
+      for (const pt of project_types) {
+        combinedSectors.push(PROJECT_TYPES_MAP[pt] || pt);
+      }
+    }
+    
+    if (sectorType && combinedSectors.length > 0) {
+      const uniqueSectors = [...new Set(combinedSectors)];
+      companyProps["Sector"] = formatProperty(sectorType, uniqueSectors);
+    }
+
+    const budgetType = companiesDb.properties["Facturación estimada"]?.type;
+    const budgetValue = (budget && budget.length > 0) ? budget[0] : (presupuesto_estimado || null);
+    if (budgetType && budgetValue) {
+      companyProps["Facturación estimada"] = formatProperty(budgetType, budgetValue);
+    }
+
+    const sedesType = companiesDb.properties["Número de sedes"]?.type;
+    if (sedesType) {
+      if (num_centros) {
+        companyProps["Número de sedes"] = formatProperty(sedesType, num_centros);
+      } else if (notes) {
+        const centersMatch = notes.match(/Número de centros:\s*(.+)/i);
+        if (centersMatch && centersMatch[1]) {
+          companyProps["Número de sedes"] = formatProperty(sedesType, centersMatch[1].trim());
+        }
+      }
+    }
+
+    console.log("DEBUG_COMPANY_PROPS", JSON.stringify(companyProps, null, 2));
+
     if (!companyPageId) {
-      const companyProps: any = {};
-      const compTitleKey = Object.keys(companiesDb.properties).find(
-        key => companiesDb.properties[key].type === "title"
-      ) || "Nombre empresa";
-
-      companyProps[compTitleKey] = formatProperty("title", company || name || "Empresa Sin Nombre");
-
-      const fieldsMapping = [
-        { key: "CIF", value: cif ? cif.toUpperCase().replace(/\s+/g, "") : null },
-        { key: "Email corporativo", value: email },
-        { key: "Teléfono principal", value: phone },
-        { key: "Ciudad", value: city },
-        { key: "País", value: "España" },
-        { key: "Estado de cliente", value: "Lead recibido" },
-      ];
-
-      for (const field of fieldsMapping) {
-        const type = companiesDb.properties[field.key]?.type;
-        if (type && field.value) {
-          companyProps[field.key] = formatProperty(type, field.value);
-        }
-      }
-
-      const domain = extractDomain(email);
-      const webType = companiesDb.properties["Web"]?.type;
-      if (webType && domain) {
-        companyProps["Web"] = formatProperty(webType, `https://${domain}`);
-      }
-
-      const sectorType = companiesDb.properties["Sector"]?.type;
-      if (sectorType && sectors && sectors.length > 0) {
-        companyProps["Sector"] = formatProperty(sectorType, sectors);
-      }
-
-      const budgetType = companiesDb.properties["Facturación estimada"]?.type;
-      if (budgetType && budget && budget.length > 0) {
-        companyProps["Facturación estimada"] = formatProperty(budgetType, budget[0]);
-      }
-
-      const sedesType = companiesDb.properties["Número de sedes"]?.type;
-      if (sedesType) {
-        if (num_centros) {
-          companyProps["Número de sedes"] = formatProperty(sedesType, num_centros);
-        } else if (notes) {
-          const centersMatch = notes.match(/Número de centros:\s*(.+)/i);
-          if (centersMatch && centersMatch[1]) {
-            companyProps["Número de sedes"] = formatProperty(sedesType, centersMatch[1].trim());
-          }
-        }
-      }
-
-      console.log("CREANDO EMPRESA");
+      console.log("Empresa creada nueva.");
       console.log("PAYLOAD_EMPRESA", JSON.stringify(companyProps, null, 2));
       const newCompany = await createNotionPage(companiesDbId, companyProps, notionToken);
-      console.log("EMPRESA CREADA");
+      console.log("RESPUESTA_NOTION_EMPRESA", JSON.stringify(newCompany, null, 2));
       companyPageId = newCompany.id;
+    } else {
+      console.log("Empresa actualizada.");
+      console.log("PAYLOAD_EMPRESA", JSON.stringify(companyProps, null, 2));
+      const updatedCompany = await updateNotionPage(companyPageId, companyProps, notionToken);
+      console.log("RESPUESTA_NOTION_EMPRESA", JSON.stringify(updatedCompany, null, 2));
     }
 
     const oppProps: any = {};
