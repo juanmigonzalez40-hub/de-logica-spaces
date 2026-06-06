@@ -66,6 +66,7 @@ export const UnifiedContactForm = ({
           budget: validated.budget,
           notes: validated.observations || null,
           event_id: eventId,
+          source: "Web Principal",
         });
 
       if (error) throw error;

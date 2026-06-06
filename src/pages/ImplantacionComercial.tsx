@@ -161,6 +161,7 @@ export default function ImplantacionComercial() {
           budget: [formData.inversionEstimada],
           notes: formattedNotes,
           event_id: eventId,
+          source: "Landing A",
         });
 
       if (error) throw error;

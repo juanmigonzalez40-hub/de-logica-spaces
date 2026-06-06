@@ -152,7 +152,7 @@ serve(async (req: Request) => {
     }
 
     submissionId = record.id;
-    const { name, company, email, phone, cif, city, sectors, message, budget, notes, created_at } = record;
+    const { name, company, email, phone, cif, city, sectors, message, budget, notes, created_at, source } = record;
 
     console.log(`Processing lead sync for submission ID: ${submissionId}`);
 
@@ -265,7 +265,7 @@ serve(async (req: Request) => {
 
     const oppFields = [
       { key: "Empresa", value: companyPageId, typeOverride: "relation" },
-      { key: "Procedencia", value: "Landing A" },
+      { key: "Procedencia", value: source },
       { key: "Campaña", value: "Implantación Comercial" },
       { key: "Estado comercial", value: "Lead recibido" },
       { key: "Valor estimado", value: null },

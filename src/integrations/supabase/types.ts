@@ -32,6 +32,7 @@ export type Database = {
           notion_sync_status: string
           phone: string
           sectors: string[] | null
+          source: string | null
           status: string
         }
         Insert: {
@@ -51,6 +52,7 @@ export type Database = {
           notion_sync_status?: string
           phone: string
           sectors?: string[] | null
+          source?: string | null
           status?: string
         }
         Update: {
@@ -70,6 +72,7 @@ export type Database = {
           notion_sync_status?: string
           phone?: string
           sectors?: string[] | null
+          source?: string | null
           status?: string
         }
         Relationships: []
