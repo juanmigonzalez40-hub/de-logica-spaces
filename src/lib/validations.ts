@@ -13,9 +13,15 @@ export const unifiedFormSchema = z.object({
   email: z.string().trim().email({ message: 'Email inválido' }).max(255, { message: 'Email demasiado largo' }),
   city: z.string().trim().min(1, { message: 'La ciudad es obligatoria' }).max(100, { message: 'El nombre de la ciudad es demasiado largo' }),
   cif: z.string().trim().min(1, { message: 'El CIF es obligatorio' }).max(20, { message: 'CIF demasiado largo' }),
+  cargo: z.string().trim().min(1, { message: 'El cargo es obligatorio' }).max(100, { message: 'El cargo es demasiado largo' }),
   sectors: z.array(z.string()).min(1, { message: 'Selecciona al menos un sector' }),
+  project_types: z.array(z.string()).min(1, { message: 'Selecciona al menos un tipo de proyecto' }),
   project: z.string().trim().min(10, { message: 'Cuéntanos más sobre tu proyecto (mínimo 10 caracteres)' }).max(1000, { message: 'El mensaje es demasiado largo' }),
   budget: z.array(z.string()).min(1, { message: 'Selecciona un rango de presupuesto' }),
+  num_centros: z.string().trim().min(1, { message: 'Selecciona el número de centros' }),
+  aperturas_previstas: z.string().trim().min(1, { message: 'Selecciona si prevés aperturas' }),
+  presupuesto_estimado: z.string().trim().min(1, { message: 'Selecciona la inversión estimada' }),
+  plazo_previsto: z.string().trim().min(1, { message: 'Selecciona el plazo previsto' }),
   observations: z.string().trim().max(1000, { message: 'Las observaciones son demasiado largas' }).optional(),
 });
 
