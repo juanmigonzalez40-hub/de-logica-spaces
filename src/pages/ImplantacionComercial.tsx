@@ -135,6 +135,15 @@ export default function ImplantacionComercial() {
       return;
     }
 
+    if (formData.tipoProyecto.length === 0) {
+      toast({
+        title: "Tipo de proyecto",
+        description: "Selecciona al menos un tipo de proyecto para enviar la valoración.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -145,9 +154,10 @@ export default function ImplantacionComercial() {
         ? crypto.randomUUID() 
         : 'evt_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
 
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert({
+      const data = { ...formData };
+      console.log("DEBUG_FORM_DATA", JSON.stringify(data, null, 2));
+
+      const insertPayload = {
           name: formData.nombre,
           company: formData.empresa,
           email: formData.email,
@@ -156,14 +166,20 @@ export default function ImplantacionComercial() {
           cif: formData.cif || "N/A",
           message: formData.descripcion,
           event_id: eventId,
-          source: "Landing A",
+          source: "Web Principal",
           cargo: formData.cargo,
           project_types: formData.tipoProyecto,
           presupuesto_estimado: formData.inversionEstimada,
           num_centros: formData.numCentros,
           aperturas_previstas: formData.aperturasPrevistas,
           plazo_previsto: formData.plazoPrevisto,
-        });
+        };
+
+      console.log("DEBUG_DB_INSERT", JSON.stringify(insertPayload, null, 2));
+
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert(insertPayload);
 
       if (error) throw error;
 

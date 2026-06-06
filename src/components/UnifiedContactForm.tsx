@@ -15,6 +15,19 @@ interface UnifiedContactFormProps {
   showInDialog?: boolean;
 }
 
+const PROJECT_TYPE_OPTIONS = [
+  { value: "implantacion_integral", label: "Implantación integral (Llave en mano)" },
+  { value: "mobiliario_comercial", label: "Mobiliario comercial a medida" },
+  { value: "rotulacion_corporativa", label: "Rotulación y señalética corporativa" },
+  { value: "produccion_grafica", label: "Producción gráfica de gran formato" },
+  { value: "renovacion_restyling", label: "Renovación / Restyling de local" },
+];
+
+const CENTERS_OPTIONS = ["1", "2-5", "6-10", "Más de 10"];
+const OPENINGS_OPTIONS = ["Sí", "No", "En estudio"];
+const INVESTMENT_OPTIONS = ["Menos de 5.000 €", "5.000 € - 15.000 €", "15.000 € - 50.000 €", "Más de 50.000 €"];
+const TIMELINE_OPTIONS = ["Inmediato", "1-3 meses", "3-6 meses", "Más de 6 meses"];
+
 export const UnifiedContactForm = ({ 
   onSuccess, 
   redirectTo = "/gracias",
@@ -27,9 +40,15 @@ export const UnifiedContactForm = ({
     email: "",
     city: "",
     cif: "",
+    cargo: "",
     sectors: [],
+    project_types: [],
     project: "",
     budget: [],
+    num_centros: "1",
+    aperturas_previstas: "No",
+    presupuesto_estimado: "5.000 € - 15.000 €",
+    plazo_previsto: "1-3 meses",
     observations: "",
   });
   const [errors, setErrors] = useState<Partial<Record<keyof UnifiedFormData, string>>>({});
@@ -51,23 +70,35 @@ export const UnifiedContactForm = ({
         ? crypto.randomUUID() 
         : 'evt_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
 
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert({
+      console.log("DEBUG_FORM_DATA", JSON.stringify(validated, null, 2));
+
+      const insertPayload = {
           name: validated.contact,
           company: validated.company,
           email: validated.email,
           phone: validated.phone,
           city: validated.city,
           cif: validated.cif,
+          cargo: validated.cargo,
           sectors: validated.sectors,
+          project_types: validated.project_types,
           business_type: validated.sectors.join(', '),
           message: validated.project,
           budget: validated.budget,
+          num_centros: validated.num_centros,
+          aperturas_previstas: validated.aperturas_previstas,
+          presupuesto_estimado: validated.presupuesto_estimado,
+          plazo_previsto: validated.plazo_previsto,
           notes: validated.observations || null,
           event_id: eventId,
           source: "Web Principal",
-        });
+        };
+
+      console.log("DEBUG_DB_INSERT", JSON.stringify(insertPayload, null, 2));
+
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert(insertPayload);
 
       if (error) throw error;
 
@@ -167,6 +198,16 @@ export const UnifiedContactForm = ({
     }
   };
 
+  const handleProjectTypeChange = (value: string, checked: boolean) => {
+    const newProjectTypes = checked
+      ? [...formData.project_types, value]
+      : formData.project_types.filter(type => type !== value);
+    setFormData({ ...formData, project_types: newProjectTypes });
+    if (errors.project_types) {
+      setErrors(prev => ({ ...prev, project_types: undefined }));
+    }
+  };
+
   const handleBudgetChange = (value: string, checked: boolean) => {
     const newBudget = checked 
       ? [...formData.budget, value]
@@ -260,6 +301,20 @@ export const UnifiedContactForm = ({
         {errors.cif && <p className="text-sm text-destructive">{errors.cif}</p>}
       </div>
 
+      {/* Cargo */}
+      <div className="space-y-2">
+        <Label htmlFor="cargo">Cargo o departamento *</Label>
+        <Input
+          id="cargo"
+          name="cargo"
+          value={formData.cargo}
+          onChange={handleChange}
+          placeholder="Ej. Director de expansión"
+          className={errors.cargo ? "border-destructive" : ""}
+        />
+        {errors.cargo && <p className="text-sm text-destructive">{errors.cargo}</p>}
+      </div>
+
       {/* Sector */}
       <div className="space-y-3">
         <Label>Sector al que pertenece *</Label>
@@ -279,6 +334,86 @@ export const UnifiedContactForm = ({
           ))}
         </div>
         {errors.sectors && <p className="text-sm text-destructive">{errors.sectors}</p>}
+      </div>
+
+      {/* Tipo de proyecto */}
+      <div className="space-y-3">
+        <Label>Tipo de proyecto *</Label>
+        <p className="text-sm text-muted-foreground">(Puedes seleccionar varias opciones)</p>
+        <div className="space-y-2">
+          {PROJECT_TYPE_OPTIONS.map((option) => (
+            <div key={option.value} className="flex items-center space-x-2">
+              <Checkbox
+                id={`project-type-${option.value}`}
+                checked={formData.project_types.includes(option.value)}
+                onCheckedChange={(checked) => handleProjectTypeChange(option.value, checked as boolean)}
+              />
+              <Label htmlFor={`project-type-${option.value}`} className="font-normal cursor-pointer">
+                {option.label}
+              </Label>
+            </div>
+          ))}
+        </div>
+        {errors.project_types && <p className="text-sm text-destructive">{errors.project_types}</p>}
+      </div>
+
+      {/* Datos operativos */}
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="num_centros">Número de centros implicados *</Label>
+          <select
+            id="num_centros"
+            name="num_centros"
+            value={formData.num_centros}
+            onChange={(e) => setFormData({ ...formData, num_centros: e.target.value })}
+            className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+          >
+            {CENTERS_OPTIONS.map((option) => <option key={option}>{option}</option>)}
+          </select>
+          {errors.num_centros && <p className="text-sm text-destructive">{errors.num_centros}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="aperturas_previstas">Aperturas previstas *</Label>
+          <select
+            id="aperturas_previstas"
+            name="aperturas_previstas"
+            value={formData.aperturas_previstas}
+            onChange={(e) => setFormData({ ...formData, aperturas_previstas: e.target.value })}
+            className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+          >
+            {OPENINGS_OPTIONS.map((option) => <option key={option}>{option}</option>)}
+          </select>
+          {errors.aperturas_previstas && <p className="text-sm text-destructive">{errors.aperturas_previstas}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="presupuesto_estimado">Valor estimado *</Label>
+          <select
+            id="presupuesto_estimado"
+            name="presupuesto_estimado"
+            value={formData.presupuesto_estimado}
+            onChange={(e) => setFormData({ ...formData, presupuesto_estimado: e.target.value })}
+            className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+          >
+            {INVESTMENT_OPTIONS.map((option) => <option key={option}>{option}</option>)}
+          </select>
+          {errors.presupuesto_estimado && <p className="text-sm text-destructive">{errors.presupuesto_estimado}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="plazo_previsto">Plazo previsto *</Label>
+          <select
+            id="plazo_previsto"
+            name="plazo_previsto"
+            value={formData.plazo_previsto}
+            onChange={(e) => setFormData({ ...formData, plazo_previsto: e.target.value })}
+            className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+          >
+            {TIMELINE_OPTIONS.map((option) => <option key={option}>{option}</option>)}
+          </select>
+          {errors.plazo_previsto && <p className="text-sm text-destructive">{errors.plazo_previsto}</p>}
+        </div>
       </div>
 
       {/* Observaciones */}

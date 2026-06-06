@@ -151,6 +151,8 @@ serve(async (req: Request) => {
       throw new Error("No record found in the webhook payload");
     }
 
+    console.log("DEBUG_WEBHOOK_RECORD", JSON.stringify(record, null, 2));
+
     submissionId = record.id;
     const { 
       name, company, email, phone, cif, city, sectors, message, budget, notes, created_at, source,
@@ -299,6 +301,8 @@ serve(async (req: Request) => {
       }
     }
 
+    console.log("DEBUG_PROJECT_TYPES", JSON.stringify(project_types, null, 2));
+
     if (project_types && project_types.length > 0) {
       const PROJECT_TYPES_MAP: Record<string, string> = {
         "implantacion_integral": "Implantación integral",
@@ -355,7 +359,7 @@ serve(async (req: Request) => {
     actProps[actTitleKey] = formatProperty("title", `Formulario Web - ${name}`);
 
     let notesContent = "";
-    if (source === "Landing A") {
+    if (source === "Landing A" || source === "Web Principal") {
       notesContent = `
 === DATOS DEL FORMULARIO ===
 Contacto: ${name}
