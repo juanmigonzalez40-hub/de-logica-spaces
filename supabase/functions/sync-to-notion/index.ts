@@ -300,7 +300,16 @@ serve(async (req: Request) => {
     }
 
     if (project_types && project_types.length > 0) {
-      oppProps["Tipo de proyecto"] = formatProperty("multi_select", project_types);
+      const PROJECT_TYPES_MAP: Record<string, string> = {
+        "implantacion_integral": "Implantación integral",
+        "mobiliario_comercial": "Mobiliario a medida",
+        "rotulation_corporativa": "Rotulación corporativa",
+        "rotulacion_corporativa": "Rotulación corporativa",
+        "produccion_grafica": "Producción gráfica",
+        "renovacion_restyling": "Renovación / Restyling"
+      };
+      const mappedTypes = project_types.map((pt: string) => PROJECT_TYPES_MAP[pt] || pt);
+      oppProps["Tipo de proyecto"] = formatProperty("multi_select", mappedTypes);
     }
 
     if (aperturas_previstas) {
