@@ -15,6 +15,19 @@ interface UnifiedContactFormProps {
   showInDialog?: boolean;
 }
 
+const PROJECT_TYPE_OPTIONS = [
+  { value: "implantacion_integral", label: "Implantación integral (Llave en mano)" },
+  { value: "mobiliario_comercial", label: "Mobiliario comercial a medida" },
+  { value: "rotulacion_corporativa", label: "Rotulación y señalética corporativa" },
+  { value: "produccion_grafica", label: "Producción gráfica de gran formato" },
+  { value: "renovacion_restyling", label: "Renovación / Restyling de local" },
+];
+
+const CENTERS_OPTIONS = ["1", "2-5", "6-10", "Más de 10"];
+const OPENINGS_OPTIONS = ["Sí", "No", "En estudio"];
+const INVESTMENT_OPTIONS = ["Menos de 5.000 €", "5.000 € - 15.000 €", "15.000 € - 50.000 €", "Más de 50.000 €"];
+const TIMELINE_OPTIONS = ["Inmediato", "1-3 meses", "3-6 meses", "Más de 6 meses"];
+
 export const UnifiedContactForm = ({ 
   onSuccess, 
   redirectTo = "/gracias",
@@ -27,9 +40,15 @@ export const UnifiedContactForm = ({
     email: "",
     city: "",
     cif: "",
+    cargo: "",
     sectors: [],
+    project_types: [],
     project: "",
     budget: [],
+    num_centros: "1",
+    aperturas_previstas: "No",
+    presupuesto_estimado: "5.000 € - 15.000 €",
+    plazo_previsto: "1-3 meses",
     observations: "",
   });
   const [errors, setErrors] = useState<Partial<Record<keyof UnifiedFormData, string>>>({});
