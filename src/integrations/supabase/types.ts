@@ -16,8 +16,10 @@ export type Database = {
     Tables: {
       contact_submissions: {
         Row: {
+          aperturas_previstas: string | null
           budget: string[] | null
           business_type: string | null
+          cargo: string | null
           cif: string | null
           city: string | null
           company: string | null
@@ -30,8 +32,6 @@ export type Database = {
           notes: string | null
           notion_sync_error: string | null
           notion_sync_status: string
-          aperturas_previstas: string | null
-          cargo: string | null
           num_centros: string | null
           phone: string
           plazo_previsto: string | null
@@ -42,8 +42,10 @@ export type Database = {
           status: string
         }
         Insert: {
+          aperturas_previstas?: string | null
           budget?: string[] | null
           business_type?: string | null
+          cargo?: string | null
           cif?: string | null
           city?: string | null
           company?: string | null
@@ -56,8 +58,6 @@ export type Database = {
           notes?: string | null
           notion_sync_error?: string | null
           notion_sync_status?: string
-          aperturas_previstas?: string | null
-          cargo?: string | null
           num_centros?: string | null
           phone: string
           plazo_previsto?: string | null
@@ -68,8 +68,10 @@ export type Database = {
           status?: string
         }
         Update: {
+          aperturas_previstas?: string | null
           budget?: string[] | null
           business_type?: string | null
+          cargo?: string | null
           cif?: string | null
           city?: string | null
           company?: string | null
@@ -82,8 +84,6 @@ export type Database = {
           notes?: string | null
           notion_sync_error?: string | null
           notion_sync_status?: string
-          aperturas_previstas?: string | null
-          cargo?: string | null
           num_centros?: string | null
           phone?: string
           plazo_previsto?: string | null
