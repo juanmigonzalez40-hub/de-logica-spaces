@@ -135,6 +135,15 @@ export default function ImplantacionComercial() {
       return;
     }
 
+    if (formData.tipoProyecto.length === 0) {
+      toast({
+        title: "Tipo de proyecto",
+        description: "Selecciona al menos un tipo de proyecto para enviar la valoración.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
