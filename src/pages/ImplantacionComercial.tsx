@@ -138,8 +138,7 @@ export default function ImplantacionComercial() {
     setIsSubmitting(true);
 
     try {
-      // Formatear metadatos específicos para verlos fácilmente en el panel
-      const formattedNotes = `Cargo: ${formData.cargo}\nNúmero de centros: ${formData.numCentros}\nAperturas previstas: ${formData.aperturasPrevistas}\nInversión estimada: ${formData.inversionEstimada}\nPlazo previsto: ${formData.plazoPrevisto}`;
+      // NOTA: Ya no enviamos formattedNotes al campo `notes`, usamos los campos estructurados en su lugar.
       
       // META CAPI - event_id para deduplicación futura
       const eventId = typeof crypto !== 'undefined' && crypto.randomUUID 
@@ -155,13 +154,15 @@ export default function ImplantacionComercial() {
           phone: formData.telefono,
           city: formData.ciudad || "No especificada",
           cif: formData.cif || "N/A",
-          sectors: formData.tipoProyecto.length > 0 ? formData.tipoProyecto : ["implantacion"],
-          business_type: "Landing Implantación Comercial",
           message: formData.descripcion,
-          budget: [formData.inversionEstimada],
-          notes: formattedNotes,
           event_id: eventId,
           source: "Landing A",
+          cargo: formData.cargo,
+          project_types: formData.tipoProyecto,
+          presupuesto_estimado: formData.inversionEstimada,
+          num_centros: formData.numCentros,
+          aperturas_previstas: formData.aperturasPrevistas,
+          plazo_previsto: formData.plazoPrevisto,
         });
 
       if (error) throw error;
@@ -199,7 +200,7 @@ export default function ImplantacionComercial() {
             phone: formData.telefono,
             company: formData.empresa,
             business_type: "Implantación Comercial",
-            message: `${formData.descripcion}\n\nDetalles adicionales:\n${formattedNotes}`,
+            message: `${formData.descripcion}\n\nDetalles adicionales:\nCargo: ${formData.cargo}\nNº Centros: ${formData.numCentros}\nAperturas previstas: ${formData.aperturasPrevistas}\nPlazo: ${formData.plazoPrevisto}`,
             city: formData.ciudad || "No especificada",
             cif: formData.cif || "N/A",
             event_id: eventId,

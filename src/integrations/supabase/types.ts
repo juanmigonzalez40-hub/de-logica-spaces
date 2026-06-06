@@ -30,7 +30,13 @@ export type Database = {
           notes: string | null
           notion_sync_error: string | null
           notion_sync_status: string
+          aperturas_previstas: string | null
+          cargo: string | null
+          num_centros: string | null
           phone: string
+          plazo_previsto: string | null
+          presupuesto_estimado: string | null
+          project_types: string[] | null
           sectors: string[] | null
           source: string | null
           status: string
@@ -50,7 +56,13 @@ export type Database = {
           notes?: string | null
           notion_sync_error?: string | null
           notion_sync_status?: string
+          aperturas_previstas?: string | null
+          cargo?: string | null
+          num_centros?: string | null
           phone: string
+          plazo_previsto?: string | null
+          presupuesto_estimado?: string | null
+          project_types?: string[] | null
           sectors?: string[] | null
           source?: string | null
           status?: string
@@ -70,7 +82,13 @@ export type Database = {
           notes?: string | null
           notion_sync_error?: string | null
           notion_sync_status?: string
+          aperturas_previstas?: string | null
+          cargo?: string | null
+          num_centros?: string | null
           phone?: string
+          plazo_previsto?: string | null
+          presupuesto_estimado?: string | null
+          project_types?: string[] | null
           sectors?: string[] | null
           source?: string | null
           status?: string

@@ -152,7 +152,10 @@ serve(async (req: Request) => {
     }
 
     submissionId = record.id;
-    const { name, company, email, phone, cif, city, sectors, message, budget, notes, created_at, source } = record;
+    const { 
+      name, company, email, phone, cif, city, sectors, message, budget, notes, created_at, source,
+      cargo, project_types, presupuesto_estimado, num_centros, aperturas_previstas, plazo_previsto 
+    } = record;
 
     console.log(`Processing lead sync for submission ID: ${submissionId}`);
 
@@ -242,10 +245,14 @@ serve(async (req: Request) => {
       }
 
       const sedesType = companiesDb.properties["Número de sedes"]?.type;
-      if (sedesType && notes) {
-        const centersMatch = notes.match(/Número de centros:\s*(.+)/i);
-        if (centersMatch && centersMatch[1]) {
-          companyProps["Número de sedes"] = formatProperty(sedesType, centersMatch[1].trim());
+      if (sedesType) {
+        if (num_centros) {
+          companyProps["Número de sedes"] = formatProperty(sedesType, num_centros);
+        } else if (notes) {
+          const centersMatch = notes.match(/Número de centros:\s*(.+)/i);
+          if (centersMatch && centersMatch[1]) {
+            companyProps["Número de sedes"] = formatProperty(sedesType, centersMatch[1].trim());
+          }
         }
       }
 
@@ -282,6 +289,49 @@ serve(async (req: Request) => {
       }
     }
 
+    // MAP NEW FIELDS WITH HISTORICAL FALLBACK
+    if (cargo) {
+      oppProps["Cargo"] = formatProperty("rich_text", cargo);
+    } else if (notes) {
+      const cargoMatch = notes.match(/Cargo:\s*(.+)/i);
+      if (cargoMatch && cargoMatch[1]) {
+        oppProps["Cargo"] = formatProperty("rich_text", cargoMatch[1].trim());
+      }
+    }
+
+    if (project_types && project_types.length > 0) {
+      oppProps["Tipo de proyecto"] = formatProperty("multi_select", project_types);
+    }
+
+    if (aperturas_previstas) {
+      oppProps["Aperturas previstas"] = formatProperty("select", aperturas_previstas);
+    } else if (notes) {
+      const apMatch = notes.match(/Aperturas previstas:\s*(.+)/i);
+      if (apMatch && apMatch[1]) {
+        oppProps["Aperturas previstas"] = formatProperty("select", apMatch[1].trim());
+      }
+    }
+
+    if (plazo_previsto) {
+      oppProps["Plazo previsto"] = formatProperty("select", plazo_previsto);
+    } else if (notes) {
+      const plazoMatch = notes.match(/Plazo previsto:\s*(.+)/i);
+      if (plazoMatch && plazoMatch[1]) {
+        oppProps["Plazo previsto"] = formatProperty("select", plazoMatch[1].trim());
+      }
+    }
+
+    if (presupuesto_estimado) {
+       const parsed = parseInt(presupuesto_estimado.split('-')[0].replace(/\D/g, ''), 10);
+       if (!isNaN(parsed)) oppProps["Valor estimado"] = formatProperty("number", parsed);
+    } else if (notes) {
+       const invMatch = notes.match(/Inversión estimada:\s*(.+)/i);
+       if (invMatch && invMatch[1]) {
+         const parsed = parseInt(invMatch[1].split('-')[0].replace(/\D/g, ''), 10);
+         if (!isNaN(parsed)) oppProps["Valor estimado"] = formatProperty("number", parsed);
+       }
+    }
+
     console.log("CREANDO OPORTUNIDAD");
     console.log("PAYLOAD_OPORTUNIDAD", JSON.stringify(oppProps, null, 2));
     const newOpp = await createNotionPage(opportunitiesDbId, oppProps, notionToken);
@@ -295,7 +345,9 @@ serve(async (req: Request) => {
 
     actProps[actTitleKey] = formatProperty("title", `Formulario Web - ${name}`);
 
-    const notesContent = `
+    let notesContent = "";
+    if (source === "Landing A") {
+      notesContent = `
 === DATOS DEL FORMULARIO ===
 Contacto: ${name}
 Empresa: ${company || 'N/A'}
@@ -303,12 +355,35 @@ CIF: ${cif || 'N/A'}
 Email: ${email}
 Teléfono: ${phone}
 Ciudad: ${city || 'N/A'}
-Tipo de proyecto: ${sectors ? sectors.join(', ') : 'N/A'}
+Tipo de proyecto: ${project_types ? project_types.join(', ') : (sectors ? sectors.join(', ') : 'N/A')}
+Mensaje: ${message}
+
+=== DETALLES ESTRUCTURADOS ===
+Cargo: ${cargo || 'N/A'}
+Número de centros: ${num_centros || 'N/A'}
+Aperturas previstas: ${aperturas_previstas || 'N/A'}
+Presupuesto estimado: ${presupuesto_estimado || 'N/A'}
+Plazo previsto: ${plazo_previsto || 'N/A'}
+
+=== NOTAS ADICIONALES ===
+${notes || 'Ninguna'}
+`;
+    } else {
+      notesContent = `
+=== DATOS DEL FORMULARIO ===
+Contacto: ${name}
+Empresa: ${company || 'N/A'}
+CIF: ${cif || 'N/A'}
+Email: ${email}
+Teléfono: ${phone}
+Ciudad: ${city || 'N/A'}
+Tipo de proyecto / Sectores: ${sectors ? sectors.join(', ') : 'N/A'}
 Mensaje: ${message}
 
 === DETALLES ADICIONALES ===
 ${notes || 'Ninguno'}
 `;
+    }
 
     const actFields = [
       { key: "Tipo actividad", value: "Formulario Web" },
