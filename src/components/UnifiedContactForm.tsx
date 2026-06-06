@@ -301,6 +301,20 @@ export const UnifiedContactForm = ({
         {errors.cif && <p className="text-sm text-destructive">{errors.cif}</p>}
       </div>
 
+      {/* Cargo */}
+      <div className="space-y-2">
+        <Label htmlFor="cargo">Cargo o departamento *</Label>
+        <Input
+          id="cargo"
+          name="cargo"
+          value={formData.cargo}
+          onChange={handleChange}
+          placeholder="Ej. Director de expansión"
+          className={errors.cargo ? "border-destructive" : ""}
+        />
+        {errors.cargo && <p className="text-sm text-destructive">{errors.cargo}</p>}
+      </div>
+
       {/* Sector */}
       <div className="space-y-3">
         <Label>Sector al que pertenece *</Label>
@@ -320,6 +334,86 @@ export const UnifiedContactForm = ({
           ))}
         </div>
         {errors.sectors && <p className="text-sm text-destructive">{errors.sectors}</p>}
+      </div>
+
+      {/* Tipo de proyecto */}
+      <div className="space-y-3">
+        <Label>Tipo de proyecto *</Label>
+        <p className="text-sm text-muted-foreground">(Puedes seleccionar varias opciones)</p>
+        <div className="space-y-2">
+          {PROJECT_TYPE_OPTIONS.map((option) => (
+            <div key={option.value} className="flex items-center space-x-2">
+              <Checkbox
+                id={`project-type-${option.value}`}
+                checked={formData.project_types.includes(option.value)}
+                onCheckedChange={(checked) => handleProjectTypeChange(option.value, checked as boolean)}
+              />
+              <Label htmlFor={`project-type-${option.value}`} className="font-normal cursor-pointer">
+                {option.label}
+              </Label>
+            </div>
+          ))}
+        </div>
+        {errors.project_types && <p className="text-sm text-destructive">{errors.project_types}</p>}
+      </div>
+
+      {/* Datos operativos */}
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="num_centros">Número de centros implicados *</Label>
+          <select
+            id="num_centros"
+            name="num_centros"
+            value={formData.num_centros}
+            onChange={(e) => setFormData({ ...formData, num_centros: e.target.value })}
+            className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+          >
+            {CENTERS_OPTIONS.map((option) => <option key={option}>{option}</option>)}
+          </select>
+          {errors.num_centros && <p className="text-sm text-destructive">{errors.num_centros}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="aperturas_previstas">Aperturas previstas *</Label>
+          <select
+            id="aperturas_previstas"
+            name="aperturas_previstas"
+            value={formData.aperturas_previstas}
+            onChange={(e) => setFormData({ ...formData, aperturas_previstas: e.target.value })}
+            className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+          >
+            {OPENINGS_OPTIONS.map((option) => <option key={option}>{option}</option>)}
+          </select>
+          {errors.aperturas_previstas && <p className="text-sm text-destructive">{errors.aperturas_previstas}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="presupuesto_estimado">Valor estimado *</Label>
+          <select
+            id="presupuesto_estimado"
+            name="presupuesto_estimado"
+            value={formData.presupuesto_estimado}
+            onChange={(e) => setFormData({ ...formData, presupuesto_estimado: e.target.value })}
+            className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+          >
+            {INVESTMENT_OPTIONS.map((option) => <option key={option}>{option}</option>)}
+          </select>
+          {errors.presupuesto_estimado && <p className="text-sm text-destructive">{errors.presupuesto_estimado}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="plazo_previsto">Plazo previsto *</Label>
+          <select
+            id="plazo_previsto"
+            name="plazo_previsto"
+            value={formData.plazo_previsto}
+            onChange={(e) => setFormData({ ...formData, plazo_previsto: e.target.value })}
+            className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+          >
+            {TIMELINE_OPTIONS.map((option) => <option key={option}>{option}</option>)}
+          </select>
+          {errors.plazo_previsto && <p className="text-sm text-destructive">{errors.plazo_previsto}</p>}
+        </div>
       </div>
 
       {/* Observaciones */}
