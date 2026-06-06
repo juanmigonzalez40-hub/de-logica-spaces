@@ -70,23 +70,35 @@ export const UnifiedContactForm = ({
         ? crypto.randomUUID() 
         : 'evt_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
 
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert({
+      console.log("DEBUG_FORM_DATA", JSON.stringify(validated, null, 2));
+
+      const insertPayload = {
           name: validated.contact,
           company: validated.company,
           email: validated.email,
           phone: validated.phone,
           city: validated.city,
           cif: validated.cif,
+          cargo: validated.cargo,
           sectors: validated.sectors,
+          project_types: validated.project_types,
           business_type: validated.sectors.join(', '),
           message: validated.project,
           budget: validated.budget,
+          num_centros: validated.num_centros,
+          aperturas_previstas: validated.aperturas_previstas,
+          presupuesto_estimado: validated.presupuesto_estimado,
+          plazo_previsto: validated.plazo_previsto,
           notes: validated.observations || null,
           event_id: eventId,
           source: "Web Principal",
-        });
+        };
+
+      console.log("DEBUG_DB_INSERT", JSON.stringify(insertPayload, null, 2));
+
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert(insertPayload);
 
       if (error) throw error;
 
@@ -183,6 +195,16 @@ export const UnifiedContactForm = ({
     setFormData({ ...formData, sectors: newSectors });
     if (errors.sectors) {
       setErrors(prev => ({ ...prev, sectors: undefined }));
+    }
+  };
+
+  const handleProjectTypeChange = (value: string, checked: boolean) => {
+    const newProjectTypes = checked
+      ? [...formData.project_types, value]
+      : formData.project_types.filter(type => type !== value);
+    setFormData({ ...formData, project_types: newProjectTypes });
+    if (errors.project_types) {
+      setErrors(prev => ({ ...prev, project_types: undefined }));
     }
   };
 
