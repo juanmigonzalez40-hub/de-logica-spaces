@@ -39,7 +39,8 @@ function formatProperty(type: string | null, value: any) {
     case "url":
       return { url: String(value).trim() };
     case "select":
-      return { select: { name: String(value) } };
+      const selVal = Array.isArray(value) ? value[0] : value;
+      return { select: { name: String(selVal) } };
     case "multi_select":
       const items = Array.isArray(value) ? value : [value];
       return { multi_select: items.map(item => ({ name: String(item) })) };
