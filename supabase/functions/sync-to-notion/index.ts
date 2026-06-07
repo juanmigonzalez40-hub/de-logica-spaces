@@ -299,7 +299,9 @@ serve(async (req: Request) => {
     
     if (sectorType && combinedSectors.length > 0) {
       const uniqueSectors = [...new Set(combinedSectors)];
-      companyProps["Sector"] = formatProperty(sectorType, uniqueSectors);
+      // FIX: select only accepts a single value; multi_select accepts the array
+      const sectorValue = sectorType === "select" ? uniqueSectors[0] : uniqueSectors;
+      companyProps["Sector"] = formatProperty(sectorType, sectorValue);
     }
 
     const budgetType = companiesDb.properties["Facturación estimada"]?.type;
