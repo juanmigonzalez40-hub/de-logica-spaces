@@ -128,7 +128,7 @@ async function updateNotionPage(pageId: string, properties: any, token: string) 
 }
 
 serve(async (req: Request) => {
-  console.log("SYNC_TO_NOTION_VERSION_D9CC5A8");
+  console.log("SYNC_TO_NOTION_VERSION_STRICT_DOMAIN_E1");
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
