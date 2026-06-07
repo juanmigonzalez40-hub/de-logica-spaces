@@ -387,19 +387,6 @@ export const UnifiedContactForm = ({
           {errors.aperturas_previstas && <p className="text-sm text-destructive">{errors.aperturas_previstas}</p>}
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="presupuesto_estimado">Valor estimado *</Label>
-          <select
-            id="presupuesto_estimado"
-            name="presupuesto_estimado"
-            value={formData.presupuesto_estimado}
-            onChange={(e) => setFormData({ ...formData, presupuesto_estimado: e.target.value })}
-            className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
-          >
-            {INVESTMENT_OPTIONS.map((option) => <option key={option}>{option}</option>)}
-          </select>
-          {errors.presupuesto_estimado && <p className="text-sm text-destructive">{errors.presupuesto_estimado}</p>}
-        </div>
 
         <div className="space-y-2">
           <Label htmlFor="plazo_previsto">Plazo previsto *</Label>
