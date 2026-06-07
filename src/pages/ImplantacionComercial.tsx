@@ -166,7 +166,7 @@ export default function ImplantacionComercial() {
           cif: formData.cif || "N/A",
           message: formData.descripcion,
           event_id: eventId,
-          source: "Web Principal",
+          source: "Landing A",
           cargo: formData.cargo,
           project_types: formData.tipoProyecto,
           presupuesto_estimado: formData.inversionEstimada,
