@@ -128,7 +128,7 @@ async function updateNotionPage(pageId: string, properties: any, token: string) 
 }
 
 serve(async (req: Request) => {
-  console.log("SYNC_TO_NOTION_VERSION_D9CC5A8");
+  console.log("SYNC_TO_NOTION_VERSION_STRICT_DOMAIN_E1");
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -208,11 +208,31 @@ serve(async (req: Request) => {
           property: "Web",
           url: { contains: domain },
         };
-        console.log("DEBUG_COMPANY_MATCH_DOMAIN", JSON.stringify(filter, null, 2));
+        console.log("DEBUG_COMPANY_MATCH_DOMAIN", JSON.stringify({ filter, domain, company }, null, 2));
         const response = await queryNotionDatabase(companiesDbId, filter, notionToken);
-        if (response.results && response.results.length > 0) {
-          companyPageId = response.results[0].id;
-          console.log("Empresa encontrada por dominio.");
+        const candidates = (response.results || []).map((r: any) => {
+          const webProp = r.properties?.["Web"];
+          const rawUrl = webProp?.url || "";
+          let host = "";
+          try {
+            const u = new URL(rawUrl.startsWith("http") ? rawUrl : `https://${rawUrl}`);
+            host = u.hostname.toLowerCase().replace(/^www\./, "");
+          } catch (_) {
+            host = String(rawUrl).toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").split("/")[0];
+          }
+          return { id: r.id, rawUrl, host };
+        });
+        console.log("DEBUG_DOMAIN_CANDIDATES", JSON.stringify(candidates, null, 2));
+
+        const normalizedDomain = domain.toLowerCase().replace(/^www\./, "");
+        const strictMatch = candidates.find((c: any) => c.host === normalizedDomain);
+
+        if (strictMatch) {
+          companyPageId = strictMatch.id;
+          console.log("DEBUG_DOMAIN_MATCH_SELECTED", JSON.stringify(strictMatch, null, 2));
+          console.log("Empresa encontrada por dominio (validación estricta).");
+        } else {
+          console.log("DEBUG_DOMAIN_MATCH_REJECTED - ningún candidato coincide exactamente con", normalizedDomain);
         }
       }
     }
