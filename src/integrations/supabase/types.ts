@@ -17,22 +17,28 @@ export type Database = {
       contact_submissions: {
         Row: {
           aperturas_previstas: string | null
+          assigned_to: string | null
           budget: string[] | null
           business_type: string | null
+          call_attempts: number | null
           cargo: string | null
           cif: string | null
           city: string | null
           company: string | null
           created_at: string
+          crm_status: string | null
           email: string
           event_id: string | null
+          history: Json | null
           id: string
           message: string
           name: string
+          next_meeting: Json | null
           notes: string | null
           notion_sync_error: string | null
           notion_sync_status: string
           num_centros: string | null
+          observations: string | null
           phone: string
           plazo_previsto: string | null
           presupuesto_estimado: string | null
@@ -40,25 +46,32 @@ export type Database = {
           sectors: string[] | null
           source: string | null
           status: string
+          sub_status: string | null
         }
         Insert: {
           aperturas_previstas?: string | null
+          assigned_to?: string | null
           budget?: string[] | null
           business_type?: string | null
+          call_attempts?: number | null
           cargo?: string | null
           cif?: string | null
           city?: string | null
           company?: string | null
           created_at?: string
+          crm_status?: string | null
           email: string
           event_id?: string | null
+          history?: Json | null
           id?: string
           message: string
           name: string
+          next_meeting?: Json | null
           notes?: string | null
           notion_sync_error?: string | null
           notion_sync_status?: string
           num_centros?: string | null
+          observations?: string | null
           phone: string
           plazo_previsto?: string | null
           presupuesto_estimado?: string | null
@@ -66,25 +79,32 @@ export type Database = {
           sectors?: string[] | null
           source?: string | null
           status?: string
+          sub_status?: string | null
         }
         Update: {
           aperturas_previstas?: string | null
+          assigned_to?: string | null
           budget?: string[] | null
           business_type?: string | null
+          call_attempts?: number | null
           cargo?: string | null
           cif?: string | null
           city?: string | null
           company?: string | null
           created_at?: string
+          crm_status?: string | null
           email?: string
           event_id?: string | null
+          history?: Json | null
           id?: string
           message?: string
           name?: string
+          next_meeting?: Json | null
           notes?: string | null
           notion_sync_error?: string | null
           notion_sync_status?: string
           num_centros?: string | null
+          observations?: string | null
           phone?: string
           plazo_previsto?: string | null
           presupuesto_estimado?: string | null
@@ -92,57 +112,79 @@ export type Database = {
           sectors?: string[] | null
           source?: string | null
           status?: string
+          sub_status?: string | null
         }
         Relationships: []
       }
       project_registrations: {
         Row: {
+          assigned_to: string | null
           budget: string[] | null
+          call_attempts: number | null
           cif: string | null
           city: string
           company: string | null
           created_at: string
+          crm_status: string | null
           email: string
+          history: Json | null
           id: string
           message: string | null
           name: string
+          next_meeting: Json | null
           notes: string | null
+          observations: string | null
           phone: string
           premises: string
           sector: string
           status: string
+          sub_status: string | null
         }
         Insert: {
+          assigned_to?: string | null
           budget?: string[] | null
+          call_attempts?: number | null
           cif?: string | null
           city: string
           company?: string | null
           created_at?: string
+          crm_status?: string | null
           email: string
+          history?: Json | null
           id?: string
           message?: string | null
           name: string
+          next_meeting?: Json | null
           notes?: string | null
+          observations?: string | null
           phone: string
           premises: string
           sector: string
           status?: string
+          sub_status?: string | null
         }
         Update: {
+          assigned_to?: string | null
           budget?: string[] | null
+          call_attempts?: number | null
           cif?: string | null
           city?: string
           company?: string | null
           created_at?: string
+          crm_status?: string | null
           email?: string
+          history?: Json | null
           id?: string
           message?: string | null
           name?: string
+          next_meeting?: Json | null
           notes?: string | null
+          observations?: string | null
           phone?: string
           premises?: string
           sector?: string
           status?: string
+          sub_status?: string | null
         }
         Relationships: []
       }
