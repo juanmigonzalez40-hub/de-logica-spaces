@@ -39,7 +39,8 @@ function formatProperty(type: string | null, value: any) {
     case "url":
       return { url: String(value).trim() };
     case "select":
-      return { select: { name: String(value) } };
+      const selVal = Array.isArray(value) ? value[0] : value;
+      return { select: { name: String(selVal) } };
     case "multi_select":
       const items = Array.isArray(value) ? value : [value];
       return { multi_select: items.map(item => ({ name: String(item) })) };
@@ -128,7 +129,7 @@ async function updateNotionPage(pageId: string, properties: any, token: string) 
 }
 
 serve(async (req: Request) => {
-  console.log("SYNC_TO_NOTION_VERSION_STRICT_DOMAIN_E1");
+  console.log("SYNC_TO_NOTION_VERSION_SECTOR_FIX_F2");
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -299,7 +300,9 @@ serve(async (req: Request) => {
     
     if (sectorType && combinedSectors.length > 0) {
       const uniqueSectors = [...new Set(combinedSectors)];
-      companyProps["Sector"] = formatProperty(sectorType, uniqueSectors);
+      // FIX: select only accepts a single value; multi_select accepts the array
+      const sectorValue = sectorType === "select" ? uniqueSectors[0] : uniqueSectors;
+      companyProps["Sector"] = formatProperty(sectorType, sectorValue);
     }
 
     const budgetType = companiesDb.properties["Facturación estimada"]?.type;
